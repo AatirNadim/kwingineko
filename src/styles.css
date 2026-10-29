@@ -4,6 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes cat-hop {
+  50% { transform: translateY(-8px); }
+}
+
+.animate-cat-hop {
+  animation: cat-hop 0.3s steps(2);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
