@@ -12,6 +12,32 @@
   animation: cat-hop 0.3s steps(2);
 }
 
+@keyframes intro-greeting-in {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes intro-splash-out {
+  to { opacity: 0; visibility: hidden; }
+}
+
+.intro-greeting {
+  animation: intro-greeting-in 220ms ease-out both;
+}
+
+.intro-splash-leave {
+  animation: intro-splash-out 520ms ease-out forwards;
+  pointer-events: none;
+}
+
+.starfield-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.68;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
