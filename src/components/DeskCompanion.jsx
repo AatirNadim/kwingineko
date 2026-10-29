@@ -39,16 +39,21 @@ export default function DeskCompanion() {
   const [hopping, setHopping] = useState(false);
   const lineTimer = useRef();
   const hopTimer = useRef();
+  const blinkTimeout = useRef();
+  const hopFrame = useRef();
 
   useEffect(() => {
     const blinkTimer = window.setInterval(() => {
+      window.clearTimeout(blinkTimeout.current);
       setBlinking(true);
-      window.setTimeout(() => setBlinking(false), 150);
+      blinkTimeout.current = window.setTimeout(() => setBlinking(false), 150);
     }, 3500);
     return () => {
       window.clearInterval(blinkTimer);
       window.clearTimeout(lineTimer.current);
       window.clearTimeout(hopTimer.current);
+      window.clearTimeout(blinkTimeout.current);
+      window.cancelAnimationFrame(hopFrame.current);
     };
   }, []);
 
@@ -57,7 +62,8 @@ export default function DeskCompanion() {
     setPets(next);
     setLine(next === 10 ? 'ok you are my favorite human now' : LINES[Math.floor(Math.random() * LINES.length)]);
     setHopping(false);
-    window.requestAnimationFrame(() => setHopping(true));
+    window.cancelAnimationFrame(hopFrame.current);
+    hopFrame.current = window.requestAnimationFrame(() => setHopping(true));
     window.clearTimeout(hopTimer.current);
     hopTimer.current = window.setTimeout(() => setHopping(false), 300);
     window.clearTimeout(lineTimer.current);
