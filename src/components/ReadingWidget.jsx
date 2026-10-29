@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import { Radio } from 'lucide-react';
 import readingConfig from '../reading.config.json';
+import { loadSelectedTopicFeeds } from '../readingFeeds.js';
 import PanelFrame from './PanelFrame.jsx';
 
 const { topics: readingTopics, maxSelectedTopics } = readingConfig;
@@ -8,14 +10,37 @@ export default function ReadingWidget({ topic, selectedTopicIds, onTopicChange, 
   const selectedTopics = readingTopics.filter((item) => selectedTopicIds.includes(item.id));
   const selected = selectedTopics.find((item) => item.id === topic) ?? selectedTopics[0];
   const hasSources = selected?.feeds.length > 0;
+  const [feedData, setFeedData] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    if (!selectedTopics.length) {
+      setLoading(false);
+      return () => { active = false; };
+    }
+    setLoading(true);
+    loadSelectedTopicFeeds(selectedTopics).then((data) => {
+      if (active) setFeedData((current) => ({ ...current, ...data }));
+    }).finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
+  }, [selectedTopicIds.join('|')]);
+
+  const currentFeed = selected ? feedData[selected.id] : null;
+  const formatDate = (value) => {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? '' : new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric' }).format(date);
+  };
 
   return (
     <PanelFrame title="READING_RADIO" icon={<Radio size={13}/> }>
-      <div className="mb-[9px] ml-[10px] mt-3 font-mono text-[8px] tracking-[.55px] text-[#aaa897]">A FEW THINGS TO FOLLOW</div>
-      <details className="group mx-2 mb-2 border border-line bg-[#242520]">
-        <summary className="flex cursor-pointer list-none items-center justify-between px-[8px] py-[7px] font-mono text-[8px] text-[#c4c2b3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow">
-          <span>DISPLAY TOPICS <span className="text-lime">{selectedTopics.length}/{maxSelectedTopics}</span></span>
-          <span aria-hidden="true" className="text-yellow group-open:rotate-180">⌄</span>
+      <div className="mx-2 mb-2 mt-3 border border-[#57584b] bg-[#292a25] p-[9px]">
+        <div className="font-mono text-[8px] tracking-[.5px] text-lime">YOUR READING MIX</div>
+        <p className="mb-[7px] mt-1 text-[9px] leading-[1.45] text-[#c4c2b3]">Choose up to {maxSelectedTopics} topics to follow. You can change them any time.</p>
+        <details className="group border border-line bg-[#20211e]">
+        <summary className="flex cursor-pointer list-none items-center justify-between px-[8px] py-[7px] font-mono text-[8px] text-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow">
+          <span>CHANGE TOPICS <span className="text-lime">{selectedTopics.length}/{maxSelectedTopics} SELECTED</span></span>
+          <span aria-hidden="true" className="group-open:rotate-180">⌄</span>
         </summary>
         <div role="group" aria-label="Choose topics to display" className="grid gap-[2px] border-t border-line p-1">
           {readingTopics.map((item) => {
@@ -29,18 +54,27 @@ export default function ReadingWidget({ topic, selectedTopicIds, onTopicChange, 
           })}
         </div>
       </details>
+      </div>
       {selected ? <>
-        <div role="tablist" aria-label="Displayed reading topics" className="flex flex-wrap gap-[3px] px-2">
-          {selectedTopics.map((item) => <button key={item.id} role="tab" aria-selected={selected.id === item.id} onClick={() => onTopicChange(item.id)} className={`border px-[6px] py-[5px] text-[9px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-yellow ${selected.id === item.id ? 'border-[#57584b] bg-focus text-ink' : 'border-transparent bg-transparent text-[#c4c2b3] hover:bg-[#34352e]'}`}>{item.label}</button>)}
+        <div role="group" aria-label="Choose a topic to read" className="flex flex-wrap gap-[3px] px-2">
+          {selectedTopics.map((item) => <button key={item.id} aria-pressed={selected.id === item.id} onClick={() => onTopicChange(item.id)} className={`border px-[6px] py-[5px] text-[9px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-yellow ${selected.id === item.id ? 'border-[#57584b] bg-focus text-ink' : 'border-transparent bg-transparent text-[#c4c2b3] hover:bg-[#34352e]'}`}>{item.label}</button>)}
         </div>
         <div className="m-2 border border-dashed border-[#595a4d] bg-[#242520] px-[11px] py-[14px]">
           <Radio size={17} className="mb-[6px] text-violet"/>
           <b className="block font-display text-xs font-medium">{selected.label}</b>
-          <p className="mb-[10px] mt-[5px] text-[10px] leading-[1.55] text-[#bebbab]">{hasSources ? 'Feed sources are configured; headlines will appear after the feed aggregator is connected.' : 'No feed sources yet. Add RSS or Atom URLs to this topic in reading.config.json.'}</p>
-          <span className="flex items-center gap-[6px] font-mono text-[7px] text-[#c9c7b9]"><i className="h-[5px] w-[5px] rounded-full bg-yellow"/>{hasSources ? 'AGGREGATOR NOT CONNECTED' : 'SOURCES NOT CONFIGURED'}</span>
+          {loading && !currentFeed && <p role="status" className="mt-2 text-[9px] text-[#bebbab]">Loading selected feeds…</p>}
+          {!loading && currentFeed?.items?.length > 0 && <ul className="mt-2 grid gap-2">
+            {currentFeed.items.map((item, index) => <li key={`${item.link}-${index}`} className="border-t border-line pt-2">
+              <a href={item.link} target="_blank" rel="noreferrer" className="text-[10px] leading-[1.45] text-[#e9e7d8] underline decoration-[#898878] underline-offset-2 hover:text-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow">{item.title}</a>
+              <div className="mt-1 flex justify-between gap-2 font-mono text-[7px] text-[#aaa897]"><span>{item.source}</span>{item.date && <time dateTime={item.date}>{formatDate(item.date)}</time>}</div>
+            </li>)}
+          </ul>}
+          {!loading && hasSources && !currentFeed?.items?.length && <p className="mt-2 text-[9px] leading-[1.5] text-[#bebbab]">{currentFeed?.errors?.length ? currentFeed.errors[0] : 'No recent articles were returned by this feed.'}</p>}
+          {!hasSources && <p className="mb-0 mt-[5px] text-[10px] leading-[1.55] text-[#bebbab]">No feed sources yet. Add RSS or Atom URLs to this topic in reading.config.json.</p>}
+          {hasSources && <span className="mt-2 flex items-center gap-[6px] font-mono text-[7px] text-[#c9c7b9]"><i className={`h-[5px] w-[5px] rounded-full ${currentFeed?.errors?.length ? 'bg-pink' : 'bg-yellow'}`}/>{currentFeed?.errors?.length ? 'FEED LOAD ISSUE' : 'SESSION CACHE · 6H'}</span>}
         </div>
       </> : <div className="m-2 border border-dashed border-[#595a4d] px-[11px] py-[14px] text-[10px] leading-[1.55] text-[#bebbab]">Choose up to {maxSelectedTopics} topics above to display here.</div>}
-      <div className="flex justify-between border-t border-line px-[10px] py-[9px] font-mono text-[7px] text-[#a9a797]"><span>UPDATE STATUS</span><span className="text-yellow">AWAITING SOURCES</span></div>
+      <div className="flex justify-between border-t border-line px-[10px] py-[9px] font-mono text-[7px] text-[#a9a797]"><span>UPDATE STATUS</span><span className="text-yellow">{loading ? 'FETCHING SELECTED' : hasSources ? 'SELECTED FEEDS' : 'AWAITING SOURCES'}</span></div>
     </PanelFrame>
   );
 }
