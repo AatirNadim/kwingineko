@@ -1,0 +1,12 @@
+{
+  "maxSelectedTopics": 3,
+  "defaultSelectedTopicIds": ["ai", "anime", "books"],
+  "topics": [
+    { "id": "ai", "label": "AI News", "feeds": [] },
+    { "id": "anime", "label": "Anime", "feeds": [] },
+    { "id": "books", "label": "Fictional Books", "feeds": [] },
+    { "id": "cinema", "label": "Cinema", "feeds": [] },
+    { "id": "software", "label": "Software & Systems", "feeds": [] },
+    { "id": "open-source", "label": "Open Source", "feeds": [] }
+  ]
+}

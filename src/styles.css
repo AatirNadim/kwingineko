@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 20px;
+  }
+
+  body {
+    @apply min-w-[320px] bg-canvas font-sans text-sm leading-[1.55] text-ink;
+    background-image: radial-gradient(#e6db741b .7px, transparent .7px), radial-gradient(#a6e22e16 .7px, transparent .7px);
+    background-position: 0 0, 31px 37px;
+    background-size: 62px 74px;
+  }
+
+  ::selection {
+    @apply bg-pink text-surface;
+  }
+
+  :focus-visible {
+    @apply outline outline-2 outline-offset-[3px] outline-yellow;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
