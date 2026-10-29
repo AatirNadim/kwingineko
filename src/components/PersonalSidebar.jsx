@@ -16,7 +16,6 @@ export default function PersonalSidebar() {
     return readingConfig.defaultSelectedTopicIds;
   });
   const [topic, setTopic] = useState(readingConfig.defaultSelectedTopicIds[0]);
-  const [purrs, setPurrs] = useState(0);
   const toggleTopic = (id) => {
     const next = selectedTopicIds.includes(id)
       ? selectedTopicIds.filter((topicId) => topicId !== id)
@@ -29,7 +28,7 @@ export default function PersonalSidebar() {
     <aside className="grid content-start gap-[14px] pt-1 sm:grid-cols-2 lg:grid-cols-1">
       <ReadingWidget topic={topic} selectedTopicIds={selectedTopicIds} onTopicChange={setTopic} onToggleTopic={toggleTopic}/>
       <NightSkyWidget/>
-      <DeskCompanion purrs={purrs} onPet={() => setPurrs((count) => count + 1)}/>
+      <DeskCompanion/>
       <div className="flex items-center gap-[10px] border border-dashed border-[#5d5e50] px-3 py-[11px] font-mono text-[9px] tracking-[.5px] text-lime"><span className="text-lg">◎</span><span>BUILT IN THE OPEN<small className="mt-[3px] block text-[7px] text-[#aaa897]">CURIOUS BY DEFAULT</small></span></div>
     </aside>
   );
