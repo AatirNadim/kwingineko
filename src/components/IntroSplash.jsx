@@ -6,6 +6,7 @@ const GREETINGS = [
   { word: 'こんにちは', language: 'JAPANESE', color: 'text-violet' },
   { word: 'hola', language: 'SPANISH', color: 'text-pink' },
   { word: 'bonjour', language: 'FRENCH', color: 'text-yellow' },
+  { word: 'jambo', language: 'SWAHILI', color: 'text-violet' },
   { word: 'hello', language: 'ENGLISH', color: 'text-lime' },
 ];
 
