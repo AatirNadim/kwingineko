@@ -8,6 +8,7 @@ import ProjectsSection from './components/ProjectsSection.jsx';
 import SiteFooter from './components/SiteFooter.jsx';
 import SiteHeader from './components/SiteHeader.jsx';
 import StarfieldBackground from './components/StarfieldBackground.jsx';
+import IntroSplash from './components/IntroSplash.jsx';
 
 export default function App() {
   const [active, setActive] = useState('home');
@@ -29,6 +30,7 @@ export default function App() {
   return (
     <>
     <StarfieldBackground />
+    <IntroSplash />
     <div className="relative z-[1] mx-auto w-[calc(100%-20px)] max-w-[1360px] pt-[10px] sm:w-[calc(100%-28px)] sm:pt-[14px] lg:w-[calc(100%-64px)] lg:pt-[30px]">
       <a href="#main" className="fixed left-[-10000px] top-[10px] z-50 bg-yellow p-[10px] text-surface focus:left-[10px]">Skip to content</a>
       <SiteHeader time={time} navOpen={navOpen} onToggleNavigation={() => setNavOpen((open) => !open)} onHome={(event) => { event.preventDefault(); navigateTo('home'); }}/>
