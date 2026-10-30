@@ -10,11 +10,16 @@ export default function ProjectsSection() {
         {projects.map((project) => (
           <article key={project.name} className="border border-line bg-[#20211e] p-[14px] transition hover:-translate-y-0.5 hover:border-[#797a61] sm:p-4">
             <div className="flex items-center gap-[10px]"><span className="font-mono text-[10px] text-pink">{project.number}</span><span className="font-mono text-[9px] text-muted">{project.kind}</span><a aria-label={`${project.name} repository on GitHub`} href={project.href} target="_blank" rel="noreferrer" className="ml-auto p-1 text-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"><ArrowUpRight size={17}/></a></div>
-            <h3 className="mb-[5px] mt-2 font-display text-xl font-semibold tracking-[-.3px]">{project.name}</h3>
-            <p className="m-0 max-w-[690px] text-[11px] leading-[1.7] text-[#c8c6b7] sm:text-xs">{project.description}</p>
-            <div className="mt-3 flex flex-col items-start justify-between gap-[9px] min-[480px]:flex-row min-[480px]:items-center">
-              <div className="flex flex-wrap gap-[5px]">{project.stack.map((item) => <span key={item} className="border border-[#4e4f45] bg-[#292a25] px-[6px] py-[3px] font-mono text-[9px] text-[#d6d3c4]">{item}</span>)}</div>
-              <span className="ml-auto flex items-center gap-[6px] whitespace-nowrap font-mono text-[8px] text-[#a9a796]"><i className="h-[5px] w-[5px] rounded-full bg-lime shadow-[0_0_8px_#a6e22e77]"/>{project.status}</span>
+            <div className={`mt-2 grid gap-3 ${project.image ? 'sm:grid-cols-[minmax(0,1fr)_220px] sm:items-center' : ''}`}>
+              <div>
+                <h3 className="mb-[5px] font-display text-xl font-semibold tracking-[-.3px]">{project.name}</h3>
+                <p className="m-0 max-w-[690px] text-[11px] leading-[1.7] text-[#c8c6b7] sm:text-xs">{project.description}</p>
+                <div className="mt-3 flex flex-col items-start justify-between gap-[9px] min-[480px]:flex-row min-[480px]:items-center">
+                  <div className="flex flex-wrap gap-[5px]">{project.stack.map((item) => <span key={item} className="border border-[#4e4f45] bg-[#292a25] px-[6px] py-[3px] font-mono text-[9px] text-[#d6d3c4]">{item}</span>)}</div>
+                  <span className="ml-auto flex items-center gap-[6px] whitespace-nowrap font-mono text-[8px] text-[#a9a796]"><i className="h-[5px] w-[5px] rounded-full bg-lime shadow-[0_0_8px_#a6e22e77]"/>{project.status}</span>
+                </div>
+              </div>
+              {project.image && <img src={project.image} alt={project.imageAlt} loading="lazy" className="aspect-[16/10] w-full border border-line bg-surface object-cover sm:aspect-[4/3]"/>}
             </div>
           </article>
         ))}
