@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import ContactModal from './components/ContactModal.jsx';
+import ContactSection from './components/ContactSection.jsx';
 import ExperienceSection from './components/ExperienceSection.jsx';
 import ExpertiseSection from './components/ExpertiseSection.jsx';
 import Introduction from './components/Introduction.jsx';
@@ -17,6 +19,7 @@ export default function App() {
   const [time, setTime] = useState(new Date());
   const [followCursor, setFollowCursor] = useState(false);
   const [catStatus, setCatStatus] = useState('idle');
+  const [contactModalOpen, setContactModalOpen] = useState(false);
 
   useEffect(() => {
     const timer = window.setInterval(() => setTime(new Date()), 60_000);
@@ -45,6 +48,7 @@ export default function App() {
           <ProjectsSection/>
           <ExperienceSection/>
           <ExpertiseSection/>
+          <ContactSection onOpenComposer={() => setContactModalOpen(true)}/>
         </main>
         <PersonalSidebar
           followEnabled={followCursor}
@@ -53,6 +57,7 @@ export default function App() {
         />
       </div>
       <SiteFooter onHome={(event) => { event.preventDefault(); navigateTo('home'); }}/>
+      <ContactModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} />
     </div>
     </>
   );

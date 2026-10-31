@@ -3,7 +3,7 @@ import { navigation } from '../data/portfolio.js';
 export default function NavigationRail({ open, active, time, onNavigate }) {
   return (
     <aside className={`${open ? 'order-first block' : 'hidden'} min-h-0 border border-line bg-surface p-[9px] lg:order-none lg:flex lg:min-h-[calc(100vh-190px)] lg:flex-col lg:border-0 lg:border-r lg:border-[#4a4a40]/25 lg:bg-transparent lg:py-[10px] lg:pr-[14px] lg:pl-0`}>
-      <div className="flex justify-between border-b border-line px-[10px] pb-[13px] font-mono text-[10px] tracking-[.55px] text-muted">DIRECTORY <span className="text-[#858372]">01—04</span></div>
+      <div className="flex justify-between border-b border-line px-[10px] pb-[13px] font-mono text-[10px] tracking-[.55px] text-muted">DIRECTORY <span className="text-[#858372]">01—0{navigation.length}</span></div>
       <nav aria-label="Main navigation" className="grid grid-cols-2 gap-[3px] pt-[10px] lg:grid-cols-1">
         {navigation.map(([id, number, label]) => (
           <button key={id} onClick={() => onNavigate(id)} className={`group flex items-center gap-3 border px-[10px] py-[11px] text-left text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${active === id ? 'border-[#55564b] bg-focus text-ink' : 'border-transparent bg-transparent text-[#c7c5b7] hover:bg-focus hover:text-ink'}`}>
