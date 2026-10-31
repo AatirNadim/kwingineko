@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import ContactModal from './components/ContactModal.jsx';
 import ContactSection from './components/ContactSection.jsx';
+import CertificatesSection from './components/CertificatesSection.jsx';
 import ExperienceSection from './components/ExperienceSection.jsx';
 import ExpertiseSection from './components/ExpertiseSection.jsx';
 import Introduction from './components/Introduction.jsx';
@@ -67,6 +68,7 @@ export default function App() {
             <ProjectsSection />
             <ExperienceSection />
             <ExpertiseSection />
+            <CertificatesSection />
             <ContactSection onOpenComposer={() => setContactModalOpen(true)} />
           </main>
           <PersonalSidebar

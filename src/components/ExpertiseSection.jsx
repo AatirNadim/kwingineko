@@ -4,7 +4,7 @@ import SectionHeading from './SectionHeading.jsx';
 export default function ExpertiseSection() {
   return (
     <section id="expertise" className="scroll-mt-4 px-3 py-6 sm:px-[14px] sm:py-8 md:pl-5">
-      <SectionHeading index="03 / TOOLS OF THE TRADE" title="Areas I work in" />
+      <SectionHeading index="04 / TOOLS OF THE TRADE" title="Areas I work in" />
       <div className="border-t border-line">
         {expertise.map(([group, items], i) => (
           <div
