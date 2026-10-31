@@ -9,11 +9,14 @@ import SiteFooter from './components/SiteFooter.jsx';
 import SiteHeader from './components/SiteHeader.jsx';
 import StarfieldBackground from './components/StarfieldBackground.jsx';
 import IntroSplash from './components/IntroSplash.jsx';
+import CursorCat from './components/CursorCat.jsx';
 
 export default function App() {
   const [active, setActive] = useState('home');
   const [navOpen, setNavOpen] = useState(false);
   const [time, setTime] = useState(new Date());
+  const [followCursor, setFollowCursor] = useState(false);
+  const [catStatus, setCatStatus] = useState('idle');
 
   useEffect(() => {
     const timer = window.setInterval(() => setTime(new Date()), 60_000);
@@ -31,6 +34,7 @@ export default function App() {
     <>
     <StarfieldBackground />
     <IntroSplash />
+    <CursorCat active={followCursor} onStatusChange={setCatStatus} />
     <div className="relative z-[1] mx-auto w-[calc(100%-20px)] max-w-[1360px] pt-[10px] sm:w-[calc(100%-28px)] sm:pt-[14px] lg:w-[calc(100%-64px)] lg:pt-[30px]">
       <a href="#main" className="fixed left-[-10000px] top-[10px] z-50 bg-yellow p-[10px] text-surface focus:left-[10px]">Skip to content</a>
       <SiteHeader time={time} navOpen={navOpen} onToggleNavigation={() => setNavOpen((open) => !open)} onHome={(event) => { event.preventDefault(); navigateTo('home'); }}/>
@@ -42,7 +46,11 @@ export default function App() {
           <ExperienceSection/>
           <ExpertiseSection/>
         </main>
-        <PersonalSidebar/>
+        <PersonalSidebar
+          followEnabled={followCursor}
+          onToggleFollow={() => setFollowCursor((prev) => !prev)}
+          catStatus={catStatus}
+        />
       </div>
       <SiteFooter onHome={(event) => { event.preventDefault(); navigateTo('home'); }}/>
     </div>

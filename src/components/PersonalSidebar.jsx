@@ -5,7 +5,7 @@ import NightSkyWidget from './NightSkyWidget.jsx';
 import ReadingWidget from './ReadingWidget.jsx';
 import SocialLinks from './SocialLinks.jsx';
 
-export default function PersonalSidebar() {
+export default function PersonalSidebar({ followEnabled, onToggleFollow, catStatus }) {
   const [selectedTopicIds, setSelectedTopicIds] = useState(() => {
     try {
       const saved = JSON.parse(window.localStorage.getItem('reading-topic-selection'));
@@ -29,7 +29,7 @@ export default function PersonalSidebar() {
     <aside className="grid content-start gap-[14px] pt-1 sm:grid-cols-2 lg:grid-cols-1">
       <ReadingWidget topic={topic} selectedTopicIds={selectedTopicIds} onTopicChange={setTopic} onToggleTopic={toggleTopic}/>
       <NightSkyWidget/>
-      <DeskCompanion/>
+      <DeskCompanion followEnabled={followEnabled} onToggleFollow={onToggleFollow} catStatus={catStatus}/>
       <SocialLinks/>
       <div className="flex items-center gap-[10px] border border-dashed border-[#5d5e50] px-3 py-[11px] font-mono text-[9px] tracking-[.5px] text-lime"><span className="text-lg">◎</span><span>BUILT IN THE OPEN<small className="mt-[3px] block text-[7px] text-[#aaa897]">CURIOUS BY DEFAULT</small></span></div>
     </aside>
