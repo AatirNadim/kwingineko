@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import ContactModal from './components/ContactModal.jsx';
 import ContactSection from './components/ContactSection.jsx';
 import CertificatesSection from './components/CertificatesSection.jsx';
+import BlogSection from './components/BlogSection.jsx';
 import ExperienceSection from './components/ExperienceSection.jsx';
 import ExpertiseSection from './components/ExpertiseSection.jsx';
 import Introduction from './components/Introduction.jsx';
@@ -69,6 +70,7 @@ export default function App() {
             <ExperienceSection />
             <ExpertiseSection />
             <CertificatesSection />
+            <BlogSection />
             <ContactSection onOpenComposer={() => setContactModalOpen(true)} />
           </main>
           <PersonalSidebar
