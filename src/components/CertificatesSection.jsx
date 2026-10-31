@@ -53,7 +53,7 @@ export default function CertificatesSection() {
                 key={cat}
                 type="button"
                 onClick={() => setSelectedCategory(cat)}
-                className={`inline-flex min-h-[36px] sm:min-h-[32px] items-center gap-1.5 border px-2.5 py-1 font-mono text-[9px] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
+                className={`inline-flex min-h-[44px] sm:min-h-[32px] items-center gap-1.5 border px-2.5 py-1.5 sm:py-1 font-mono text-[9px] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
                   isActive
                     ? 'border-pink bg-focus text-ink shadow-[2px_2px_0_#f9267240]'
                     : 'border-[#3f4037] bg-[#22231e] text-[#a9a796] hover:border-line hover:bg-focus hover:text-ink'
@@ -63,7 +63,9 @@ export default function CertificatesSection() {
                   {isActive ? '●' : '○'}
                 </span>
                 <span>{cat.toUpperCase()}</span>
-                <span className="text-[8px] text-[#787665]">[{count < 10 ? `0${count}` : count}]</span>
+                <span className={`text-[8px] ${isActive ? 'text-[#c8c6b7]' : 'text-[#787665]'}`}>
+                  [{count < 10 ? `0${count}` : count}]
+                </span>
               </button>
             );
           })}
@@ -144,7 +146,7 @@ export default function CertificatesSection() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Verify ${cert.title} credential on ${cert.platform}`}
-                    className="inline-flex min-h-[36px] min-w-[36px] sm:min-h-[32px] items-center gap-1 border border-[#525345] bg-[#282924] px-2.5 py-1 font-mono text-[9px] font-medium text-yellow transition-colors hover:border-yellow hover:bg-[#34352e] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+                    className="inline-flex min-h-[44px] min-w-[44px] sm:min-h-[32px] sm:min-w-0 items-center justify-center gap-1 border border-[#525345] bg-[#282924] px-3 py-1 font-mono text-[9px] font-medium text-yellow transition-colors hover:border-yellow hover:bg-[#34352e] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
                   >
                     <span>VERIFY</span>
                     <ArrowUpRight size={13} className="text-yellow" />
