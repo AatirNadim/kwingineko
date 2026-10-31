@@ -37,10 +37,21 @@ export default function DeskCompanion({ followEnabled = false, onToggleFollow, c
   const [line, setLine] = useState('');
   const [blinking, setBlinking] = useState(false);
   const [hopping, setHopping] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const lineTimer = useRef();
   const hopTimer = useRef();
   const blinkTimeout = useRef();
   const hopFrame = useRef();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const coarseMedia = window.matchMedia('(pointer: coarse)');
+      setIsTouchDevice(coarseMedia.matches);
+      const handleMedia = (e) => setIsTouchDevice(e.matches);
+      coarseMedia.addEventListener?.('change', handleMedia);
+      return () => coarseMedia.removeEventListener?.('change', handleMedia);
+    }
+  }, []);
 
   useEffect(() => {
     const blinkTimer = window.setInterval(() => {
@@ -78,7 +89,7 @@ export default function DeskCompanion({ followEnabled = false, onToggleFollow, c
       </button>
       {line && <p aria-live="polite" className="mx-[10px] mt-2 border border-[#0b0b0b] bg-[#f0f0f0] px-[7px] py-[5px] text-center text-[10px] leading-[1.4] text-[#0b0b0b] shadow-[2px_2px_0_#f92672]">{line}</p>}
       <div className="flex items-center justify-between px-[10px] pb-[3px] pt-2"><b className="font-display text-[10px]">tiny coworker</b><span className="font-mono text-[7px] text-[#aaa897]">{pets ? `pets: ${pets}${pets >= 10 ? ' ♥' : ''}` : 'A LITTLE ENCOURAGEMENT'}</span></div>
-      <div className="flex items-center gap-[5px] px-[10px] py-[2px] font-mono text-[8px] text-[#aaa897]"><Heart size={11} className="text-pink"/> click to pet the cat</div>
+      <div className="flex items-center gap-[5px] px-[10px] py-[2px] font-mono text-[8px] text-[#aaa897]"><Heart size={11} className="text-pink"/> {isTouchDevice ? 'touch screen: tap to pet' : 'click to pet the cat'}</div>
       <div className="mt-2 border-t border-[#35362e] px-[10px] pb-2 pt-2 font-mono">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-[9px] font-bold tracking-wider text-ink">
@@ -91,7 +102,7 @@ export default function DeskCompanion({ followEnabled = false, onToggleFollow, c
             aria-label="Toggle cursor chasing cat"
             aria-checked={followEnabled}
             onClick={onToggleFollow}
-            className={`flex items-center gap-1.5 border px-2 py-0.5 text-[8px] font-bold tracking-wider transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
+            className={`flex min-h-[44px] items-center justify-center gap-1.5 border px-3 py-2 text-[8px] font-bold tracking-wider transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
               followEnabled
                 ? 'border-lime bg-[#243319] text-lime shadow-[1px_1px_0_#a6e22e]'
                 : 'border-[#45463e] bg-[#242520] text-muted hover:border-[#5d5e50] hover:text-ink'
@@ -106,13 +117,13 @@ export default function DeskCompanion({ followEnabled = false, onToggleFollow, c
         <div className="mt-1.5 flex items-center gap-1 text-[8px] leading-tight">
           <span className="text-[#aaa897]">SYS.STALKER //</span>
           {!followEnabled ? (
-            <span className="text-muted">STANDBY · CLICK TO DEPLOY</span>
+            <span className="text-muted">{isTouchDevice ? 'TOUCH SCREEN · TAP TO STALK' : 'STANDBY · CLICK TO DEPLOY'}</span>
           ) : catStatus === 'caught' ? (
             <span className="font-semibold text-pink">♥ TARGET CAUGHT! [PURR]</span>
           ) : catStatus === 'stalking' ? (
             <span className="text-lime">▶ STALKING SPEED: 160PX/S</span>
           ) : (
-            <span className="text-muted">❚❚ CURSOR OUT OF REACH</span>
+            <span className="text-muted">❚❚ TARGET OUT OF REACH</span>
           )}
         </div>
       </div>

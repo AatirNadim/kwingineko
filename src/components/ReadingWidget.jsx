@@ -38,7 +38,7 @@ export default function ReadingWidget({ topic, selectedTopicIds, onTopicChange, 
         <div className="font-mono text-[8px] tracking-[.5px] text-lime">YOUR READING MIX</div>
         <p className="mb-[7px] mt-1 text-[9px] leading-[1.45] text-[#c4c2b3]">Choose up to {maxSelectedTopics} topics to follow. You can change them any time.</p>
         <details className="group border border-line bg-[#20211e]">
-        <summary className="flex cursor-pointer list-none items-center justify-between px-[8px] py-[7px] font-mono text-[8px] text-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow">
+        <summary className="flex min-h-[36px] cursor-pointer list-none items-center justify-between px-[8px] py-[7px] font-mono text-[8px] text-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow">
           <span>CHANGE TOPICS <span className="text-lime">{selectedTopics.length}/{maxSelectedTopics} SELECTED</span></span>
           <span aria-hidden="true" className="group-open:rotate-180">⌄</span>
         </summary>
@@ -46,8 +46,8 @@ export default function ReadingWidget({ topic, selectedTopicIds, onTopicChange, 
           {readingTopics.map((item) => {
             const checked = selectedTopicIds.includes(item.id);
             const atLimit = selectedTopicIds.length >= maxSelectedTopics;
-            return <label key={item.id} className={`flex cursor-pointer items-center gap-2 px-[6px] py-[5px] text-[9px] ${checked ? 'text-ink' : 'text-[#c4c2b3]'}`}>
-              <input type="checkbox" checked={checked} disabled={!checked && atLimit} onChange={() => onToggleTopic(item.id)} className="accent-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"/>
+            return <label key={item.id} className={`flex min-h-[36px] cursor-pointer items-center gap-2 px-[6px] py-[6px] text-[9px] ${checked ? 'text-ink' : 'text-[#c4c2b3]'}`}>
+              <input type="checkbox" checked={checked} disabled={!checked && atLimit} onChange={() => onToggleTopic(item.id)} className="h-4 w-4 accent-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"/>
               {item.label}
               {item.feeds.length === 0 && <span className="ml-auto font-mono text-[7px] text-[#aaa897]">NO SOURCES</span>}
             </label>;
@@ -57,7 +57,7 @@ export default function ReadingWidget({ topic, selectedTopicIds, onTopicChange, 
       </div>
       {selected ? <>
         <div role="group" aria-label="Choose a topic to read" className="flex flex-wrap gap-[3px] px-2">
-          {selectedTopics.map((item) => <button key={item.id} aria-pressed={selected.id === item.id} onClick={() => onTopicChange(item.id)} className={`border px-[6px] py-[5px] text-[9px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-yellow ${selected.id === item.id ? 'border-[#57584b] bg-focus text-ink' : 'border-transparent bg-transparent text-[#c4c2b3] hover:bg-[#34352e]'}`}>{item.label}</button>)}
+          {selectedTopics.map((item) => <button key={item.id} aria-pressed={selected.id === item.id} onClick={() => onTopicChange(item.id)} className={`min-h-[32px] border px-2.5 py-1.5 text-[9px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-yellow ${selected.id === item.id ? 'border-[#57584b] bg-focus text-ink font-medium' : 'border-transparent bg-transparent text-[#c4c2b3] hover:bg-[#34352e]'}`}>{item.label}</button>)}
         </div>
         <div className="m-2 border border-dashed border-[#595a4d] bg-[#242520] px-[11px] py-[14px]">
           <Radio size={17} className="mb-[6px] text-violet"/>
