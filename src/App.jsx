@@ -35,30 +35,54 @@ export default function App() {
 
   return (
     <>
-    <StarfieldBackground />
-    <IntroSplash />
-    <CursorCat active={followCursor} onStatusChange={setCatStatus} />
-    <div className="relative z-[1] mx-auto w-[calc(100%-20px)] max-w-[1360px] pt-[10px] sm:w-[calc(100%-28px)] sm:pt-[14px] lg:w-[calc(100%-64px)] lg:pt-[30px]">
-      <a href="#main" className="fixed left-[-10000px] top-[10px] z-50 bg-yellow p-[10px] text-surface focus:left-[10px]">Skip to content</a>
-      <SiteHeader time={time} navOpen={navOpen} onToggleNavigation={() => setNavOpen((open) => !open)} onHome={(event) => { event.preventDefault(); navigateTo('home'); }}/>
-      <div className="grid grid-cols-1 items-start gap-3 pt-[14px] lg:grid-cols-[200px_minmax(0,1fr)_258px] lg:gap-[22px] lg:pt-6">
-        <NavigationRail open={navOpen} active={active} time={time} onNavigate={navigateTo}/>
-        <main id="main" tabIndex="-1" className="order-first min-w-0 focus:outline-none lg:order-none">
-          <Introduction onExplore={() => navigateTo('work')}/>
-          <ProjectsSection/>
-          <ExperienceSection/>
-          <ExpertiseSection/>
-          <ContactSection onOpenComposer={() => setContactModalOpen(true)}/>
-        </main>
-        <PersonalSidebar
-          followEnabled={followCursor}
-          onToggleFollow={() => setFollowCursor((prev) => !prev)}
-          catStatus={catStatus}
+      <StarfieldBackground />
+      <IntroSplash />
+      <CursorCat active={followCursor} onStatusChange={setCatStatus} />
+      <div className="relative z-[1] mx-auto w-[calc(100%-16px)] max-w-[1360px] pt-2 min-[380px]:w-[calc(100%-24px)] min-[380px]:pt-3 sm:w-[calc(100%-32px)] sm:pt-4 md:w-[calc(100%-48px)] lg:w-[calc(100%-64px)] lg:pt-[30px]">
+        <a
+          href="#main"
+          className="fixed left-[-10000px] top-[10px] z-50 bg-yellow p-[10px] text-surface focus:left-[10px]"
+        >
+          Skip to content
+        </a>
+        <SiteHeader
+          time={time}
+          navOpen={navOpen}
+          onToggleNavigation={() => setNavOpen((open) => !open)}
+          onHome={(event) => {
+            event.preventDefault();
+            navigateTo('home');
+          }}
         />
+        <div className="grid grid-cols-1 items-start gap-3 pt-3 sm:gap-4 sm:pt-4 lg:grid-cols-[200px_minmax(0,1fr)_258px] lg:gap-[22px] lg:pt-6">
+          <NavigationRail
+            open={navOpen}
+            onClose={() => setNavOpen(false)}
+            active={active}
+            time={time}
+            onNavigate={navigateTo}
+          />
+          <main id="main" tabIndex="-1" className="min-w-0 focus:outline-none">
+            <Introduction onExplore={() => navigateTo('work')} />
+            <ProjectsSection />
+            <ExperienceSection />
+            <ExpertiseSection />
+            <ContactSection onOpenComposer={() => setContactModalOpen(true)} />
+          </main>
+          <PersonalSidebar
+            followEnabled={followCursor}
+            onToggleFollow={() => setFollowCursor((prev) => !prev)}
+            catStatus={catStatus}
+          />
+        </div>
+        <SiteFooter
+          onHome={(event) => {
+            event.preventDefault();
+            navigateTo('home');
+          }}
+        />
+        <ContactModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} />
       </div>
-      <SiteFooter onHome={(event) => { event.preventDefault(); navigateTo('home'); }}/>
-      <ContactModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} />
-    </div>
     </>
   );
 }

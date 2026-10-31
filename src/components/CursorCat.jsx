@@ -110,6 +110,7 @@ export default function CursorCat({ active = false, onStatusChange }) {
   const currentFrameRef = useRef('CAUGHT');
   const rafRef = useRef(null);
   const lastTimeRef = useRef(null);
+  const touchTimeoutRef = useRef(null);
 
   const onStatusChangeRef = useRef(onStatusChange);
   onStatusChangeRef.current = onStatusChange;
@@ -143,6 +144,21 @@ export default function CursorCat({ active = false, onStatusChange }) {
       };
     };
 
+    const handleTouchMove = (e) => {
+      if (!e.touches || e.touches.length === 0) return;
+      const touch = e.touches[0];
+      mouseRef.current = {
+        x: touch.clientX,
+        y: touch.clientY,
+        active: true,
+      };
+      if (touchTimeoutRef.current) clearTimeout(touchTimeoutRef.current);
+      touchTimeoutRef.current = setTimeout(() => {
+        mouseRef.current.active = false;
+        setCatStatus('idle');
+      }, 2500);
+    };
+
     const handleMouseLeave = () => {
       mouseRef.current.active = false;
       isCaughtRef.current = false;
@@ -162,6 +178,8 @@ export default function CursorCat({ active = false, onStatusChange }) {
 
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
     window.addEventListener('mousemove', handlePointerMove, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchstart', handleTouchMove, { passive: true });
     document.addEventListener('mouseleave', handleMouseLeave);
     document.addEventListener('mouseenter', handleMouseEnter);
 
@@ -279,8 +297,11 @@ export default function CursorCat({ active = false, onStatusChange }) {
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (touchTimeoutRef.current) clearTimeout(touchTimeoutRef.current);
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('mousemove', handlePointerMove);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchstart', handleTouchMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
       document.removeEventListener('mouseenter', handleMouseEnter);
       reduceMotionQuery.removeEventListener?.('change', onMotionChange);
@@ -299,12 +320,12 @@ export default function CursorCat({ active = false, onStatusChange }) {
         transform: `translate3d(${pos.x - CAT_HALF_SIZE}px, ${pos.y - CAT_HALF_SIZE}px, 0)`,
       }}
     >
-      <div className="relative">
+      <div className="relative pointer-events-none select-none">
         {isCaught && (
           <div
             role="status"
             aria-live="polite"
-            className={`absolute left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#f0f0f0] text-[#0b0b0b] font-mono text-[9px] px-1.5 py-0.5 border border-[#0b0b0b] shadow-[1px_1px_0_#f92672] ${
+            className={`pointer-events-none absolute left-1/2 -translate-x-1/2 max-w-[140px] truncate whitespace-nowrap bg-[#f0f0f0] text-[#0b0b0b] font-mono text-[9px] px-1.5 py-0.5 border border-[#0b0b0b] shadow-[1px_1px_0_#f92672] ${
               pos.y < 40 ? 'top-full mt-1.5' : 'bottom-full mb-1.5'
             }`}
           >

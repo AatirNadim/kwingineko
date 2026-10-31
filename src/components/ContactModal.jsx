@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Mail, X, Copy, Check, ExternalLink, Sparkles, AlertCircle } from 'lucide-react';
+import { Mail, X, Copy, Check, ExternalLink, Sparkles } from 'lucide-react';
 import { contact } from '../data/portfolio.js';
 
 const MAX_SUBJECT_LENGTH = 80;
@@ -90,7 +90,7 @@ export default function ContactModal({ isOpen, onClose }) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-mail-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5"
     >
       {/* Dimmed Retro Backdrop */}
       <div
@@ -103,10 +103,10 @@ export default function ContactModal({ isOpen, onClose }) {
       <div className="relative z-10 flex max-h-[92vh] w-full max-w-[620px] flex-col border border-line bg-[#1e1f1c] shadow-[6px_6px_0_rgba(0,0,0,0.5)]">
         
         {/* Title Bar */}
-        <div className="flex h-[36px] shrink-0 items-center justify-between border-b border-line bg-[#282924] px-3">
+        <div className="flex min-h-[44px] shrink-0 items-center justify-between border-b border-line bg-[#282924] px-3 sm:px-4">
           <div className="flex items-center gap-2">
-            <Mail size={13} className="text-pink" />
-            <span id="modal-mail-title" className="font-mono text-[10px] tracking-wide text-ink">
+            <Mail size={14} className="text-pink" />
+            <span id="modal-mail-title" className="font-mono text-[9.5px] sm:text-[10px] tracking-wide text-ink truncate">
               new_message.eml <span className="text-muted">// DISPATCH COMPOSER</span>
             </span>
           </div>
@@ -116,18 +116,20 @@ export default function ContactModal({ isOpen, onClose }) {
               <i className="h-2 w-2 border border-[#55564b] bg-focus" />
               <i className="h-2 w-2 border border-[#55564b] bg-focus" />
             </span>
+            {/* Enlarged touch target (min 44x44px) */}
             <button
               onClick={onClose}
+              type="button"
               aria-label="Close dialog"
-              className="grid h-5 w-5 place-items-center text-muted transition-colors hover:bg-pink hover:text-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+              className="grid h-11 w-11 min-h-[44px] min-w-[44px] place-items-center text-muted transition-colors hover:bg-pink hover:text-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow -mr-1"
             >
-              <X size={13} />
+              <X size={16} />
             </button>
           </div>
         </div>
 
         {/* Scrollable Content */}
-        <div className="overflow-y-auto p-4 sm:p-5">
+        <div className="overflow-y-auto p-3.5 sm:p-5">
           
           {/* Step 1: Preset Templates */}
           <div className="mb-4">
@@ -143,9 +145,9 @@ export default function ContactModal({ isOpen, onClose }) {
                     key={tpl.id}
                     type="button"
                     onClick={() => handleSelectTemplate(tpl.id)}
-                    className={`border px-2 py-1 font-mono text-[9px] tracking-tight transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
+                    className={`min-h-[36px] border px-2.5 py-1.5 font-mono text-[9px] tracking-tight transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
                       active
-                        ? 'border-pink bg-pink/15 text-pink'
+                        ? 'border-pink bg-pink/15 text-pink font-semibold'
                         : 'border-[#45463e] bg-surface text-muted hover:border-line hover:text-ink'
                     }`}
                   >
@@ -172,13 +174,13 @@ export default function ContactModal({ isOpen, onClose }) {
                     key={avatar.id}
                     type="button"
                     onClick={() => setSelectedAvatar(avatar.id)}
-                    className={`flex items-center gap-1.5 border px-2 py-1.5 text-left font-mono text-[9px] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
+                    className={`flex min-h-[40px] items-center gap-1.5 border px-2.5 py-2 text-left font-mono text-[9px] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
                       active
                         ? 'border-lime bg-lime/10 text-lime font-medium'
                         : 'border-[#3f4037] bg-[#22231e] text-muted hover:border-line hover:text-[#d6d4c5]'
                     }`}
                   >
-                    <span className="text-xs">{avatar.icon}</span>
+                    <span className="text-sm">{avatar.icon}</span>
                     <span className="truncate">{avatar.name}</span>
                   </button>
                 );
@@ -187,7 +189,7 @@ export default function ContactModal({ isOpen, onClose }) {
           </div>
 
           {/* Step 3: Message Editor & Constraints */}
-          <div className="space-y-3 border-t border-[#35362e] pt-3">
+          <div className="space-y-3.5 border-t border-[#35362e] pt-3">
             
             {/* Recipient */}
             <div>
@@ -195,7 +197,7 @@ export default function ContactModal({ isOpen, onClose }) {
                 <span>TO:</span>
                 <span className="text-lime">VERIFIED INBOX</span>
               </div>
-              <div className="mt-1 border border-[#3e4037] bg-[#171815] px-2.5 py-1.5 font-mono text-[10px] text-yellow">
+              <div className="mt-1 border border-[#3e4037] bg-[#171815] px-3 py-2 font-mono text-[11px] text-yellow">
                 {contact.email}
               </div>
             </div>
@@ -214,7 +216,7 @@ export default function ContactModal({ isOpen, onClose }) {
                 maxLength={MAX_SUBJECT_LENGTH}
                 onChange={(e) => setSubject(e.target.value)}
                 placeholder="Subject line..."
-                className="mt-1 w-full border border-line bg-[#161714] px-2.5 py-1.5 font-mono text-[11px] text-ink placeholder:text-[#6a685b] focus:border-yellow focus:bg-[#1f201b] focus:outline-none"
+                className="mt-1 w-full border border-line bg-[#161714] px-3 py-2 font-mono text-[16px] sm:text-sm text-ink placeholder:text-[#6a685b] focus:border-yellow focus:bg-[#1f201b] focus:outline-none"
               />
             </div>
 
@@ -232,13 +234,13 @@ export default function ContactModal({ isOpen, onClose }) {
                 maxLength={MAX_BODY_LENGTH}
                 onChange={(e) => setBody(e.target.value)}
                 placeholder="Write your note here..."
-                className="mt-1 w-full resize-none border border-line bg-[#161714] p-2.5 font-mono text-[10px] leading-relaxed text-ink placeholder:text-[#6a685b] focus:border-yellow focus:bg-[#1f201b] focus:outline-none"
+                className="mt-1 w-full resize-none border border-line bg-[#161714] p-3 font-mono text-[16px] sm:text-sm leading-relaxed text-ink placeholder:text-[#6a685b] focus:border-yellow focus:bg-[#1f201b] focus:outline-none"
               />
             </div>
           </div>
 
           {/* Live Mailto Budget Meter */}
-          <div className="mt-3 border border-[#32332c] bg-[#181916] p-2">
+          <div className="mt-3 border border-[#32332c] bg-[#181916] p-2.5">
             <div className="flex items-center justify-between font-mono text-[8px]">
               <span className="flex items-center gap-1 text-muted">
                 URL ENCODED BUDGET:
@@ -247,7 +249,7 @@ export default function ContactModal({ isOpen, onClose }) {
                 {encodedLength} / {SAFE_URL_BUDGET} BYTES ({budgetRatio}%)
               </span>
             </div>
-            <div className="mt-1 h-1.5 w-full bg-[#272822] overflow-hidden">
+            <div className="mt-1.5 h-1.5 w-full bg-[#272822] overflow-hidden">
               <div
                 className={`h-full transition-all duration-300 ${
                   budgetRatio > 90 ? 'bg-pink' : budgetRatio > 70 ? 'bg-yellow' : 'bg-lime'
@@ -255,19 +257,19 @@ export default function ContactModal({ isOpen, onClose }) {
                 style={{ width: `${budgetRatio}%` }}
               />
             </div>
-            <p className="mt-1 m-0 font-mono text-[7px] text-[#787669]">
+            <p className="mt-1.5 m-0 font-mono text-[7px] text-[#787669]">
               Strictly budgeted within browser mailto limits to prevent truncation on mobile and desktop email clients.
             </p>
           </div>
 
         </div>
 
-        {/* Bottom Actions Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-line bg-[#252621] px-4 py-3">
+        {/* Bottom Actions Bar: wrap and stack nicely on mobile */}
+        <div className="flex flex-col gap-2.5 border-t border-line bg-[#252621] px-3.5 py-3 min-[440px]:flex-row min-[440px]:items-center min-[440px]:justify-between">
           <button
             type="button"
             onClick={handleCopy}
-            className="inline-flex items-center gap-1.5 border border-line bg-surface px-2.5 py-2 font-mono text-[9px] text-[#dedccd] transition-colors hover:border-[#66675b] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+            className="inline-flex min-h-[44px] w-full items-center justify-center gap-1.5 border border-line bg-surface px-3 py-2 font-mono text-[9px] text-[#dedccd] transition-colors hover:border-[#66675b] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow min-[440px]:w-auto"
           >
             {copied ? (
               <>
@@ -288,7 +290,7 @@ export default function ContactModal({ isOpen, onClose }) {
               // Delay close slightly so browser registers link click
               setTimeout(onClose, 400);
             }}
-            className={`inline-flex items-center gap-2 border px-3 py-2 font-mono text-[9px] font-medium tracking-wide transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-yellow ${
+            className={`inline-flex min-h-[44px] w-full items-center justify-center gap-2 border px-3.5 py-2 font-mono text-[9px] font-medium tracking-wide transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-yellow min-[440px]:w-auto ${
               isBudgetSafe
                 ? 'border-pink bg-pink text-surface hover:shadow-[2px_2px_0_#f9267270]'
                 : 'pointer-events-none opacity-50 border-line bg-focus text-muted'

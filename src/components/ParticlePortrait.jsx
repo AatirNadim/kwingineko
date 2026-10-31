@@ -3,10 +3,15 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 /**
  * ParticlePortrait
  *
- * Implements a cursor-reactive particle dispersion matrix for Aatir Nadim's portrait.
- * Samples /assets/aatir-portrait.png onto a high-density raster grid of rectangular
- * phosphor-like cells. Hovering or moving the pointer pushes particles radially outward
+ * Implements a cursor-reactive and touch-interactive particle dispersion matrix for Aatir Nadim's portrait.
+ * Samples /assets/aatir-portrait.png onto a calibrated raster grid of rectangular
+ * phosphor-like cells. Hovering or touch dragging pushes particles radially outward
  * with organic scatter, revealing the underlying photographic portrait underneath.
+ *
+ * Mobile-optimized:
+ * - touch-pan-y enabled so touch interactions do not block vertical page scroll.
+ * - Dynamic column calibration maintains silky 60fps across low-power mobile viewports.
+ * - Touch coordinates tracked relative to canvas bounding box with impulse waves on touch start.
  */
 export default function ParticlePortrait({ className = '' }) {
   const containerRef = useRef(null);
@@ -14,7 +19,7 @@ export default function ParticlePortrait({ className = '' }) {
   const imageRef = useRef(null);
 
   const [isLoaded, setIsLoaded] = useState(false);
-  const [coords, setCoords] = useState({ x: 0, y: 0, active: false });
+  const [coords, setCoords] = useState({ x: 0, y: 0, active: false, isTouch: false });
   const [particleCount, setParticleCount] = useState(0);
 
   // Animation and physics state stored in refs to avoid React re-render overhead
@@ -57,8 +62,11 @@ export default function ParticlePortrait({ className = '' }) {
     const imgData = offCtx.getImageData(0, 0, canvasWidth, canvasHeight);
     const data = imgData.data;
 
-    // Grid resolution: target ~54 columns by 68 rows (~3,670 particles)
-    const cols = Math.max(42, Math.min(60, Math.round(canvasWidth / 4.1)));
+    // Grid resolution: calibrate columns smoothly based on canvas width:
+    // target ~38-42 cols on mobile (<240px) up to ~56-60 cols on desktop
+    const cols = canvasWidth < 240
+      ? Math.max(36, Math.min(42, Math.round(canvasWidth / 5.2)))
+      : Math.max(42, Math.min(60, Math.round(canvasWidth / 4.1)));
     const rows = Math.round(cols * 1.25);
     const stepX = canvasWidth / cols;
     const stepY = canvasHeight / rows;
@@ -163,7 +171,7 @@ export default function ParticlePortrait({ className = '' }) {
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
-        // 1. Cursor repulsion
+        // 1. Cursor / Touch repulsion
         if (pointer.active) {
           const dx = p.x - pointer.x;
           const dy = p.y - pointer.y;
@@ -293,6 +301,7 @@ export default function ParticlePortrait({ className = '' }) {
 
     const updateDimensions = () => {
       const rect = container.getBoundingClientRect();
+      if (!rect.width) return;
       const width = Math.round(rect.width);
       // Keep strict 4:5 aspect ratio
       const height = Math.round(width * 1.25);
@@ -319,11 +328,19 @@ export default function ParticlePortrait({ className = '' }) {
     });
     resizeObserver.observe(container);
 
-    return () => resizeObserver.disconnect();
+    window.addEventListener('resize', updateDimensions);
+    window.addEventListener('orientationchange', updateDimensions);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', updateDimensions);
+      window.removeEventListener('orientationchange', updateDimensions);
+    };
   }, [initParticles]);
 
-  // Pointer event handlers
+  // Pointer event handlers (Mouse / Stylus)
   const handlePointerMove = (e) => {
+    if (e.pointerType === 'touch') return; // Handled by touch events
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
@@ -334,7 +351,7 @@ export default function ParticlePortrait({ className = '' }) {
     stateRef.current.pointer.y = y;
     stateRef.current.pointer.active = true;
 
-    setCoords({ x: Math.round(x), y: Math.round(y), active: true });
+    setCoords({ x: Math.round(x), y: Math.round(y), active: true, isTouch: false });
 
     // Wake up physics loop if asleep
     if (stateRef.current.isSleeping) {
@@ -346,7 +363,7 @@ export default function ParticlePortrait({ className = '' }) {
     stateRef.current.pointer.active = false;
     stateRef.current.pointer.x = -9999;
     stateRef.current.pointer.y = -9999;
-    setCoords({ x: 0, y: 0, active: false });
+    setCoords({ x: 0, y: 0, active: false, isTouch: false });
   };
 
   const handleClick = (e) => {
@@ -369,6 +386,61 @@ export default function ParticlePortrait({ className = '' }) {
     stateRef.current.isSleeping = false;
   };
 
+  // Touch event handlers (Touchscreen devices)
+  // CRITICAL: We do not call e.preventDefault() so touch-pan-y can scroll down freely
+  const handleTouchStart = (e) => {
+    if (!e.touches || e.touches.length === 0) return;
+    const touch = e.touches[0];
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+
+    stateRef.current.pointer.x = x;
+    stateRef.current.pointer.y = y;
+    stateRef.current.pointer.active = true;
+    stateRef.current.isSleeping = false;
+
+    // Touch tap shockwave impulse
+    stateRef.current.shockwaves.push({
+      x,
+      y,
+      radius: 6,
+      maxRadius: stateRef.current.width * 0.7,
+      speed: 7,
+      intensity: 14,
+    });
+
+    setCoords({ x: Math.round(x), y: Math.round(y), active: true, isTouch: true });
+  };
+
+  const handleTouchMove = (e) => {
+    if (!e.touches || e.touches.length === 0) return;
+    const touch = e.touches[0];
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+
+    stateRef.current.pointer.x = x;
+    stateRef.current.pointer.y = y;
+    stateRef.current.pointer.active = true;
+    if (stateRef.current.isSleeping) {
+      stateRef.current.isSleeping = false;
+    }
+
+    setCoords({ x: Math.round(x), y: Math.round(y), active: true, isTouch: true });
+  };
+
+  const handleTouchEnd = () => {
+    stateRef.current.pointer.active = false;
+    stateRef.current.pointer.x = -9999;
+    stateRef.current.pointer.y = -9999;
+    setCoords({ x: 0, y: 0, active: false, isTouch: false });
+  };
+
   return (
     <div className={`relative flex flex-col ${className}`}>
       {/* Monokai Terminal Frame */}
@@ -384,19 +456,24 @@ export default function ParticlePortrait({ className = '' }) {
             <span className="font-semibold text-ink">AATIR / 001</span>
           </div>
           <div className="flex items-center gap-2 text-[7px] text-[#88846f]">
-            <span className="text-lime">{coords.active ? 'INTERACTION' : 'LIVE MESH'}</span>
+            <span className="text-lime">{coords.active ? (coords.isTouch ? 'TOUCH DISPERSE' : 'INTERACTION') : 'LIVE MESH'}</span>
             <span className="hidden sm:inline text-[#5d5e50]">|</span>
             <span className="hidden sm:inline text-yellow">{particleCount ? `${particleCount} PTS` : 'LOADING'}</span>
           </div>
         </div>
 
         {/* Interactive Viewport (Canvas + Underlayer Reveal) */}
+        {/* touch-pan-y allows unhindered vertical page scrolling on mobile */}
         <div
           ref={containerRef}
           onPointerMove={handlePointerMove}
           onPointerLeave={handlePointerLeave}
           onClick={handleClick}
-          className="relative aspect-[4/5] w-full cursor-crosshair overflow-hidden bg-[#24251f] select-none touch-none"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchEnd}
+          className="relative aspect-[4/5] w-full cursor-crosshair overflow-hidden bg-[#24251f] select-none touch-pan-y"
         >
           {/* Underlayer photographic portrait: calibrated contrast revealed through the dispersion hole */}
           <img
@@ -441,7 +518,9 @@ export default function ParticlePortrait({ className = '' }) {
         <div className="mt-1.5 flex items-center justify-between px-1 font-mono text-[7px] tracking-[0.4px] text-[#88846f]">
           <div className="flex items-center gap-2">
             <span className="text-[#aaa897]">
-              {coords.active ? `X:${String(coords.x).padStart(3, '0')} Y:${String(coords.y).padStart(3, '0')}` : 'CURSOR: HOVER'}
+              {coords.active
+                ? `${coords.isTouch ? 'TOUCH' : 'CURSOR'}: X:${String(coords.x).padStart(3, '0')} Y:${String(coords.y).padStart(3, '0')}`
+                : 'CURSOR: HOVER / TOUCH'}
             </span>
           </div>
           <div className="text-right text-pink font-medium">
