@@ -3,6 +3,7 @@ export const navigation = [
   ['work', '02', 'Selected work'],
   ['experience', '03', 'Experience'],
   ['expertise', '04', 'Expertise'],
+  ['contact', '05', 'Contact'],
 ];
 
 export const projects = [
@@ -75,3 +76,57 @@ export const expertise = [
   ['OBSERVABILITY', 'OpenTelemetry · Grafana · Prometheus · Loki · CloudWatch'],
   ['SECURITY & QUALITY', 'OAuth/OIDC · IAM · dependency hygiene · testing'],
 ];
+
+export const contact = {
+  email: 'aatir.nadim@gmail.com',
+  availability: 'OPEN TO OPPORTUNITIES',
+  responseWindow: '< 24-48h',
+  location: 'UTC +05:30 (IST)',
+  note: 'My inbox is always open for backend/platform roles, architecture inquiries, or open-source collaboration.',
+  templates: [
+    {
+      id: 'opportunity',
+      label: '💼 Engineering Role',
+      subject: 'Engineering Opportunity / Role Inquiry',
+      body: 'Hi Aatir,\n\nI came across your portfolio and wanted to connect regarding a software engineering role at [Company]. We are currently looking for someone with your backend and infrastructure background.\n\nBest regards,\n[Your Name]',
+    },
+    {
+      id: 'systems',
+      label: '⚡ Systems Collab',
+      subject: 'Question on Systems & Infrastructure',
+      body: 'Hi Aatir,\n\nI was checking out your work on plan-parse / getMe / Window and wanted to reach out regarding [topic/project].\n\nWould love to exchange thoughts!\n\nBest,\n[Your Name]',
+    },
+    {
+      id: 'casual',
+      label: '☕ Say Hello',
+      subject: 'Greetings from a fellow engineer',
+      body: 'Hi Aatir,\n\nLoved the portfolio, the interactive particle portrait, and the companion cat! Just wanted to drop a quick hello.\n\nCheers,\n[Your Name]',
+    },
+  ],
+  avatars: [
+    {
+      id: 'wizard-cat',
+      name: 'Wizard Cat',
+      icon: '🐱',
+      stamp: '[SENDER COMPANION: WIZARD CAT // 🧙‍♂️✧]',
+    },
+    {
+      id: 'terminal-hacker',
+      name: 'Terminal Op',
+      icon: '⚡',
+      stamp: '[SENDER BADGE: TERMINAL OPERATOR // >_]',
+    },
+    {
+      id: 'bitcask-dragon',
+      name: 'Bitcask Dragon',
+      icon: '🐉',
+      stamp: '[SENDER SIGIL: ARCHIVE DRAGON // 🐉]',
+    },
+    {
+      id: 'none',
+      name: 'Plain (No Stamp)',
+      icon: '✕',
+      stamp: '',
+    },
+  ],
+};
