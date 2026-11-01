@@ -33,7 +33,7 @@ export default function PersonalSidebar({ followEnabled, onToggleFollow, catStat
       <DeskCompanion followEnabled={followEnabled} onToggleFollow={onToggleFollow} catStatus={catStatus}/>
       <RecreationBayWidget onLaunchGame={onLaunchGame} activeGame={activeGame}/>
       <SocialLinks/>
-      <div className="flex items-center gap-[10px] border border-dashed border-[#5d5e50] px-3 py-[11px] font-mono text-[9px] tracking-[.5px] text-lime"><span className="text-lg">◎</span><span>BUILT IN THE OPEN<small className="mt-[3px] block text-[7px] text-[#aaa897]">CURIOUS BY DEFAULT</small></span></div>
+      <div className="flex items-center gap-[10px] border border-dashed border-[#5d5e50] px-3 py-[11px] font-mono text-[10px] tracking-wide text-lime"><span className="text-lg">◎</span><span>BUILT IN THE OPEN<small className="mt-[3px] block text-[9.5px] tracking-wider text-[#bbb8a5]">CURIOUS BY DEFAULT</small></span></div>
     </aside>
   );
 }

@@ -12,19 +12,19 @@ export default function ExpertiseSection() {
             className="grid grid-cols-1 gap-1 border-b border-line/80 px-1 py-3 min-[440px]:grid-cols-[27px_120px_1fr] min-[440px]:items-center min-[440px]:gap-2"
           >
             <div className="flex items-center gap-2 min-[440px]:contents">
-              <span className="font-mono text-[8.5px] text-violet sm:text-[9px]">0{i + 1}</span>
-              <span className="font-mono text-[8.5px] font-medium text-yellow sm:text-[9px]">{group}</span>
+              <span className="font-mono text-[10px] font-semibold text-violet sm:text-[10.5px]">0{i + 1}</span>
+              <span className="font-mono text-[10px] font-semibold text-yellow sm:text-[10.5px]">{group}</span>
             </div>
-            <span className="text-[10px] leading-[1.5] text-[#d6d4c5] sm:text-[11px]">{items}</span>
+            <span className="text-[11px] leading-[1.6] text-[#dedccd] sm:text-xs">{items}</span>
           </div>
         ))}
       </div>
       <div className="relative mt-5 border-l-2 border-lime bg-surface py-3 pl-7 pr-3 sm:pl-[35px] sm:pr-[17px]">
         <span className="absolute left-2.5 top-0 font-display text-[32px] text-lime sm:left-3 sm:top-1 sm:text-[34px]">“</span>
-        <p className="m-0 font-display text-[12px] font-medium leading-[1.6] text-[#e7e5d7] sm:text-[13px]">
+        <p className="m-0 font-display text-[13px] font-medium leading-[1.6] text-[#e7e5d7] sm:text-sm">
           Start with the evidence. Map the edges. Make the change understandable for the next person, too.
         </p>
-        <span className="mt-2 block font-mono text-[7.5px] tracking-[.55px] text-[#a5a392] sm:text-[8px]">
+        <span className="mt-2 block font-mono text-[9.5px] tracking-wider text-[#b5b3a2] sm:text-[10px]">
           A WORKING PRINCIPLE
         </span>
       </div>

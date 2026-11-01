@@ -13,12 +13,19 @@ A dark, compact personal computing environment evoking Unix workstations, retro 
   - Selected / Focus Surfaces: `#414339` (Active tabs, keyboard focus outlines)
   - Primary Text: `#f8f8f2` (Headings, primary body)
   - Secondary Text: `#d6d4c5` / `#c8c6b7` (Readable descriptions)
-  - Subdued Metadata: `#b4b19e` / `#88846f` (System tags, telemetry labels)
+  - Subdued Metadata: `#b4b19e` / `#88846f` / `#9c9987` (System tags, telemetry labels)
 - **10% Purposeful Syntax Accents**:
   - Monokai Pink (`#f92672`): Primary actions, active directory markers, critical accents
   - Monokai Lime (`#a6e22e`): Positive status pings, code highlights, verified links
   - Monokai Yellow (`#e6db74`): Featured badges, timestamps, quotes, focus rings
   - Monokai Violet (`#ae81ff`): Section numbers, metadata tags, telemetry streams
+
+### Typography System: Authentic Engineering Superfamily
+- **Monospace Engine (`font-mono`)**: `IBM Plex Mono` (400, 500, 600, 700). Used for all chrome, telemetry, headers, directory indices, buttons, table entries, and DOS arcade interfaces. Authentic computing pedigree with zero synthetic bold smudging.
+- **Body & Substantive Copy (`font-sans`)**: `IBM Plex Sans` (400, 500, 600, 700). Native superfamily partner sharing vertical metrics and stroke architecture with IBM Plex Mono. Ensures effortless legibility on narrative bios, project descriptions, and experience notes.
+- **Display Headings (`font-display`)**: `IBM Plex Sans` with `Noto Sans Devanagari` and `Noto Sans JP` fallbacks. Eliminates script-fallback baseline glitches during multilingual intro greetings (e.g., Hindi "नमस्ते" and Japanese "こんにちは").
+- **Micro-Scale Accessible Floor**: Monospace metadata is clamped to a minimum accessible floor of `9.5px`–`10px` with uppercase letter spacing (`tracking-wider` / `tracking-widest`), preventing antialiasing stroke dissolution on dark canvases.
+- **FOUT/FOIT Mitigation**: All font families are preconnected via `<link rel="preconnect">` in `index.html` with `display=swap`, removing render-blocking `@import` overhead.
 
 ---
 

@@ -9,9 +9,9 @@ export default {
         yellow: '#e6db74', violet: '#ae81ff',
       },
       fontFamily: {
-        display: ['Space Grotesk', 'sans-serif'],
-        mono: ['DM Mono', 'monospace'],
-        sans: ['DM Sans', 'sans-serif'],
+        display: ['IBM Plex Sans', 'Noto Sans Devanagari', 'Noto Sans JP', 'sans-serif'],
+        mono: ['IBM Plex Mono', 'monospace'],
+        sans: ['IBM Plex Sans', 'sans-serif'],
       },
       boxShadow: { panel: '3px 3px 0 rgb(0 0 0 / 20%)' },
     },

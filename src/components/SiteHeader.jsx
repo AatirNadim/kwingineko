@@ -12,7 +12,7 @@ export default function SiteHeader({ time, navOpen, onToggleNavigation, onHome }
             <span className="block font-mono text-[10px] font-semibold tracking-[1px] text-ink sm:text-xs">
               AATIR NADIM
             </span>
-            <span className="mt-[2px] block truncate font-mono text-[7.5px] font-normal tracking-[.4px] text-muted sm:text-[9px]">
+            <span className="mt-[2px] block truncate font-mono text-[9.5px] font-normal tracking-[.5px] text-muted sm:text-[10px]">
               PERSONAL SITE / ENGINEERING NOTES
             </span>
           </div>
@@ -30,17 +30,17 @@ export default function SiteHeader({ time, navOpen, onToggleNavigation, onHome }
           {navOpen ? <X size={20} className="text-pink" /> : <Menu size={20} />}
         </button>
 
-        <div className="hidden items-center gap-2 font-mono text-[10px] tracking-[.55px] text-[#d2d0bf] lg:flex">
+        <div className="hidden items-center gap-2 font-mono text-[10.5px] tracking-[.6px] text-[#d2d0bf] lg:flex">
           <span className="h-[7px] w-[7px] rounded-full bg-lime shadow-[0_0_9px_#a6e22e77]"/> SYSTEMS THINKING / ON PURPOSE
         </div>
       </div>
 
       {/* Sub-bar: clean wrapping & responsive text for 320px+ viewports */}
       <div className="flex min-h-[36px] flex-wrap items-center justify-between gap-x-2 gap-y-1 bg-gradient-to-r from-[#292a25] to-[#22231f] px-3 py-1.5 sm:h-[39px] sm:px-6 sm:py-0">
-        <span className="truncate font-mono text-[7.5px] tracking-[.35px] text-[#cbc9b9] min-[360px]:text-[8px] min-[420px]:tracking-[.45px] sm:text-[10px]">
+        <span className="truncate font-mono text-[9px] tracking-[.4px] text-[#cbc9b9] min-[360px]:text-[9.5px] min-[420px]:tracking-[.5px] sm:text-[10.5px]">
           SOFTWARE ENGINEER <b className="px-1 text-pink">·</b> BACKEND / CLOUD / SYSTEMS
         </span>
-        <span className="ml-auto font-mono text-[7.5px] tracking-[.55px] text-violet min-[360px]:text-[8px] sm:text-[10px]">
+        <span className="ml-auto font-mono text-[9px] tracking-[.55px] text-violet min-[360px]:text-[9.5px] sm:text-[10.5px]">
           {time.toLocaleDateString('en', { weekday: 'short', day: '2-digit', month: 'short' }).toUpperCase()}
         </span>
       </div>

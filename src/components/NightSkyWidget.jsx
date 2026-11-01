@@ -9,7 +9,7 @@ export default function NightSkyWidget() {
         <span className="rotate-[-22deg] text-[54px] leading-none text-yellow drop-shadow-[0_0_24px_#e6db7475]">◐</span>
         <span className="absolute left-[47px] top-[23px] text-[10px] text-violet">✦</span><span className="absolute right-[48px] top-[37px] text-[23px] text-lime">·</span><span className="absolute bottom-6 right-[66px] text-[11px] text-yellow">✧</span>
       </div>
-      <div className="flex items-center justify-between px-[9px] pt-[10px]"><b className="font-mono text-[9px] text-[#e9e7d8]">TAKE A BREATH</b><span className="font-mono text-[7px] text-[#a7a594]">ONE THING AT A TIME</span></div>
+      <div className="flex items-center justify-between px-[9px] pt-[10px]"><b className="font-mono text-[10px] text-[#e9e7d8]">TAKE A BREATH</b><span className="font-mono text-[9px] tracking-wide text-[#b5b3a3]">ONE THING AT A TIME</span></div>
     </PanelFrame>
   );
 }

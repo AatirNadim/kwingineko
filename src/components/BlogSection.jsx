@@ -98,7 +98,7 @@ export default function BlogSection() {
         </div>
         {/* Top Control Bar */}
         <div className="mb-4 flex flex-col gap-2.5 border border-line bg-[#1e1f1c] p-2.5 sm:p-3 shadow-panel">
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#36372f] pb-2 font-mono text-[8.5px] sm:text-[9px]">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#36372f] pb-2 font-mono text-[10px] sm:text-[10.5px]">
             <div className="flex items-center gap-2 text-muted">
               <BookOpen size={13} className="text-pink" />
               <span className="text-[#c8c6b7]">DISPATCH LOG</span>
@@ -118,7 +118,7 @@ export default function BlogSection() {
 
             {/* Tactile Carousel Controls */}
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1 font-mono text-[9px] text-[#88846f]">
+              <div className="flex items-center gap-1 font-mono text-[10px] text-[#9c9987]">
                 <span className="text-yellow font-semibold">[{currentNumber}</span>
                 <span>/</span>
                 <span>{totalNumber}]</span>
@@ -129,7 +129,7 @@ export default function BlogSection() {
                   type="button"
                   onClick={handlePrev}
                   aria-label="Previous article"
-                  className="inline-flex min-h-[44px] min-w-[44px] sm:min-h-[34px] sm:min-w-[34px] items-center justify-center border border-[#3f4037] bg-[#22231e] font-mono text-[9px] text-[#c8c6b7] transition hover:border-pink hover:bg-focus hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+                  className="inline-flex min-h-[44px] min-w-[44px] sm:min-h-[34px] sm:min-w-[34px] items-center justify-center border border-[#3f4037] bg-[#22231e] font-mono text-[10px] text-[#c8c6b7] transition hover:border-pink hover:bg-focus hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
                 >
                   <ChevronLeft size={14} className="text-pink" />
                   <span className="sr-only sm:not-sr-only sm:pr-1">PREV</span>
@@ -138,7 +138,7 @@ export default function BlogSection() {
                   type="button"
                   onClick={handleNext}
                   aria-label="Next article"
-                  className="inline-flex min-h-[44px] min-w-[44px] sm:min-h-[34px] sm:min-w-[34px] items-center justify-center border border-[#3f4037] bg-[#22231e] font-mono text-[9px] text-[#c8c6b7] transition hover:border-lime hover:bg-focus hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+                  className="inline-flex min-h-[44px] min-w-[44px] sm:min-h-[34px] sm:min-w-[34px] items-center justify-center border border-[#3f4037] bg-[#22231e] font-mono text-[10px] text-[#c8c6b7] transition hover:border-lime hover:bg-focus hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
                 >
                   <span className="sr-only sm:not-sr-only sm:pl-1">NEXT</span>
                   <ChevronRight size={14} className="text-lime" />
@@ -148,7 +148,7 @@ export default function BlogSection() {
           </div>
 
           {/* Quick Hub Note */}
-          <div className="flex flex-wrap items-center justify-between gap-1 text-[8.5px] font-mono text-[#88846f]">
+          <div className="flex flex-wrap items-center justify-between gap-1 text-[9.5px] font-mono text-[#9c9987]">
             <span>USE [← / →] KEYS OR SWIPE TO BROWSE</span>
             <span className="text-violet">TOPIC: {current.category.toUpperCase()}</span>
           </div>
@@ -176,7 +176,7 @@ export default function BlogSection() {
                   />
                 ) : (
                   <div className="flex h-full w-full flex-col justify-between p-3 font-mono">
-                    <div className="flex items-center justify-between text-[8px] text-muted">
+                    <div className="flex items-center justify-between text-[9.5px] text-muted">
                       <span className="flex items-center gap-1 text-pink">
                         <Terminal size={11} />
                         DISPATCH_{currentNumber}
@@ -185,28 +185,28 @@ export default function BlogSection() {
                     </div>
 
                     <div className="my-auto text-center">
-                      <div className="font-mono text-[10px] tracking-wider text-yellow">
+                      <div className="font-mono text-[10.5px] tracking-wider text-yellow">
                         [ TECHTOM ARCHIVE ]
                       </div>
-                      <div className="mt-1 text-[9px] text-[#a9a796]">
+                      <div className="mt-1 text-[10px] text-[#a9a796]">
                         {current.category}
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between border-t border-[#292a23] pt-1 text-[7.5px] text-[#616254]">
+                    <div className="flex items-center justify-between border-t border-[#292a23] pt-1 text-[9px] text-[#717264]">
                       <span>FORMAT: MD</span>
                       <span>HASHNODE SYNC</span>
                     </div>
                   </div>
                 )}
                 {/* Monokai corner highlight */}
-                <div className="pointer-events-none absolute right-1 top-1 font-mono text-[8px] text-yellow/80">
+                <div className="pointer-events-none absolute right-1 top-1 font-mono text-[9.5px] text-yellow/80">
                   #{currentNumber}
                 </div>
               </div>
 
               {/* Quick Card Telemetry */}
-              <div className="flex flex-wrap items-center justify-between gap-1 border border-[#2d2e26] bg-[#191a16] px-2.5 py-1.5 font-mono text-[8.5px]">
+              <div className="flex flex-wrap items-center justify-between gap-1 border border-[#2d2e26] bg-[#191a16] px-2.5 py-1.5 font-mono text-[9.5px]">
                 <div className="flex items-center gap-1 text-[#b4b19e]">
                   <Calendar size={11} className="text-violet" />
                   <span>{current.date}</span>
@@ -222,7 +222,7 @@ export default function BlogSection() {
             <div className="flex flex-col justify-between">
               <div>
                 {/* Meta row */}
-                <div className="flex flex-wrap items-center gap-2 font-mono text-[9px]">
+                <div className="flex flex-wrap items-center gap-2 font-mono text-[10px]">
                   <span className="border border-pink/40 bg-pink/10 px-2 py-0.5 text-pink">
                     {current.category}
                   </span>
@@ -249,14 +249,14 @@ export default function BlogSection() {
 
                 {/* Tags Pill List */}
                 <div className="mt-4 flex flex-wrap items-center gap-1.5">
-                  <span className="mr-1 inline-flex items-center gap-0.5 font-mono text-[8.5px] text-[#88846f]">
+                  <span className="mr-1 inline-flex items-center gap-0.5 font-mono text-[9.5px] text-[#9c9987]">
                     <Hash size={10} className="text-violet" />
                     TAGS:
                   </span>
                   {current.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="border border-[#38392f] bg-[#22231e] px-2 py-0.5 font-mono text-[8.5px] text-[#b4b19e]"
+                      className="border border-[#38392f] bg-[#22231e] px-2 py-0.5 font-mono text-[9.5px] text-[#b4b19e]"
                     >
                       {tag}
                     </span>
@@ -270,7 +270,7 @@ export default function BlogSection() {
                   href={current.url}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="inline-flex min-h-[44px] items-center gap-2 border border-pink bg-pink px-4 py-2.5 font-mono text-[9.5px] font-semibold text-surface transition hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0_#f9267270] focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow sm:text-[10px]"
+                  className="inline-flex min-h-[44px] items-center gap-2 border border-pink bg-pink px-4 py-2.5 font-mono text-[10px] font-semibold text-surface transition hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0_#f9267270] focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow sm:text-[10.5px]"
                 >
                   <BookOpen size={13} />
                   <span>READ FULL DISPATCH</span>
@@ -281,7 +281,7 @@ export default function BlogSection() {
                   href="https://techtom.hashnode.dev/"
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="inline-flex min-h-[44px] items-center gap-1.5 border border-[#48493e] bg-[#22231e] px-3.5 py-2.5 font-mono text-[8.5px] text-[#cbc9b9] transition hover:border-line hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow sm:text-[9px]"
+                  className="inline-flex min-h-[44px] items-center gap-1.5 border border-[#48493e] bg-[#22231e] px-3.5 py-2.5 font-mono text-[9.5px] text-[#cbc9b9] transition hover:border-line hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow sm:text-[10px]"
                 >
                   <span>ALL POSTS ON TECHTOM</span>
                   <ExternalLink size={11} className="text-yellow" />
@@ -293,7 +293,7 @@ export default function BlogSection() {
 
         {/* Bottom Pagination Scrubber Track */}
         <div className="mt-3.5 border border-line bg-[#1e1f1c] p-2 sm:p-2.5">
-          <div className="mb-1.5 flex items-center justify-between font-mono text-[8px] text-[#88846f]">
+          <div className="mb-1.5 flex items-center justify-between font-mono text-[9.5px] text-[#9c9987]">
             <span>INDEX SELECTOR:</span>
             <span>{currentNumber} SELECTED</span>
           </div>
@@ -309,7 +309,7 @@ export default function BlogSection() {
                   onClick={() => setCurrentIndex(idx)}
                   aria-label={`Jump to article ${formattedIdx}: ${art.title}`}
                   aria-current={isActive ? 'true' : undefined}
-                  className={`inline-flex min-h-[44px] sm:min-h-[32px] flex-col items-center justify-center border px-1 py-1 font-mono text-[9px] transition ${
+                  className={`inline-flex min-h-[44px] sm:min-h-[32px] flex-col items-center justify-center border px-1 py-1 font-mono text-[10px] transition ${
                     isActive
                       ? 'border-pink bg-focus text-ink shadow-[2px_2px_0_#f9267240]'
                       : 'border-[#36372f] bg-[#22231e] text-[#88846f] hover:border-line hover:bg-focus hover:text-ink'

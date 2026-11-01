@@ -5,12 +5,12 @@ export default function Introduction({ onExplore }) {
   return (
     <section id="home" className="border-b border-line px-3 py-4 sm:px-[14px] sm:py-[18px] md:pl-5">
       {/* Section Header */}
-      <div className="flex items-center justify-between border-b border-[#35362e] pb-2.5 font-mono text-[10px] tracking-[1px] text-lime">
+      <div className="flex items-center justify-between border-b border-[#35362e] pb-2.5 font-mono text-[10.5px] tracking-wider text-lime">
         <div className="flex items-center gap-[10px]">
           <span className="h-px w-[22px] bg-lime" />
           A LITTLE ABOUT HOW I WORK
         </div>
-        <span className="hidden sm:inline font-mono text-[8px] tracking-wider text-[#88846f]">
+        <span className="hidden sm:inline font-mono text-[9.5px] tracking-wider text-[#9f9c89]">
           SYS.ID // 001
         </span>
       </div>
@@ -28,11 +28,11 @@ export default function Introduction({ onExplore }) {
           <div className="mt-[22px] flex flex-wrap items-center gap-3 sm:gap-[23px]">
             <button
               onClick={onExplore}
-              className="inline-flex min-h-[44px] items-center gap-2 border border-pink bg-pink px-3 py-2.5 font-mono text-[9px] tracking-[.35px] text-[#201e1d] font-semibold transition hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0_#f9267270] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow sm:gap-[15px] sm:px-[13px]"
+              className="inline-flex min-h-[44px] items-center gap-2 border border-pink bg-pink px-3 py-2.5 font-mono text-[10px] tracking-wide text-[#201e1d] font-semibold transition hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0_#f9267270] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow sm:gap-[15px] sm:px-[13px]"
             >
               EXPLORE SELECTED WORK <ArrowDownRight size={15} />
             </button>
-            <span className="font-mono text-[8px] leading-[1.8] tracking-[.55px] text-muted sm:text-[9px]">
+            <span className="font-mono text-[9.5px] leading-[1.8] tracking-wide text-muted sm:text-[10px]">
               Backend systems<br />Cloud platforms<br />Developer tooling
             </span>
           </div>
@@ -45,7 +45,7 @@ export default function Introduction({ onExplore }) {
       </div>
 
       {/* Footer Meter Strip */}
-      <div className="mt-[26px] flex flex-wrap items-center gap-2 sm:gap-3 font-mono text-[8.5px] tracking-[.4px] text-[#a7a494] sm:text-[9px]">
+      <div className="mt-[26px] flex flex-wrap items-center gap-2 sm:gap-3 font-mono text-[10px] tracking-wider text-[#bbb8a5] sm:text-[10.5px]">
         <span>BUILDING WITH INTENTION</span>
         <div className="flex items-center gap-[3px]">
           {[6, 11, 15, 9, 15, 11, 6, 9].map((height, i) => (

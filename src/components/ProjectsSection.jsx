@@ -14,8 +14,8 @@ export default function ProjectsSection() {
           >
             {/* Top metadata strip */}
             <div className="flex flex-wrap items-center gap-2 border-b border-[#36372f] pb-2.5">
-              <span className="font-mono text-[10px] font-bold text-pink">{project.number}</span>
-              <span className="font-mono text-[8.5px] uppercase tracking-wider text-muted sm:text-[9px]">{project.kind}</span>
+              <span className="font-mono text-[10.5px] font-bold text-pink">{project.number}</span>
+              <span className="font-mono text-[10px] uppercase tracking-wider text-muted">{project.kind}</span>
               <a
                 aria-label={`${project.name} repository on GitHub`}
                 href={project.href}
@@ -23,7 +23,7 @@ export default function ProjectsSection() {
                 rel="noreferrer"
                 className="ml-auto inline-flex min-h-[44px] min-w-[44px] items-center justify-end gap-1 -my-2.5 -mr-1 p-2 font-mono text-[10px] text-yellow transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
               >
-                <span className="hidden text-[9px] text-muted min-[440px]:inline">SOURCE</span>
+                <span className="hidden text-[10px] text-muted min-[440px]:inline">SOURCE</span>
                 <ArrowUpRight size={16} />
               </a>
             </div>
@@ -41,7 +41,7 @@ export default function ProjectsSection() {
                 {/* Lore callout */}
                 {project.lore && (
                   <div className="my-3 border-l-2 border-l-pink border-y border-r border-[#383a31] bg-[#1a1b17] p-2.5 sm:p-3">
-                    <div className="flex items-center gap-1.5 font-mono text-[8.5px] uppercase tracking-wider text-violet">
+                    <div className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-violet">
                       <span className="text-pink">✦</span>
                       <span>lore transmission</span>
                       <span className="text-[#656658]">//</span>
@@ -59,13 +59,13 @@ export default function ProjectsSection() {
                     {project.stack.map((item) => (
                       <span
                         key={item}
-                        className="border border-[#4e4f45] bg-[#292a25] px-2 py-0.5 font-mono text-[8.5px] text-[#d6d3c4] transition-colors hover:border-[#88846f] sm:text-[9px]"
+                        className="border border-[#4e4f45] bg-[#292a25] px-2 py-0.5 font-mono text-[10px] text-[#dedccd] transition-colors hover:border-[#88846f]"
                       >
                         {item}
                       </span>
                     ))}
                   </div>
-                  <span className="flex items-center gap-1.5 whitespace-nowrap font-mono text-[8.5px] text-[#a9a796] min-[480px]:ml-auto">
+                  <span className="flex items-center gap-1.5 whitespace-nowrap font-mono text-[10px] text-[#b8b5a3] min-[480px]:ml-auto">
                     <i className="h-1.5 w-1.5 rounded-full bg-lime shadow-[0_0_8px_#a6e22e77]" />
                     {project.status}
                   </span>
@@ -75,12 +75,12 @@ export default function ProjectsSection() {
               {/* Pixel art frame */}
               {project.image && (
                 <div className="group/art overflow-hidden border border-line bg-[#151613] shadow-panel">
-                  <div className="flex items-center justify-between border-b border-[#36372f] bg-[#1e1f1c] px-2 py-1 font-mono text-[8px] text-[#88846f]">
+                  <div className="flex items-center justify-between border-b border-[#36372f] bg-[#1e1f1c] px-2 py-1 font-mono text-[9.5px] text-[#9c9987]">
                     <span className="flex items-center gap-1.5">
                       <span className="h-1.5 w-1.5 rounded-full bg-lime shadow-[0_0_6px_#a6e22e88]" />
                       <span className="font-semibold tracking-wider text-[#d6d3c4]">{project.name.toUpperCase()}.PNG</span>
                     </span>
-                    <span className="text-[7.5px] tracking-wide text-muted">{project.status}</span>
+                    <span className="text-[9px] tracking-wider text-muted">{project.status}</span>
                   </div>
                   <div className="relative overflow-hidden bg-black/50">
                     <img
@@ -91,7 +91,7 @@ export default function ProjectsSection() {
                     />
                   </div>
                   {project.imageCaption && (
-                    <div className="border-t border-[#36372f] bg-[#1a1b17] px-2.5 py-1.5 font-mono text-[8px] leading-tight text-[#b4b19e]">
+                    <div className="border-t border-[#36372f] bg-[#1a1b17] px-2.5 py-1.5 font-mono text-[9.5px] leading-snug text-[#dedccd]">
                       <span className="text-violet mr-1">►</span>
                       {project.imageCaption}
                     </div>
