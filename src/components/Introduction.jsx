@@ -1,4 +1,4 @@
-import { ArrowDownRight } from 'lucide-react';
+import { ArrowDownRight, FileText, ExternalLink } from 'lucide-react';
 import ParticlePortrait from './ParticlePortrait.jsx';
 
 export default function Introduction({ onExplore }) {
@@ -25,13 +25,23 @@ export default function Introduction({ onExplore }) {
             I’m <span className="font-display text-lg font-bold text-pink sm:text-xl">Aatir</span> — a software engineer drawn to the spaces between services, infrastructure, and the people who rely on them. I trace data flows, investigate ambiguous behavior, and shape changes with compatibility, testing, and clear documentation in mind.
           </p>
 
-          <div className="mt-[22px] flex flex-wrap items-center gap-3 sm:gap-[23px]">
+          <div className="mt-[22px] flex flex-wrap items-center gap-3 sm:gap-[16px]">
             <button
               onClick={onExplore}
-              className="inline-flex min-h-[44px] items-center gap-2 border border-pink bg-pink px-3 py-2.5 font-mono text-[10px] tracking-wide text-surface font-semibold transition hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0_#f9267270] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow sm:gap-[15px] sm:px-[13px]"
+              className="inline-flex min-h-[44px] items-center gap-2 border border-pink bg-pink px-3 py-2.5 font-mono text-[10px] tracking-wide text-surface font-semibold transition hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0_#f9267270] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow sm:gap-[12px] sm:px-[13px]"
             >
               EXPLORE SELECTED WORK <ArrowDownRight size={15} />
             </button>
+            <a
+              href="/Aatir_Nadim_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-[44px] items-center gap-2 border border-[#48493e] bg-surface px-3 py-2.5 font-mono text-[10px] tracking-wide text-[#cbc9b9] font-semibold transition hover:border-yellow hover:text-yellow hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0_#e6db7450] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow sm:px-[13px]"
+            >
+              <FileText size={14} className="text-yellow" />
+              <span>RÉSUMÉ [PDF]</span>
+              <ExternalLink size={12} className="text-[#88846f]" />
+            </a>
             <span className="font-mono text-[9.5px] leading-[1.8] tracking-wide text-muted sm:text-[10px]">
               Backend systems<br />Cloud platforms<br />Developer tooling
             </span>

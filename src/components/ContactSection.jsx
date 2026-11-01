@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, Copy, Check, Send } from 'lucide-react';
+import { Mail, Copy, Check, Send, FileText, ExternalLink } from 'lucide-react';
 import SectionHeading from './SectionHeading.jsx';
 import { contact } from '../data/portfolio.js';
 
@@ -18,7 +18,7 @@ export default function ContactSection({ onOpenComposer }) {
 
   return (
     <section id="contact" className="scroll-mt-4 border-b border-line px-3 py-6 sm:px-[14px] sm:py-8 md:pl-5">
-      <SectionHeading index="07 / TRANSMISSION" title="Get in touch" aside="CHANNEL // DIRECT" />
+      <SectionHeading index="08 / TRANSMISSION" title="Get in touch" aside="CHANNEL // DIRECT" />
 
       <div className="grid grid-cols-1 gap-4 cq-split-contact">
         
@@ -80,6 +80,21 @@ export default function ContactSection({ onOpenComposer }) {
             <span className="font-mono text-[9.5px] leading-[1.7] text-muted sm:text-[10px]">
               Preset topics · avatar stamps · auto-budgeted mailto link
             </span>
+          </div>
+
+          {/* Quick Resume Link */}
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-[#35362e] pt-3 font-mono text-[9.5px] sm:text-[10px]">
+            <span className="text-muted">LOOKING FOR A FORMAL RESUME?</span>
+            <a
+              href="/Aatir_Nadim_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-[44px] sm:min-h-[36px] items-center gap-1.5 border border-[#48493e] bg-[#1a1b18] px-2.5 py-1 text-yellow transition-colors hover:border-yellow hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+            >
+              <FileText size={12} className="text-yellow" />
+              <span>DOWNLOAD RESUME (.PDF)</span>
+              <ExternalLink size={11} className="opacity-75" />
+            </a>
           </div>
         </div>
 
