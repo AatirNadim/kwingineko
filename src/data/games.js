@@ -1,0 +1,25 @@
+export const retroGames = [
+  {
+    id: 'doom',
+    title: 'DOOM (Shareware v1.9)',
+    year: '1993',
+    publisher: 'id Software',
+    bundleUrl: '/games/doom.jsdos',
+    genre: 'FIRST-PERSON SHOOTER',
+    loreTag: 'PHOBOS ANOMALY',
+    lore: 'When the Terraform state drifts, the pipeline burns red, and the Slack channel is screaming—grab a shotgun and clear out the hangar on Mars.',
+    telemetry: '640x400 @ 35FPS · SOUND BLASTER 16',
+    status: 'READY TO RUN',
+    rating: 'LEGENDARY SHAREWARE',
+    executable: 'DOOM.EXE',
+    size: '2.45 MB',
+    controls: [
+      { key: 'ARROWS / WASD', action: 'Move / Turn' },
+      { key: 'CTRL / L-CLICK', action: 'Fire weapon' },
+      { key: 'SPACE', action: 'Open doors / activate switches' },
+      { key: 'SHIFT', action: 'Run' },
+      { key: '1 - 7', action: 'Arsenal switch' },
+      { key: 'ESC', action: 'Menu / Pause' },
+    ],
+  },
+];
