@@ -80,6 +80,7 @@ export default function App() {
             onToggleFollow={() => setFollowCursor((prev) => !prev)}
             catStatus={catStatus}
             onLaunchGame={(game) => setActiveDosGame(game)}
+            activeGame={activeDosGame}
           />
         </div>
         <SiteFooter
@@ -93,6 +94,7 @@ export default function App() {
           isOpen={Boolean(activeDosGame)}
           game={activeDosGame}
           onClose={() => setActiveDosGame(null)}
+          onGameChange={(nextGame) => setActiveDosGame(nextGame)}
         />
       </div>
     </>

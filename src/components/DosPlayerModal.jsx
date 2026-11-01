@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { X, Maximize2, Minimize2, Terminal, ShieldAlert, RotateCcw } from 'lucide-react';
+import { X, Maximize2, Minimize2, Terminal, ShieldAlert, RotateCcw, Disc } from 'lucide-react';
+import { retroGames } from '../data/games.js';
 
 function loadJsDos() {
   return new Promise((resolve, reject) => {
@@ -36,12 +37,12 @@ function loadJsDos() {
         reject(new Error('window.Dos was not found after loading js-dos.js'));
       }
     };
-    script.onerror = (e) => reject(new Error('Failed to load js-dos runtime script'));
+    script.onerror = () => reject(new Error('Failed to load js-dos runtime script'));
     document.body.appendChild(script);
   });
 }
 
-export default function DosPlayerModal({ isOpen, onClose, game }) {
+export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) {
   const mountRef = useRef(null);
   const dosInstanceRef = useRef(null);
   const [bootState, setBootState] = useState('idle'); // 'idle' | 'loading' | 'ready' | 'error'
@@ -77,6 +78,16 @@ export default function DosPlayerModal({ isOpen, onClose, game }) {
     setReloadKey((k) => k + 1);
   }, [cleanupDos]);
 
+  const handleSwitchGame = useCallback(
+    async (nextGame) => {
+      if (nextGame.id === game?.id) return;
+      await cleanupDos();
+      onGameChange?.(nextGame);
+      setReloadKey((k) => k + 1);
+    },
+    [cleanupDos, game?.id, onGameChange]
+  );
+
   // Lock body scroll when modal is active
   useEffect(() => {
     if (!isOpen) return;
@@ -101,7 +112,7 @@ export default function DosPlayerModal({ isOpen, onClose, game }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, handleClose]);
 
-  // Boot emulator when modal opens
+  // Boot emulator when modal opens or game changes
   useEffect(() => {
     if (!isOpen || !game) return;
 
@@ -167,18 +178,18 @@ export default function DosPlayerModal({ isOpen, onClose, game }) {
     >
       <div
         ref={modalContainerRef}
-        className="flex max-h-[96vh] w-full max-w-[860px] flex-col border border-line bg-surface shadow-[8px_8px_0_rgba(0,0,0,0.5)]"
+        className="flex max-h-[96vh] w-full max-w-[860px] flex-col border border-line bg-surface shadow-[8px_8px_0_rgba(0,0,0,0.7)]"
       >
         {/* Retro Window Chrome Title Bar */}
         <div className="flex min-h-[44px] items-center justify-between border-b border-line bg-[#292a25] px-3 font-mono text-[9px] tracking-wider text-muted sm:px-4">
           <div className="flex min-w-0 items-center gap-2">
             <Terminal size={14} className="shrink-0 text-lime" />
             <span id="dos-player-title" className="truncate font-bold text-ink">
-              C:\GAMES\DOOM\{game.executable}
+              C:\GAMES\{game.cartridgeCode || game.id.toUpperCase()}\{game.executable}
             </span>
             <span className="hidden items-center gap-1.5 border border-[#3e4034] bg-[#1e1f1c] px-2 py-0.5 text-[8px] text-lime sm:inline-flex">
               <span className="h-1.5 w-1.5 rounded-full bg-lime shadow-[0_0_6px_#a6e22e]" />
-              {bootState === 'loading' ? 'BOOTING...' : 'RUNNING (60 FPS)'}
+              {bootState === 'loading' ? 'BOOTING...' : 'RUNNING (WASM)'}
             </span>
           </div>
 
@@ -213,6 +224,35 @@ export default function DosPlayerModal({ isOpen, onClose, game }) {
           </div>
         </div>
 
+        {/* In-Player ROM Quick-Switcher Strip */}
+        <div className="flex items-center justify-between border-b border-[#2d2e27] bg-[#1b1c18] px-3 py-1.5 font-mono text-[8px] text-muted overflow-x-auto gap-2">
+          <span className="shrink-0 flex items-center gap-1 text-[#88846f]">
+            <Disc size={11} className="text-yellow" />
+            <span>SWITCH ROM:</span>
+          </span>
+          <div className="flex items-center gap-1">
+            {retroGames.map((g) => {
+              const isCurrent = g.id === game.id;
+              return (
+                <button
+                  key={g.id}
+                  type="button"
+                  onClick={() => handleSwitchGame(g)}
+                  className={`px-2 py-1 border text-[8px] transition-all font-mono min-h-[28px] ${
+                    isCurrent
+                      ? 'border-lime bg-lime/20 text-lime font-bold shadow-[0_0_6px_#a6e22e30]'
+                      : 'border-[#383a30] bg-[#22231e] text-[#a09e8e] hover:border-[#5a5c4d] hover:text-ink'
+                  }`}
+                  title={`${g.title} (${g.size})`}
+                >
+                  <span className="opacity-70 mr-1">{g.diskNumber}:</span>
+                  {g.cartridgeCode}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Emulation Viewport Area with Recessed CRT Bezel */}
         <div className="relative flex min-h-[320px] w-full flex-1 items-center justify-center overflow-hidden border-b border-[#21221b] bg-black shadow-[inset_0_0_30px_rgba(0,0,0,0.9)] sm:min-h-[420px] md:min-h-[480px]">
           {/* Active Canvas Mount */}
@@ -230,11 +270,15 @@ export default function DosPlayerModal({ isOpen, onClose, game }) {
                   <span className="text-[8px] text-muted">SB16 DETECTED</span>
                 </div>
                 <div className="pt-1 text-[#aaa897]">
-                  <p className="m-0">C:\&gt; MOUNT C /games/doom</p>
-                  <p className="m-0">Drive C is mounted as 1.44MB floppy image.</p>
-                  <p className="m-0 text-pink">C:\&gt; CD DOOM</p>
-                  <p className="m-0 text-yellow">C:\DOOM\&gt; DOOM.EXE</p>
-                  <p className="m-0 text-lime animate-pulse">Loading DOOM1.WAD (2.45 MB)...</p>
+                  <p className="m-0">C:\&gt; MOUNT C {game.bundleUrl}</p>
+                  <p className="m-0">Drive C mounted from WebAssembly VFS.</p>
+                  <p className="m-0 text-pink">C:\&gt; CD {game.cartridgeCode || game.id.toUpperCase()}</p>
+                  <p className="m-0 text-yellow">
+                    C:\{game.cartridgeCode || game.id.toUpperCase()}\&gt; {game.executable}
+                  </p>
+                  <p className="m-0 text-lime animate-pulse">
+                    Loading {game.title} ({game.size})...
+                  </p>
                 </div>
                 <div className="mt-3 h-2 w-full overflow-hidden border border-line bg-canvas">
                   <div className="h-full w-3/4 animate-[pulse_1s_infinite] bg-lime" />
@@ -265,15 +309,20 @@ export default function DosPlayerModal({ isOpen, onClose, game }) {
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#303129] pb-2 font-mono text-[8px] text-[#aaa897]">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
               <span className="font-bold text-lime">CONTROLS:</span>
-              <span><b className="text-yellow">[W A S D / ARROWS]</b> Move</span>
-              <span><b className="text-yellow">[CTRL / L-CLICK]</b> Fire</span>
-              <span><b className="text-yellow">[SPACE]</b> Open Door</span>
-              <span><b className="text-yellow">[1-7]</b> Weapons</span>
-              <span><b className="text-yellow">[SHIFT]</b> Run</span>
-              <span><b className="text-yellow">[ESC]</b> Menu / Pause</span>
+              {game.controls && game.controls.length > 0 ? (
+                game.controls.map((ctrl, idx) => (
+                  <span key={idx}>
+                    <b className="text-yellow">[{ctrl.key}]</b> {ctrl.action}
+                  </span>
+                ))
+              ) : (
+                <span>
+                  <b className="text-yellow">[ARROWS]</b> Move · <b className="text-yellow">[SPACE/CTRL]</b> Action
+                </span>
+              )}
             </div>
             <div className="text-[7.5px] text-muted">
-              CLICK SCREEN TO LOCK MOUSE · [ESC] TO UNLOCK
+              <span className="text-yellow font-medium">[CLICK CANVAS TO ENGAGE SB16 AUDIO & MOUSE]</span> · [ESC] TO UNLOCK
             </div>
           </div>
 
