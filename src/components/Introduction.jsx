@@ -16,7 +16,7 @@ export default function Introduction({ onExplore }) {
       </div>
 
       {/* Main Grid: About-Me Content Side-by-Side with Particle Portrait */}
-      <div className="mt-5 grid grid-cols-1 items-start gap-6 sm:mt-6 md:grid-cols-[1fr_210px] lg:grid-cols-[1fr_228px] lg:gap-8">
+      <div className="mt-5 grid grid-cols-1 items-start gap-6 sm:mt-6 cq-split-intro">
         <div className="min-w-0">
           <h1 className="mb-[18px] font-display text-[clamp(28px,6vw,56px)] font-semibold leading-[1.04] tracking-[-1.5px] sm:tracking-[-2.5px] text-ink">
             I work across<br /><em className="not-italic text-pink">the whole system.</em>
@@ -39,7 +39,7 @@ export default function Introduction({ onExplore }) {
         </div>
 
         {/* Interactive Particle Dispersion Portrait Component */}
-        <aside aria-label="Interactive Portrait" className="mx-auto w-full max-w-[240px] md:mx-0 md:max-w-none">
+        <aside aria-label="Interactive Portrait" className="mx-auto w-full max-w-[240px]">
           <ParticlePortrait />
         </aside>
       </div>

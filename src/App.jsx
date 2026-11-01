@@ -66,7 +66,7 @@ export default function App() {
             time={time}
             onNavigate={navigateTo}
           />
-          <main id="main" tabIndex="-1" className="min-w-0 focus:outline-none">
+          <main id="main" tabIndex="-1" className="main-container min-w-0 focus:outline-none">
             <Introduction onExplore={() => navigateTo('work')} />
             <ProjectsSection />
             <ExperienceSection />

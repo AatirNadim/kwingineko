@@ -134,7 +134,7 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
                   key={g.id}
                   type="button"
                   onClick={() => setSelectedGameIndex(idx)}
-                  className={`relative flex flex-col items-center justify-center border px-1 py-1 transition-all after:absolute after:-inset-1.5 ${getAccentClass(
+                  className={`relative flex flex-col items-center justify-center border px-1 py-1 transition-all after:absolute after:-inset-1.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${getAccentClass(
                     g.diskColor,
                     isActive
                   )}`}
@@ -145,6 +145,16 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
                 </button>
               );
             })}
+            {/* Slot 8: View all / Catalog shortcut in 4-column layout */}
+            <button
+              type="button"
+              onClick={() => setCatalogOpen(true)}
+              className="relative flex flex-col items-center justify-center border border-dashed border-[#575949] bg-[#1a1b17] px-1 py-1 font-mono text-[7px] text-yellow transition-all hover:border-yellow hover:bg-[#252620] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow min-[420px]:hidden lg:flex xl:hidden"
+              title="Open Aatir's Arcade 7-disk catalog"
+            >
+              <span className="text-[6.5px] text-[#88846f]">VAULT</span>
+              <span className="font-bold tracking-tight">ALL 7 ↗</span>
+            </button>
           </div>
         </div>
 

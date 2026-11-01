@@ -198,13 +198,13 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
     >
       <div
         ref={modalContainerRef}
-        className="flex max-h-[96vh] w-full max-w-[860px] flex-col border border-line bg-surface shadow-[8px_8px_0_rgba(0,0,0,0.7)]"
+        className="flex max-h-[96vh] w-full max-w-[860px] flex-col overflow-y-auto border border-line bg-surface shadow-[8px_8px_0_rgba(0,0,0,0.7)]"
       >
         {/* Retro Window Chrome Title Bar */}
-        <div className="flex min-h-[44px] items-center justify-between border-b border-line bg-[#292a25] px-3 font-mono text-[9px] tracking-wider text-muted sm:px-4">
+        <div className="flex min-h-[44px] items-center justify-between border-b border-line bg-[#292a25] px-2.5 sm:px-4 font-mono text-[9px] tracking-wider text-muted gap-2">
           <div className="flex min-w-0 items-center gap-2">
             <Terminal size={14} className="shrink-0 text-lime" />
-            <span className="font-bold text-yellow uppercase tracking-widest shrink-0">
+            <span className="font-bold text-yellow uppercase tracking-widest shrink-0 text-[10px] sm:text-[11px]">
               AATIR'S ARCADE
             </span>
             <span className="text-[#55564c] hidden sm:inline">//</span>
@@ -217,13 +217,13 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5 sm:gap-2">
+          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
             <button
               type="button"
               onClick={togglePause}
               aria-label={isPaused ? 'Resume emulation' : 'Pause emulation'}
               title={isPaused ? 'Resume emulation' : 'Pause emulation'}
-              className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 border px-2 font-mono text-[8.5px] font-semibold transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-yellow ${
+              className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 border px-2 font-mono text-[8.5px] font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
                 isPaused
                   ? 'border-yellow bg-yellow/15 text-yellow'
                   : 'border-[#444639] bg-[#1e1f1c] text-muted hover:border-yellow hover:text-yellow'
@@ -237,7 +237,7 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
               onClick={toggleMute}
               aria-label={isMuted ? 'Unmute audio' : 'Mute audio'}
               title={isMuted ? 'Unmute audio' : 'Mute audio'}
-              className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 border px-2 font-mono text-[8.5px] font-semibold transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-yellow ${
+              className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 border px-2 font-mono text-[8.5px] font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
                 isMuted
                   ? 'border-pink bg-pink/15 text-pink'
                   : 'border-[#444639] bg-[#1e1f1c] text-muted hover:border-lime hover:text-lime'
@@ -251,7 +251,7 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
               onClick={handleRestart}
               aria-label="Reload game session"
               title="Restart game session"
-              className="inline-flex min-h-[44px] items-center justify-center gap-1 border border-[#444639] bg-[#1e1f1c] px-2.5 font-mono text-[8.5px] font-semibold text-muted transition-colors hover:border-lime hover:text-lime focus-visible:outline focus-visible:outline-1 focus-visible:outline-yellow"
+              className="hidden min-[380px]:inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 border border-[#444639] bg-[#1e1f1c] px-2.5 font-mono text-[8.5px] font-semibold text-muted transition-colors hover:border-lime hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
             >
               <RotateCcw size={13} />
               <span className="hidden sm:inline">RELOAD</span>
@@ -261,7 +261,7 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
               onClick={toggleFullscreen}
               aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
               title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
-              className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center border border-[#444639] bg-[#1e1f1c] text-muted transition-colors hover:border-yellow hover:text-yellow focus-visible:outline focus-visible:outline-1 focus-visible:outline-yellow"
+              className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center border border-[#444639] bg-[#1e1f1c] text-muted transition-colors hover:border-yellow hover:text-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
             >
               {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
             </button>
@@ -269,7 +269,7 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
               type="button"
               onClick={handleClose}
               aria-label="Close DOS Player"
-              className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 border border-[#444639] bg-[#1e1f1c] px-2.5 font-mono text-[8.5px] font-semibold text-yellow transition-colors hover:border-pink hover:text-pink focus-visible:outline focus-visible:outline-1 focus-visible:outline-yellow"
+              className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 border border-[#444639] bg-[#1e1f1c] px-2.5 font-mono text-[8.5px] font-semibold text-yellow transition-colors hover:border-pink hover:text-pink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
             >
               <X size={14} />
               <span className="hidden sm:inline">EXIT [ESC]</span>
@@ -307,7 +307,7 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
         </div>
 
         {/* Emulation Viewport Area with Recessed CRT Bezel */}
-        <div className="relative flex min-h-[320px] w-full flex-1 items-center justify-center overflow-hidden border-b border-[#21221b] bg-black shadow-[inset_0_0_30px_rgba(0,0,0,0.9)] sm:min-h-[420px] md:min-h-[480px]">
+        <div className="relative flex min-h-[260px] max-h-[60vh] w-full flex-1 items-center justify-center overflow-hidden border-b border-[#21221b] bg-black shadow-[inset_0_0_30px_rgba(0,0,0,0.9)] sm:min-h-[380px] md:min-h-[460px]">
           {/* Subtle CRT top bezel badge */}
           <div
             aria-hidden="true"
@@ -319,7 +319,7 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
           {/* Active Canvas Mount */}
           <div
             ref={mountRef}
-            className="h-full w-full max-h-[64vh] aspect-[4/3] flex items-center justify-center"
+            className="h-full w-full max-h-[58vh] aspect-[4/3] flex items-center justify-center"
           />
 
           {/* Loading Screen Overlay */}
