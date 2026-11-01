@@ -81,7 +81,7 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
           <div className="relative z-10 flex items-center justify-between font-mono text-[8px] tracking-wider text-muted">
             <span className="flex items-center gap-1.5 text-lime">
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-lime shadow-[0_0_6px_#a6e22e]" />
-              DOSBOX-WASM // 0.74
+              AATIR'S ARCADE // WASM
             </span>
             <span className="text-[#88846f]">
               ROM.ID // 0x{game.cartridgeCode} [{game.diskNumber}/07]
@@ -182,7 +182,7 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
               onClick={() => setCatalogOpen(true)}
               aria-label="View all 7 games in catalog"
               className="flex min-h-[44px] min-w-[44px] items-center justify-center border border-[#444639] bg-[#22231e] text-[#c7c5b7] transition-all hover:border-yellow hover:text-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
-              title="Open full arcade catalog"
+              title="Open Aatir's Arcade catalog"
             >
               <Layers size={14} />
             </button>
@@ -203,7 +203,7 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="Retro Games Arcade Catalog"
+          aria-label="Aatir's Arcade Retro Games Catalog"
           className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6"
         >
           {/* Backdrop with click to close */}
@@ -219,7 +219,7 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
             <div className="flex h-[46px] items-center justify-between border-b border-line bg-[#292a25] px-4 font-mono text-[11px] text-ink">
               <span className="flex items-center gap-2">
                 <Terminal size={14} className="text-lime" />
-                <span>ARCADE_BAY // RETRO DOS VAULT [7 DISKS]</span>
+                <span>AATIR'S ARCADE // RETRO DOS VAULT [7 DISKS]</span>
               </span>
               <button
                 type="button"

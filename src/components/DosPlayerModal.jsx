@@ -184,10 +184,14 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
         <div className="flex min-h-[44px] items-center justify-between border-b border-line bg-[#292a25] px-3 font-mono text-[9px] tracking-wider text-muted sm:px-4">
           <div className="flex min-w-0 items-center gap-2">
             <Terminal size={14} className="shrink-0 text-lime" />
-            <span id="dos-player-title" className="truncate font-bold text-ink">
+            <span className="font-bold text-yellow uppercase tracking-widest shrink-0">
+              AATIR'S ARCADE
+            </span>
+            <span className="text-[#55564c] hidden sm:inline">//</span>
+            <span id="dos-player-title" className="truncate font-semibold text-ink hidden sm:inline">
               C:\GAMES\{game.cartridgeCode || game.id.toUpperCase()}\{game.executable}
             </span>
-            <span className="hidden items-center gap-1.5 border border-[#3e4034] bg-[#1e1f1c] px-2 py-0.5 text-[8px] text-lime sm:inline-flex">
+            <span className="hidden items-center gap-1.5 border border-[#3e4034] bg-[#1e1f1c] px-2 py-0.5 text-[8px] text-lime md:inline-flex">
               <span className="h-1.5 w-1.5 rounded-full bg-lime shadow-[0_0_6px_#a6e22e]" />
               {bootState === 'loading' ? 'BOOTING...' : 'RUNNING (WASM)'}
             </span>
@@ -255,6 +259,14 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
 
         {/* Emulation Viewport Area with Recessed CRT Bezel */}
         <div className="relative flex min-h-[320px] w-full flex-1 items-center justify-center overflow-hidden border-b border-[#21221b] bg-black shadow-[inset_0_0_30px_rgba(0,0,0,0.9)] sm:min-h-[420px] md:min-h-[480px]">
+          {/* Subtle CRT top bezel badge */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute top-2 left-1/2 -translate-x-1/2 z-10 select-none rounded border border-[#2b2d24] bg-[#141512]/85 px-2.5 py-0.5 font-mono text-[7px] tracking-[0.2em] text-[#8a8775] backdrop-blur-[2px]"
+          >
+            AATIR'S ARCADE CAB · SB16 STEREO
+          </div>
+
           {/* Active Canvas Mount */}
           <div
             ref={mountRef}
@@ -266,7 +278,7 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
             <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[#131411] p-6 font-mono text-[#d6d4c5]">
               <div className="w-full max-w-[420px] space-y-2 border border-[#35362e] bg-[#1a1b17] p-4 text-[10px] leading-relaxed shadow-[4px_4px_0_#000]">
                 <div className="flex items-center justify-between border-b border-[#35362e] pb-1.5 text-lime">
-                  <span>MS-DOS 6.22 WASM KERNEL</span>
+                  <span>AATIR'S ARCADE // MS-DOS 6.22 WASM KERNEL</span>
                   <span className="text-[8px] text-muted">SB16 DETECTED</span>
                 </div>
                 <div className="pt-1 text-[#aaa897]">
@@ -277,7 +289,7 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
                     C:\{game.cartridgeCode || game.id.toUpperCase()}\&gt; {game.executable}
                   </p>
                   <p className="m-0 text-lime animate-pulse">
-                    Loading {game.title} ({game.size})...
+                    Aatir's Arcade: Loading {game.title} ({game.size})...
                   </p>
                 </div>
                 <div className="mt-3 h-2 w-full overflow-hidden border border-line bg-canvas">
