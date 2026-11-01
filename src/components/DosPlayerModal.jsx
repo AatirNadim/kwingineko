@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { X, Maximize2, Minimize2, Terminal, ShieldAlert, RotateCcw, Disc } from 'lucide-react';
+import { X, Maximize2, Minimize2, Terminal, ShieldAlert, RotateCcw, Disc, Volume2, VolumeX, Pause, Play } from 'lucide-react';
 import { retroGames } from '../data/games.js';
 
 function loadJsDos() {
@@ -48,6 +48,8 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
   const [bootState, setBootState] = useState('idle'); // 'idle' | 'loading' | 'ready' | 'error'
   const [errorMessage, setErrorMessage] = useState('');
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
   const modalContainerRef = useRef(null);
 
@@ -66,7 +68,25 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
       mountRef.current.innerHTML = '';
     }
     setBootState('idle');
+    setIsPaused(false);
+    setIsMuted(false);
   }, []);
+
+  const toggleMute = useCallback(() => {
+    if (dosInstanceRef.current && typeof dosInstanceRef.current.setVolume === 'function') {
+      const nextMuted = !isMuted;
+      dosInstanceRef.current.setVolume(nextMuted ? 0 : 1);
+      setIsMuted(nextMuted);
+    }
+  }, [isMuted]);
+
+  const togglePause = useCallback(() => {
+    if (dosInstanceRef.current && typeof dosInstanceRef.current.setPaused === 'function') {
+      const nextPaused = !isPaused;
+      dosInstanceRef.current.setPaused(nextPaused);
+      setIsPaused(nextPaused);
+    }
+  }, [isPaused]);
 
   const handleClose = useCallback(() => {
     cleanupDos();
@@ -197,13 +217,41 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <button
+              type="button"
+              onClick={togglePause}
+              aria-label={isPaused ? 'Resume emulation' : 'Pause emulation'}
+              title={isPaused ? 'Resume emulation' : 'Pause emulation'}
+              className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 border px-2 font-mono text-[8.5px] font-semibold transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-yellow ${
+                isPaused
+                  ? 'border-yellow bg-yellow/15 text-yellow'
+                  : 'border-[#444639] bg-[#1e1f1c] text-muted hover:border-yellow hover:text-yellow'
+              }`}
+            >
+              {isPaused ? <Play size={13} /> : <Pause size={13} />}
+              <span className="hidden sm:inline">{isPaused ? 'RESUME' : 'PAUSE'}</span>
+            </button>
+            <button
+              type="button"
+              onClick={toggleMute}
+              aria-label={isMuted ? 'Unmute audio' : 'Mute audio'}
+              title={isMuted ? 'Unmute audio' : 'Mute audio'}
+              className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 border px-2 font-mono text-[8.5px] font-semibold transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-yellow ${
+                isMuted
+                  ? 'border-pink bg-pink/15 text-pink'
+                  : 'border-[#444639] bg-[#1e1f1c] text-muted hover:border-lime hover:text-lime'
+              }`}
+            >
+              {isMuted ? <VolumeX size={13} /> : <Volume2 size={13} />}
+              <span className="hidden sm:inline">{isMuted ? 'MUTED' : 'AUDIO'}</span>
+            </button>
             <button
               type="button"
               onClick={handleRestart}
               aria-label="Reload game session"
               title="Restart game session"
-              className="inline-flex min-h-[44px] items-center justify-center gap-1.5 border border-[#444639] bg-[#1e1f1c] px-3 font-mono text-[8.5px] font-semibold text-muted transition-colors hover:border-lime hover:text-lime focus-visible:outline focus-visible:outline-1 focus-visible:outline-yellow"
+              className="inline-flex min-h-[44px] items-center justify-center gap-1 border border-[#444639] bg-[#1e1f1c] px-2.5 font-mono text-[8.5px] font-semibold text-muted transition-colors hover:border-lime hover:text-lime focus-visible:outline focus-visible:outline-1 focus-visible:outline-yellow"
             >
               <RotateCcw size={13} />
               <span className="hidden sm:inline">RELOAD</span>
@@ -212,6 +260,7 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
               type="button"
               onClick={toggleFullscreen}
               aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+              title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
               className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center border border-[#444639] bg-[#1e1f1c] text-muted transition-colors hover:border-yellow hover:text-yellow focus-visible:outline focus-visible:outline-1 focus-visible:outline-yellow"
             >
               {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
@@ -220,10 +269,10 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
               type="button"
               onClick={handleClose}
               aria-label="Close DOS Player"
-              className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 border border-[#444639] bg-[#1e1f1c] px-3 font-mono text-[8.5px] font-semibold text-yellow transition-colors hover:border-pink hover:text-pink focus-visible:outline focus-visible:outline-1 focus-visible:outline-yellow"
+              className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 border border-[#444639] bg-[#1e1f1c] px-2.5 font-mono text-[8.5px] font-semibold text-yellow transition-colors hover:border-pink hover:text-pink focus-visible:outline focus-visible:outline-1 focus-visible:outline-yellow"
             >
               <X size={14} />
-              <span>EXIT [ESC]</span>
+              <span className="hidden sm:inline">EXIT [ESC]</span>
             </button>
           </div>
         </div>
@@ -295,6 +344,28 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
                 <div className="mt-3 h-2 w-full overflow-hidden border border-line bg-canvas">
                   <div className="h-full w-3/4 animate-[pulse_1s_infinite] bg-lime" />
                 </div>
+              </div>
+            </div>
+          )}
+
+          {/* Paused State Overlay */}
+          {isPaused && (
+            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/75 p-6 font-mono backdrop-blur-[2px]">
+              <div className="border border-yellow bg-[#1a1b17] p-5 text-center shadow-[4px_4px_0_#000]">
+                <p className="text-[12px] font-bold text-yellow uppercase tracking-widest m-0">
+                  // EMULATION PAUSED //
+                </p>
+                <p className="mt-1.5 text-[9px] text-[#aaa897] m-0">
+                  WASM CPU & Sound Blaster 16 halted
+                </p>
+                <button
+                  type="button"
+                  onClick={togglePause}
+                  className="mt-3 inline-flex items-center gap-1.5 border border-lime bg-lime/10 px-3 py-1.5 text-[9px] font-bold text-lime transition-all hover:bg-lime/20"
+                >
+                  <Play size={12} />
+                  RESUME SESSION
+                </button>
               </div>
             </div>
           )}
