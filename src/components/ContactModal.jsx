@@ -106,7 +106,7 @@ export default function ContactModal({ isOpen, onClose }) {
         <div className="flex min-h-[44px] shrink-0 items-center justify-between border-b border-line bg-[#282924] px-3 sm:px-4">
           <div className="flex items-center gap-2">
             <Mail size={14} className="text-pink" />
-            <span id="modal-mail-title" className="font-mono text-[9.5px] sm:text-[10px] tracking-wide text-ink truncate">
+            <span id="modal-mail-title" className="font-mono text-[10.5px] sm:text-xs tracking-wide text-ink truncate">
               new_message.eml <span className="text-muted">// DISPATCH COMPOSER</span>
             </span>
           </div>
@@ -133,9 +133,9 @@ export default function ContactModal({ isOpen, onClose }) {
           
           {/* Step 1: Preset Templates */}
           <div className="mb-4">
-            <label className="mb-1.5 flex items-center justify-between font-mono text-[9px] uppercase tracking-wider text-violet">
+            <label className="mb-1.5 flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-violet">
               <span>01. CHOOSE TEMPLATE</span>
-              <span className="text-[8px] text-muted">PRE-FILLED TOPIC</span>
+              <span className="text-[9.5px] text-muted">PRE-FILLED TOPIC</span>
             </label>
             <div className="flex flex-wrap gap-1.5">
               {contact.templates.map((tpl) => {
@@ -145,7 +145,7 @@ export default function ContactModal({ isOpen, onClose }) {
                     key={tpl.id}
                     type="button"
                     onClick={() => handleSelectTemplate(tpl.id)}
-                    className={`min-h-[36px] border px-2.5 py-1.5 font-mono text-[9px] tracking-tight transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
+                    className={`min-h-[36px] border px-2.5 py-1.5 font-mono text-[10px] tracking-tight transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
                       active
                         ? 'border-pink bg-pink/15 text-pink font-semibold'
                         : 'border-[#45463e] bg-surface text-muted hover:border-line hover:text-ink'
@@ -160,11 +160,11 @@ export default function ContactModal({ isOpen, onClose }) {
 
           {/* Step 2: Avatar / Stamp Picker */}
           <div className="mb-4 border-t border-dashed border-[#35362e] pt-3">
-            <label className="mb-1.5 flex items-center justify-between font-mono text-[9px] uppercase tracking-wider text-lime">
+            <label className="mb-1.5 flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-lime">
               <span className="flex items-center gap-1.5">
                 <Sparkles size={11} className="text-yellow" /> 02. SENDER COMPANION / STAMP (OPTIONAL)
               </span>
-              <span className="text-[8px] text-muted">INJECTED INTO BODY</span>
+              <span className="text-[9.5px] text-muted">INJECTED INTO BODY</span>
             </label>
             <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
               {contact.avatars.map((avatar) => {
@@ -174,7 +174,7 @@ export default function ContactModal({ isOpen, onClose }) {
                     key={avatar.id}
                     type="button"
                     onClick={() => setSelectedAvatar(avatar.id)}
-                    className={`flex min-h-[40px] items-center gap-1.5 border px-2.5 py-2 text-left font-mono text-[9px] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
+                    className={`flex min-h-[40px] items-center gap-1.5 border px-2.5 py-2 text-left font-mono text-[10px] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
                       active
                         ? 'border-lime bg-lime/10 text-lime font-medium'
                         : 'border-[#3f4037] bg-[#22231e] text-muted hover:border-line hover:text-[#d6d4c5]'
@@ -193,20 +193,20 @@ export default function ContactModal({ isOpen, onClose }) {
             
             {/* Recipient */}
             <div>
-              <div className="flex justify-between font-mono text-[9px] text-muted">
+              <div className="flex justify-between font-mono text-[10px] text-muted">
                 <span>TO:</span>
                 <span className="text-lime">VERIFIED INBOX</span>
               </div>
-              <div className="mt-1 border border-[#3e4037] bg-[#171815] px-3 py-2 font-mono text-[11px] text-yellow">
+              <div className="mt-1 border border-[#3e4037] bg-[#171815] px-3 py-2 font-mono text-xs text-yellow">
                 {contact.email}
               </div>
             </div>
 
             {/* Subject */}
             <div>
-              <div className="flex justify-between font-mono text-[9px]">
+              <div className="flex justify-between font-mono text-[10px]">
                 <span className="text-[#cac7b6]">SUBJECT:</span>
-                <span className={`font-mono text-[8px] ${subject.length >= MAX_SUBJECT_LENGTH ? 'text-pink' : 'text-muted'}`}>
+                <span className={`font-mono text-[9.5px] ${subject.length >= MAX_SUBJECT_LENGTH ? 'text-pink' : 'text-muted'}`}>
                   {subject.length} / {MAX_SUBJECT_LENGTH}
                 </span>
               </div>
@@ -222,9 +222,9 @@ export default function ContactModal({ isOpen, onClose }) {
 
             {/* Body */}
             <div>
-              <div className="flex justify-between font-mono text-[9px]">
+              <div className="flex justify-between font-mono text-[10px]">
                 <span className="text-[#cac7b6]">MESSAGE BODY:</span>
-                <span className={`font-mono text-[8px] ${body.length >= MAX_BODY_LENGTH ? 'text-pink' : 'text-muted'}`}>
+                <span className={`font-mono text-[9.5px] ${body.length >= MAX_BODY_LENGTH ? 'text-pink' : 'text-muted'}`}>
                   {body.length} / {MAX_BODY_LENGTH}
                 </span>
               </div>
@@ -241,7 +241,7 @@ export default function ContactModal({ isOpen, onClose }) {
 
           {/* Live Mailto Budget Meter */}
           <div className="mt-3 border border-[#32332c] bg-[#181916] p-2.5">
-            <div className="flex items-center justify-between font-mono text-[8px]">
+            <div className="flex items-center justify-between font-mono text-[9.5px]">
               <span className="flex items-center gap-1 text-muted">
                 URL ENCODED BUDGET:
               </span>
@@ -257,7 +257,7 @@ export default function ContactModal({ isOpen, onClose }) {
                 style={{ width: `${budgetRatio}%` }}
               />
             </div>
-            <p className="mt-1.5 m-0 font-mono text-[7px] text-[#787669]">
+            <p className="mt-1.5 m-0 font-mono text-[9px] text-[#8e8c7c]">
               Strictly budgeted within browser mailto limits to prevent truncation on mobile and desktop email clients.
             </p>
           </div>
@@ -269,7 +269,7 @@ export default function ContactModal({ isOpen, onClose }) {
           <button
             type="button"
             onClick={handleCopy}
-            className="inline-flex min-h-[44px] w-full items-center justify-center gap-1.5 border border-line bg-surface px-3 py-2 font-mono text-[9px] text-[#dedccd] transition-colors hover:border-[#66675b] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow min-[440px]:w-auto"
+            className="inline-flex min-h-[44px] w-full items-center justify-center gap-1.5 border border-line bg-surface px-3 py-2 font-mono text-[10px] text-[#dedccd] transition-colors hover:border-[#66675b] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow min-[440px]:w-auto"
           >
             {copied ? (
               <>
@@ -290,7 +290,7 @@ export default function ContactModal({ isOpen, onClose }) {
               // Delay close slightly so browser registers link click
               setTimeout(onClose, 400);
             }}
-            className={`inline-flex min-h-[44px] w-full items-center justify-center gap-2 border px-3.5 py-2 font-mono text-[9px] font-medium tracking-wide transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-yellow min-[440px]:w-auto ${
+            className={`inline-flex min-h-[44px] w-full items-center justify-center gap-2 border px-3.5 py-2 font-mono text-[10px] font-medium tracking-wide transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-yellow min-[440px]:w-auto ${
               isBudgetSafe
                 ? 'border-pink bg-pink text-surface hover:shadow-[2px_2px_0_#f9267270]'
                 : 'pointer-events-none opacity-50 border-line bg-focus text-muted'

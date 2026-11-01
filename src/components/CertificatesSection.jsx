@@ -21,27 +21,26 @@ export default function CertificatesSection() {
       />
 
       {/* Telemetry Control Bar */}
-      <div className="mb-4 flex flex-col gap-2.5 border border-line bg-[#1e1f1c] p-2.5 sm:p-3">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#36372f] pb-2 font-mono text-[8.5px] sm:text-[9px]">
+      <div className="mb-4 flex flex-col gap-2.5 border border-line bg-surface p-2.5 sm:p-3 shadow-panel">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-subtle pb-2 font-mono text-[10px] sm:text-[10.5px]">
           <div className="flex items-center gap-2 text-muted">
-            <Award size={13} className="text-yellow" />
-            <span className="text-[#c8c6b7]">ACCREDITATION LEDGER</span>
-            <span className="text-[#616254]">//</span>
+            <span className="font-mono text-yellow font-bold">[LEDGER]</span>
+            <span className="text-ink-secondary">ACCREDITATION LEDGER</span>
+            <span className="text-muted-dim">//</span>
             <span className="text-lime">STATUS: ALL RECORDS VERIFIED</span>
           </div>
-          <div className="flex items-center gap-2 font-mono text-[8px] text-[#88846f]">
+          <div className="flex items-center gap-2 font-mono text-[9.5px] text-muted">
             <span>REGISTRIES:</span>
             <span className="text-yellow">COURSERA</span>
-            <span className="text-[#616254]">·</span>
+            <span className="text-muted-dim">·</span>
             <span className="text-lime">GOOGLE CLOUD</span>
           </div>
         </div>
 
         {/* Filter Pills with touch targets >= 44px */}
         <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
-          <span className="mr-1 hidden items-center gap-1 font-mono text-[8.5px] text-[#88846f] sm:inline-flex">
-            <Filter size={11} className="text-violet" />
-            FILTER:
+          <span className="mr-1 hidden items-center gap-1 font-mono text-[10px] text-muted sm:inline-flex">
+            <span className="font-mono text-violet font-semibold">[FILTER]</span>
           </span>
           {categories.map((cat) => {
             const count = cat === 'ALL'
@@ -53,17 +52,17 @@ export default function CertificatesSection() {
                 key={cat}
                 type="button"
                 onClick={() => setSelectedCategory(cat)}
-                className={`inline-flex min-h-[44px] sm:min-h-[32px] items-center gap-1.5 border px-2.5 py-1.5 sm:py-1 font-mono text-[9px] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
+                className={`inline-flex min-h-[44px] sm:min-h-[32px] items-center gap-1.5 border px-2.5 py-1.5 sm:py-1 font-mono text-[10px] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
                   isActive
                     ? 'border-pink bg-focus text-ink shadow-[2px_2px_0_#f9267240]'
-                    : 'border-[#3f4037] bg-[#22231e] text-[#a9a796] hover:border-line hover:bg-focus hover:text-ink'
+                    : 'border-line-subtle bg-surface-card text-muted hover:border-line hover:bg-focus hover:text-ink'
                 }`}
               >
                 <span className={isActive ? 'text-pink' : 'text-violet'}>
                   {isActive ? '●' : '○'}
                 </span>
                 <span>{cat.toUpperCase()}</span>
-                <span className={`text-[8px] ${isActive ? 'text-[#c8c6b7]' : 'text-[#787665]'}`}>
+                <span className={`text-[9.5px] ${isActive ? 'text-ink-secondary' : 'text-muted-dim'}`}>
                   [{count < 10 ? `0${count}` : count}]
                 </span>
               </button>
@@ -81,25 +80,25 @@ export default function CertificatesSection() {
           return (
             <article
               key={cert.id}
-              className="group relative border border-line bg-[#20211e] p-3.5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#797a61] sm:p-4"
+              className="group relative border border-line bg-surface-card p-3.5 shadow-panel transition-all duration-200 hover:-translate-y-0.5 hover:border-line sm:p-4"
             >
               {/* Header Telemetry Strip */}
-              <div className="flex flex-wrap items-center gap-2 border-b border-[#36372f] pb-2 text-muted">
-                <span className="font-mono text-[10px] font-bold text-pink">{formattedNumber}</span>
-                <span className="font-mono text-[8.5px] uppercase tracking-wider text-violet">
+              <div className="flex flex-wrap items-center gap-2 border-b border-line-subtle pb-2 text-muted">
+                <span className="font-mono text-[10.5px] font-bold text-pink">{formattedNumber}</span>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-violet">
                   {cert.id}
                 </span>
-                <span className="text-[#555648]">//</span>
-                <span className="font-mono text-[8.5px] uppercase tracking-wider text-[#9d9b8a] sm:text-[9px]">
+                <span className="text-muted-dim">//</span>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-muted">
                   {cert.category}
                 </span>
 
                 <div className="ml-auto flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1 font-mono text-[8px] text-lime">
+                  <span className="inline-flex items-center gap-1 font-mono text-[9.5px] text-lime">
                     <CheckCircle2 size={11} className="text-lime" />
                     <span>{cert.status.toUpperCase()}</span>
                   </span>
-                  <span className="border border-[#45463e] bg-[#292a25] px-1.5 py-0.5 font-mono text-[8px] text-yellow">
+                  <span className="border border-line bg-surface px-1.5 py-0.5 font-mono text-[9.5px] text-yellow">
                     {cert.date}
                   </span>
                 </div>
@@ -110,26 +109,26 @@ export default function CertificatesSection() {
                 <h3 className="font-display text-sm font-semibold tracking-tight text-ink sm:text-base">
                   {cert.title}
                 </h3>
-                <div className="mt-0.5 flex flex-wrap items-center gap-1.5 font-mono text-[9px] text-muted">
+                <div className="mt-0.5 flex flex-wrap items-center gap-1.5 font-mono text-[10px] text-muted">
                   <span className="text-lime">{cert.issuer}</span>
-                  <span className="text-[#616254]">·</span>
-                  <span className="text-[#b4b19e]">{cert.platform}</span>
+                  <span className="text-muted-dim">·</span>
+                  <span className="text-ink-secondary">{cert.platform}</span>
                 </div>
               </div>
 
               {/* Description */}
-              <p className="mt-2 mb-0 text-[11px] leading-relaxed text-[#c7c5b7] sm:text-xs">
+              <p className="mt-2 mb-0 text-xs leading-relaxed text-ink-secondary">
                 {cert.description}
               </p>
 
               {/* Tags & Action Bar */}
-              <div className="mt-3 flex flex-col gap-2.5 border-t border-[#30312a] pt-2.5 min-[520px]:flex-row min-[520px]:items-center min-[520px]:justify-between">
+              <div className="mt-3 flex flex-col gap-2.5 border-t border-line-subtle pt-2.5 min-[520px]:flex-row min-[520px]:items-center min-[520px]:justify-between">
                 {/* Topic Tags */}
                 <div className="flex flex-wrap gap-1.5">
                   {cert.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="border border-[#44463c] bg-[#1a1b17] px-1.5 py-0.5 font-mono text-[8px] text-[#cac7b6] sm:text-[8.5px]"
+                      className="border border-line-subtle bg-surface-inset px-1.5 py-0.5 font-mono text-[9.5px] text-ink-secondary"
                     >
                       #{tag}
                     </span>
@@ -138,7 +137,7 @@ export default function CertificatesSection() {
 
                 {/* Verification CTA with accessible tap target */}
                 <div className="flex items-center justify-between gap-3 min-[520px]:justify-end">
-                  <span className="font-mono text-[8px] text-[#797767] truncate max-w-[150px] sm:max-w-none">
+                  <span className="font-mono text-[9.5px] text-muted truncate max-w-[150px] sm:max-w-none">
                     ID: {cert.credentialId}
                   </span>
                   <a
@@ -146,7 +145,7 @@ export default function CertificatesSection() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Verify ${cert.title} credential on ${cert.platform}`}
-                    className="inline-flex min-h-[44px] min-w-[44px] sm:min-h-[32px] sm:min-w-0 items-center justify-center gap-1 border border-[#525345] bg-[#282924] px-3 py-1 font-mono text-[9px] font-medium text-yellow transition-colors hover:border-yellow hover:bg-[#34352e] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+                    className="inline-flex min-h-[44px] min-w-[44px] sm:min-h-[32px] sm:min-w-0 items-center justify-center gap-1 border border-line bg-surface px-3 py-1 font-mono text-[10px] font-medium text-yellow transition-colors hover:border-yellow hover:bg-focus hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
                   >
                     <span>VERIFY</span>
                     <ArrowUpRight size={13} className="text-yellow" />
@@ -159,12 +158,12 @@ export default function CertificatesSection() {
       </div>
 
       {/* Footer System Annotation */}
-      <div className="mt-4 flex flex-col gap-1.5 border-t border-dashed border-line pt-3 font-mono text-[8.5px] text-[#8e8c7c] sm:flex-row sm:items-center sm:justify-between sm:text-[9px]">
+      <div className="mt-4 flex flex-col gap-1.5 border-t border-dashed border-line pt-3 font-mono text-[9.5px] text-muted sm:flex-row sm:items-center sm:justify-between sm:text-[10px]">
         <div className="flex items-center gap-1.5">
           <span className="text-violet">►</span>
           <span>Includes verified coursework and public skill profiles directly verifiable through issuer signatures.</span>
         </div>
-        <span className="text-[#656455]">TELEMETRY // ID-HASH VERIFIED</span>
+        <span className="text-muted-dim">TELEMETRY // ID-HASH VERIFIED</span>
       </div>
     </section>
   );

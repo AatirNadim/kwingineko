@@ -51,7 +51,7 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
   }, [catalogOpen]);
 
   const getAccentClass = (color, isActive) => {
-    if (!isActive) return 'border-[#3c3d34] bg-[#1a1b17] text-[#a7a594] hover:border-[#606254] hover:text-ink';
+    if (!isActive) return 'border-line-subtle bg-surface-inset text-muted hover:border-line hover:text-ink';
     switch (color) {
       case 'pink':
         return 'border-pink bg-pink/15 text-pink shadow-[2px_2px_0_#f9267240] font-semibold';
@@ -68,9 +68,9 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
 
   return (
     <>
-      <PanelFrame title="RECREATION_BAY" icon={<Gamepad2 size={13} />}>
+      <PanelFrame title="RECREATION_BAY" symbol="DOS">
         {/* CRT Terminal Screen Preview Inset */}
-        <div className="relative overflow-hidden border-b border-line bg-[#131411] p-3 text-ink">
+        <div className="relative overflow-hidden border-b border-line bg-surface-inset p-3 text-ink">
           {/* Ambient CRT Scanline Overlay */}
           <div
             aria-hidden="true"
@@ -78,30 +78,30 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
           />
 
           {/* Top Telemetry / Status Row */}
-          <div className="relative z-10 flex items-center justify-between font-mono text-[8px] tracking-wider text-muted">
+          <div className="relative z-10 flex items-center justify-between font-mono text-[9.5px] tracking-wider text-muted">
             <span className="flex items-center gap-1.5 text-lime">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-lime shadow-[0_0_6px_#a6e22e]" />
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-lime" />
               AATIR'S ARCADE // WASM
             </span>
-            <span className="text-[#88846f]">
+            <span className="text-muted-dim">
               ROM.ID // 0x{game.cartridgeCode} [{game.diskNumber}/07]
             </span>
           </div>
 
           {/* Simulated DOS Prompt / Game Badge */}
-          <div className="relative z-10 mt-2 rounded border border-[#2a2b24] bg-[#1a1b17]/90 px-2.5 py-2 font-mono text-[10px] leading-relaxed">
+          <div className="relative z-10 mt-2 rounded border border-line-subtle bg-surface-card/90 px-2.5 py-2 font-mono text-[10px] leading-relaxed">
             <div className="flex items-center gap-1.5 text-muted truncate">
               <span className="text-pink">C:\GAMES\{game.cartridgeCode}&gt;</span>
               <span className="text-yellow font-medium">{game.executable}</span>
             </div>
-            <div className="mt-1 flex items-center justify-between text-[8.5px]">
+            <div className="mt-1 flex items-center justify-between text-[9.5px]">
               <span className="font-bold tracking-wide text-ink truncate mr-2">{game.title}</span>
               <span className="text-violet shrink-0">{game.year}</span>
             </div>
           </div>
 
           {/* Status Indicator Bar */}
-          <div className="relative z-10 mt-2.5 flex items-center justify-between font-mono text-[7.5px] tracking-wide text-[#a7a594]">
+          <div className="relative z-10 mt-2.5 flex items-center justify-between font-mono text-[9.5px] tracking-wide text-muted">
             <span className="flex items-center gap-1">
               <Flame size={10} className="text-pink" />
               {game.loreTag}
@@ -111,8 +111,8 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
         </div>
 
         {/* Tactile ROM Cartridge Rack */}
-        <div className="border-b border-line bg-[#1b1c18] px-3 py-2">
-          <div className="flex items-center justify-between pb-1.5 font-mono text-[7.5px] tracking-wider text-muted">
+        <div className="border-b border-line bg-surface px-3 py-2">
+          <div className="flex items-center justify-between pb-1.5 font-mono text-[9.5px] tracking-wider text-muted">
             <span className="flex items-center gap-1">
               <Disc size={9} className="text-yellow" />
               CARTRIDGE RACK [7 DISKS]
@@ -126,7 +126,7 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
             </button>
           </div>
           {/* Responsive grid adjusted for desktop sidebar column */}
-          <div className="grid grid-cols-4 min-[420px]:grid-cols-7 lg:grid-cols-4 xl:grid-cols-7 gap-1 font-mono text-[7.5px]">
+          <div className="grid grid-cols-4 min-[420px]:grid-cols-7 lg:grid-cols-4 xl:grid-cols-7 gap-1 font-mono text-[9px]">
             {retroGames.map((g, idx) => {
               const isActive = idx === selectedGameIndex;
               return (
@@ -140,7 +140,7 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
                   )}`}
                   title={`${g.title} (${g.year})`}
                 >
-                  <span className="text-[6.5px] opacity-75">{g.diskNumber}</span>
+                  <span className="text-[9.5px] tracking-wider opacity-85 font-mono">{g.diskNumber}</span>
                   <span className="truncate w-full text-center font-bold tracking-tight">{g.cartridgeCode}</span>
                 </button>
               );
@@ -149,10 +149,10 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
             <button
               type="button"
               onClick={() => setCatalogOpen(true)}
-              className="relative flex flex-col items-center justify-center border border-dashed border-[#575949] bg-[#1a1b17] px-1 py-1 font-mono text-[7px] text-yellow transition-all hover:border-yellow hover:bg-[#252620] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow min-[420px]:hidden lg:flex xl:hidden"
+              className="relative flex flex-col items-center justify-center border border-dashed border-line bg-surface-card px-1 py-1 font-mono text-[9px] text-yellow transition-all hover:border-yellow hover:bg-surface-well hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow min-[420px]:hidden lg:flex xl:hidden"
               title="Open Aatir's Arcade 7-disk catalog"
             >
-              <span className="text-[6.5px] text-[#88846f]">VAULT</span>
+              <span className="text-[9.5px] tracking-wider text-muted">VAULT</span>
               <span className="font-bold tracking-tight">ALL 7 ↗</span>
             </button>
           </div>
@@ -160,19 +160,19 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
 
         {/* Narrative & Lore Copy */}
         <div className="p-3">
-          <p className="m-0 font-mono text-[9.5px] leading-[1.6] text-[#d6d4c5]">
+          <p className="m-0 font-mono text-[10px] leading-[1.65] text-ink-secondary">
             {game.lore}
           </p>
 
           {/* Feature Badges */}
-          <div className="mt-2.5 flex flex-wrap gap-1.5 font-mono text-[7.5px] text-muted">
-            <span className="border border-[#3c3d34] bg-[#1a1b17] px-1.5 py-0.5 text-lime">
+          <div className="mt-2.5 flex flex-wrap gap-1.5 font-mono text-[9px] text-muted">
+            <span className="border border-line-subtle bg-surface-card px-1.5 py-0.5 text-lime">
               {game.genre}
             </span>
-            <span className="border border-[#3c3d34] bg-[#1a1b17] px-1.5 py-0.5 text-yellow">
+            <span className="border border-line-subtle bg-surface-card px-1.5 py-0.5 text-yellow">
               {game.telemetry}
             </span>
-            <span className="border border-[#3c3d34] bg-[#1a1b17] px-1.5 py-0.5 text-violet">
+            <span className="border border-line-subtle bg-surface-card px-1.5 py-0.5 text-violet">
               {game.publisher}
             </span>
           </div>
@@ -182,7 +182,7 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
             <button
               type="button"
               onClick={() => onLaunchGame(game)}
-              className="flex min-h-[44px] flex-1 items-center justify-center gap-2 border border-lime bg-lime/10 px-3 py-2 font-mono text-[10px] font-semibold tracking-wider text-lime transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-lime hover:text-[#181915] hover:shadow-[3px_3px_0_#a6e22e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow active:translate-x-0 active:translate-y-0"
+              className="flex min-h-[44px] flex-1 items-center justify-center gap-2 border border-lime bg-lime/10 px-3 py-2 font-mono text-[10.5px] font-semibold tracking-wider text-lime transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-lime hover:text-[#181915] hover:shadow-[3px_3px_0_#a6e22e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow active:translate-x-0 active:translate-y-0"
             >
               <Play size={13} className="fill-current" />
               <span>LAUNCH {game.executable}</span>
@@ -191,7 +191,7 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
               type="button"
               onClick={() => setCatalogOpen(true)}
               aria-label="View all 7 games in catalog"
-              className="flex min-h-[44px] min-w-[44px] items-center justify-center border border-[#444639] bg-[#22231e] text-[#c7c5b7] transition-all hover:border-yellow hover:text-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+              className="flex min-h-[44px] min-w-[44px] items-center justify-center border border-line bg-surface-card text-ink-secondary transition-all hover:border-yellow hover:text-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
               title="Open Aatir's Arcade catalog"
             >
               <Layers size={14} />
@@ -199,9 +199,9 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
           </div>
 
           {/* Sub-footer microcopy */}
-          <div className="mt-2 flex items-center justify-between font-mono text-[7px] text-[#88846f]">
+          <div className="mt-2 flex items-center justify-between font-mono text-[9px] text-muted">
             <span>CLICK-TO-PLAY · ZERO INSTALL</span>
-            <span className={isTouchDevice ? 'text-yellow' : 'text-[#88846f]'}>
+            <span className={isTouchDevice ? 'text-yellow' : 'text-muted-dim'}>
               {isTouchDevice ? 'KEYBOARD RECOMMENDED' : 'DESKTOP READY'}
             </span>
           </div>
@@ -226,7 +226,7 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
           {/* Modal Panel */}
           <div className="relative z-10 flex max-h-[90vh] w-full max-w-[620px] flex-col border border-line bg-surface shadow-[8px_8px_0_rgba(0,0,0,0.7)]">
             {/* Header */}
-            <div className="flex h-[46px] items-center justify-between border-b border-line bg-[#292a25] px-4 font-mono text-[11px] text-ink">
+            <div className="flex h-[46px] items-center justify-between border-b border-line bg-surface px-4 font-mono text-[11px] text-ink">
               <span className="flex items-center gap-2">
                 <Terminal size={14} className="text-lime" />
                 <span>AATIR'S ARCADE // RETRO DOS VAULT [7 DISKS]</span>
@@ -251,10 +251,10 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
                 {retroGames.map((item, idx) => (
                   <div
                     key={item.id}
-                    className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border border-[#383a30] bg-[#1a1b17] p-3 transition-colors hover:border-[#525447]"
+                    className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border border-line-subtle bg-surface-inset p-3 transition-colors hover:border-line"
                   >
                     <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2 text-[9px]">
+                      <div className="flex items-center gap-2 text-[10px]">
                         <span className="border border-line bg-[#252620] px-1.5 py-0.5 text-lime font-bold">
                           DISK {item.diskNumber}
                         </span>
@@ -264,10 +264,10 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
                       <h4 className="m-0 mt-1 text-[12px] font-bold text-ink">
                         {item.title}
                       </h4>
-                      <p className="m-0 mt-0.5 text-[9px] text-[#b5b3a3] leading-normal">
+                      <p className="m-0 mt-0.5 text-[10px] text-[#dedccd] leading-normal">
                         {item.lore}
                       </p>
-                      <div className="mt-1.5 flex flex-wrap gap-2 text-[7.5px] text-[#88846f]">
+                      <div className="mt-1.5 flex flex-wrap gap-2 text-[9px] text-[#9c9987]">
                         <span className="text-yellow">{item.telemetry}</span>
                         <span>· {item.size}</span>
                         <span>· {item.publisher}</span>
@@ -281,7 +281,7 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
                         setCatalogOpen(false);
                         onLaunchGame(item);
                       }}
-                      className="flex min-h-[40px] items-center justify-center gap-1.5 border border-lime bg-lime/10 px-3 py-1.5 text-[9.5px] font-semibold text-lime transition-all hover:bg-lime hover:text-[#181915] active:translate-y-0.5 shrink-0"
+                      className="flex min-h-[40px] items-center justify-center gap-1.5 border border-lime bg-lime/10 px-3 py-1.5 text-[10px] font-semibold text-lime transition-all hover:bg-lime hover:text-[#181915] active:translate-y-0.5 shrink-0"
                     >
                       <Play size={11} className="fill-current" />
                       <span>PLAY</span>
