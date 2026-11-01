@@ -97,14 +97,14 @@ export default function BlogSection() {
           Slide {currentIndex + 1} of {total}: {current.title}
         </div>
         {/* Top Control Bar */}
-        <div className="mb-4 flex flex-col gap-2.5 border border-line bg-[#1e1f1c] p-2.5 sm:p-3 shadow-panel">
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#36372f] pb-2 font-mono text-[10px] sm:text-[10.5px]">
+        <div className="mb-4 flex flex-col gap-2.5 border border-line bg-surface p-2.5 sm:p-3 shadow-panel">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-subtle pb-2 font-mono text-[10px] sm:text-[10.5px]">
             <div className="flex items-center gap-2 text-muted">
-              <BookOpen size={13} className="text-pink" />
-              <span className="text-[#c8c6b7]">DISPATCH LOG</span>
-              <span className="text-[#616254]">//</span>
+              <span className="font-mono text-pink font-bold">[LOG]</span>
+              <span className="text-ink-secondary">DISPATCH LOG</span>
+              <span className="text-muted-dim">//</span>
               <span className="text-lime">● FEED ACTIVE</span>
-              <span className="hidden text-[#616254] sm:inline">·</span>
+              <span className="hidden text-muted-dim sm:inline">·</span>
               <a
                 href="https://techtom.hashnode.dev/"
                 target="_blank"
@@ -118,7 +118,7 @@ export default function BlogSection() {
 
             {/* Tactile Carousel Controls */}
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1 font-mono text-[10px] text-[#9c9987]">
+              <div className="flex items-center gap-1 font-mono text-[10px] text-muted">
                 <span className="text-yellow font-semibold">[{currentNumber}</span>
                 <span>/</span>
                 <span>{totalNumber}]</span>
@@ -129,7 +129,7 @@ export default function BlogSection() {
                   type="button"
                   onClick={handlePrev}
                   aria-label="Previous article"
-                  className="inline-flex min-h-[44px] min-w-[44px] sm:min-h-[34px] sm:min-w-[34px] items-center justify-center border border-[#3f4037] bg-[#22231e] font-mono text-[10px] text-[#c8c6b7] transition hover:border-pink hover:bg-focus hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+                  className="inline-flex min-h-[44px] min-w-[44px] sm:min-h-[34px] sm:min-w-[34px] items-center justify-center border border-line-subtle bg-surface-card font-mono text-[10px] text-ink-secondary transition hover:border-pink hover:bg-focus hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
                 >
                   <ChevronLeft size={14} className="text-pink" />
                   <span className="sr-only sm:not-sr-only sm:pr-1">PREV</span>
@@ -138,7 +138,7 @@ export default function BlogSection() {
                   type="button"
                   onClick={handleNext}
                   aria-label="Next article"
-                  className="inline-flex min-h-[44px] min-w-[44px] sm:min-h-[34px] sm:min-w-[34px] items-center justify-center border border-[#3f4037] bg-[#22231e] font-mono text-[10px] text-[#c8c6b7] transition hover:border-lime hover:bg-focus hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+                  className="inline-flex min-h-[44px] min-w-[44px] sm:min-h-[34px] sm:min-w-[34px] items-center justify-center border border-line-subtle bg-surface-card font-mono text-[10px] text-ink-secondary transition hover:border-lime hover:bg-focus hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
                 >
                   <span className="sr-only sm:not-sr-only sm:pl-1">NEXT</span>
                   <ChevronRight size={14} className="text-lime" />
@@ -148,7 +148,7 @@ export default function BlogSection() {
           </div>
 
           {/* Quick Hub Note */}
-          <div className="flex flex-wrap items-center justify-between gap-1 text-[9.5px] font-mono text-[#9c9987]">
+          <div className="flex flex-wrap items-center justify-between gap-1 text-[9.5px] font-mono text-muted">
             <span>USE [← / →] KEYS OR SWIPE TO BROWSE</span>
             <span className="text-violet">TOPIC: {current.category.toUpperCase()}</span>
           </div>
@@ -165,7 +165,7 @@ export default function BlogSection() {
             
             {/* Visual Well / Thumbnail Column */}
             <div className="flex flex-col gap-2.5">
-              <div className="relative aspect-[16/10] w-full overflow-hidden border border-[#36372f] bg-[#171815]">
+              <div className="relative aspect-[16/10] w-full overflow-hidden border border-line-subtle bg-surface-inset">
                 {hasCover ? (
                   <img
                     src={current.cover}
@@ -188,12 +188,12 @@ export default function BlogSection() {
                       <div className="font-mono text-[10.5px] tracking-wider text-yellow">
                         [ TECHTOM ARCHIVE ]
                       </div>
-                      <div className="mt-1 text-[10px] text-[#a9a796]">
+                      <div className="mt-1 text-[10px] text-muted">
                         {current.category}
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between border-t border-[#292a23] pt-1 text-[9px] text-[#717264]">
+                    <div className="flex items-center justify-between border-t border-line-subtle pt-1 text-[9px] text-muted-dim">
                       <span>FORMAT: MD</span>
                       <span>HASHNODE SYNC</span>
                     </div>
@@ -206,8 +206,8 @@ export default function BlogSection() {
               </div>
 
               {/* Quick Card Telemetry */}
-              <div className="flex flex-wrap items-center justify-between gap-1 border border-[#2d2e26] bg-[#191a16] px-2.5 py-1.5 font-mono text-[9.5px]">
-                <div className="flex items-center gap-1 text-[#b4b19e]">
+              <div className="flex flex-wrap items-center justify-between gap-1 border border-line-subtle bg-surface-inset px-2.5 py-1.5 font-mono text-[9.5px]">
+                <div className="flex items-center gap-1 text-muted">
                   <Calendar size={11} className="text-violet" />
                   <span>{current.date}</span>
                 </div>
@@ -226,8 +226,8 @@ export default function BlogSection() {
                   <span className="border border-pink/40 bg-pink/10 px-2 py-0.5 text-pink">
                     {current.category}
                   </span>
-                  <span className="text-[#616254]">·</span>
-                  <span className="text-[#88846f]">POST #{currentNumber}</span>
+                  <span className="text-muted-dim">·</span>
+                  <span className="text-muted">POST #{currentNumber}</span>
                 </div>
 
                 {/* Article Headline */}
@@ -243,20 +243,20 @@ export default function BlogSection() {
                 </h3>
 
                 {/* Synopsis / Excerpt */}
-                <p className="mt-3 text-xs leading-[1.8] text-[#d6d4c5] sm:text-sm">
+                <p className="mt-3 text-xs leading-[1.8] text-ink-secondary sm:text-sm">
                   {current.description}
                 </p>
 
                 {/* Tags Pill List */}
                 <div className="mt-4 flex flex-wrap items-center gap-1.5">
-                  <span className="mr-1 inline-flex items-center gap-0.5 font-mono text-[9.5px] text-[#9c9987]">
+                  <span className="mr-1 inline-flex items-center gap-0.5 font-mono text-[9.5px] text-muted">
                     <Hash size={10} className="text-violet" />
                     TAGS:
                   </span>
                   {current.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="border border-[#38392f] bg-[#22231e] px-2 py-0.5 font-mono text-[9.5px] text-[#b4b19e]"
+                      className="border border-line-subtle bg-surface-card px-2 py-0.5 font-mono text-[9.5px] text-muted"
                     >
                       {tag}
                     </span>
@@ -265,7 +265,7 @@ export default function BlogSection() {
               </div>
 
               {/* Action Buttons */}
-              <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-[#35362e] pt-4">
+              <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-line-subtle pt-4">
                 <a
                   href={current.url}
                   target="_blank"
@@ -281,7 +281,7 @@ export default function BlogSection() {
                   href="https://techtom.hashnode.dev/"
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="inline-flex min-h-[44px] items-center gap-1.5 border border-[#48493e] bg-[#22231e] px-3.5 py-2.5 font-mono text-[9.5px] text-[#cbc9b9] transition hover:border-line hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow sm:text-[10px]"
+                  className="inline-flex min-h-[44px] items-center gap-1.5 border border-line-subtle bg-surface-card px-3.5 py-2.5 font-mono text-[9.5px] text-ink-secondary transition hover:border-line hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow sm:text-[10px]"
                 >
                   <span>ALL POSTS ON TECHTOM</span>
                   <ExternalLink size={11} className="text-yellow" />
@@ -292,8 +292,8 @@ export default function BlogSection() {
         </div>
 
         {/* Bottom Pagination Scrubber Track */}
-        <div className="mt-3.5 border border-line bg-[#1e1f1c] p-2 sm:p-2.5">
-          <div className="mb-1.5 flex items-center justify-between font-mono text-[9.5px] text-[#9c9987]">
+        <div className="mt-3.5 border border-line bg-surface p-2 sm:p-2.5">
+          <div className="mb-1.5 flex items-center justify-between font-mono text-[9.5px] text-muted">
             <span>INDEX SELECTOR:</span>
             <span>{currentNumber} SELECTED</span>
           </div>
@@ -312,10 +312,10 @@ export default function BlogSection() {
                   className={`inline-flex min-h-[44px] sm:min-h-[32px] flex-col items-center justify-center border px-1 py-1 font-mono text-[10px] transition ${
                     isActive
                       ? 'border-pink bg-focus text-ink shadow-[2px_2px_0_#f9267240]'
-                      : 'border-[#36372f] bg-[#22231e] text-[#88846f] hover:border-line hover:bg-focus hover:text-ink'
+                      : 'border-line-subtle bg-surface-card text-muted-dim hover:border-line hover:bg-focus hover:text-ink'
                   }`}
                 >
-                  <span className={isActive ? 'text-pink font-bold' : 'text-[#88846f]'}>
+                  <span className={isActive ? 'text-pink font-bold' : 'text-muted-dim'}>
                     {isActive ? `● ${formattedIdx}` : formattedIdx}
                   </span>
                 </button>

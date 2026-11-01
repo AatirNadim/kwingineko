@@ -447,20 +447,20 @@ export default function ParticlePortrait({ className = '' }) {
   return (
     <div className={`relative flex flex-col ${className}`}>
       {/* Monokai Terminal Frame */}
-      <div className="relative overflow-hidden border border-[#5d5e50] bg-[#1e1f1c] p-1.5 shadow-[4px_4px_0_rgb(0_0_0_/_35%)] transition-colors duration-200 hover:border-lime/70 sm:p-2">
+      <div className="relative overflow-hidden border border-line bg-surface p-1.5 shadow-panel transition-colors duration-200 hover:border-lime/70 sm:p-2">
         {/* Retro Header Strip */}
-        <div className="mb-1.5 flex items-center justify-between border-b border-[#35362e] pb-1 px-1 font-mono text-[9.5px] tracking-wider">
-          <div className="flex items-center gap-1.5 text-[#d0cebf]">
+        <div className="mb-1.5 flex items-center justify-between border-b border-line-subtle pb-1 px-1 font-mono text-[9.5px] tracking-wider">
+          <div className="flex items-center gap-1.5 text-ink-secondary">
             <span
               className={`h-1.5 w-1.5 rounded-full transition-colors ${
-                coords.active ? 'bg-pink shadow-[0_0_6px_#f92672]' : 'bg-lime shadow-[0_0_5px_#a6e22e]'
+                coords.active ? 'bg-pink' : 'bg-lime'
               }`}
             />
             <span className="font-semibold text-ink">AATIR / 001</span>
           </div>
-          <div className="flex items-center gap-2 text-[9px] text-[#9c9987]">
+          <div className="flex items-center gap-2 text-[9px] text-muted">
             <span className="text-lime">{coords.active ? (coords.isTouch ? 'TOUCH DISPERSE' : 'INTERACTION') : 'LIVE MESH'}</span>
-            <span className="hidden sm:inline text-[#5d5e50]">|</span>
+            <span className="hidden sm:inline text-muted-dim">|</span>
             <span className="hidden sm:inline text-yellow">{particleCount ? `${particleCount} PTS` : 'LOADING'}</span>
           </div>
         </div>
@@ -476,7 +476,7 @@ export default function ParticlePortrait({ className = '' }) {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
           onTouchCancel={handleTouchEnd}
-          className="relative aspect-[4/5] w-full cursor-crosshair overflow-hidden bg-[#24251f] select-none touch-pan-y"
+          className="relative aspect-[4/5] w-full cursor-crosshair overflow-hidden bg-surface-well select-none touch-pan-y"
         >
           {/* Underlayer photographic portrait: calibrated contrast revealed through the dispersion hole */}
           <img
@@ -502,7 +502,7 @@ export default function ParticlePortrait({ className = '' }) {
 
           {/* Loading indicator */}
           {!isLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center bg-[#1e1f1c] font-mono text-[9px] tracking-wider text-muted">
+            <div className="absolute inset-0 flex items-center justify-center bg-surface font-mono text-[9px] tracking-wider text-muted">
               INITIALIZING MESH...
             </div>
           )}
@@ -515,9 +515,9 @@ export default function ParticlePortrait({ className = '' }) {
         </div>
 
         {/* Retro Status Footer */}
-        <div className="mt-1.5 flex items-center justify-between px-1 font-mono text-[9px] tracking-wider text-[#9c9987]">
+        <div className="mt-1.5 flex items-center justify-between px-1 font-mono text-[9px] tracking-wider text-muted">
           <div className="flex items-center gap-2">
-            <span className="text-[#aaa897]">
+            <span className="text-muted-dim">
               {coords.active
                 ? `${coords.isTouch ? 'TOUCH' : 'CURSOR'}: X:${String(coords.x).padStart(3, '0')} Y:${String(coords.y).padStart(3, '0')}`
                 : 'CURSOR: HOVER / TOUCH'}
@@ -530,7 +530,7 @@ export default function ParticlePortrait({ className = '' }) {
       </div>
 
       {/* Film Strip Style Sub-label */}
-      <div className="mt-1 flex items-center justify-between px-1 font-mono text-[9.5px] tracking-widest text-[#9c9987]">
+      <div className="mt-1 flex items-center justify-between px-1 font-mono text-[9.5px] tracking-widest text-muted">
         <span>ENGINEER // CORE</span>
         <span>NO. 001</span>
       </div>
