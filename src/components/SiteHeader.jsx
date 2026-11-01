@@ -1,6 +1,6 @@
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Terminal, FileText } from 'lucide-react';
 
-export default function SiteHeader({ time, navOpen, onToggleNavigation, onHome }) {
+export default function SiteHeader({ time, navOpen, onToggleNavigation, onHome, onOpenCommandPalette }) {
   return (
     <header className="border border-line bg-surface/95 shadow-panel-lg">
       <div className="flex h-[69px] items-center justify-between border-b border-line px-3 sm:px-6">
@@ -18,20 +18,53 @@ export default function SiteHeader({ time, navOpen, onToggleNavigation, onHome }
           </div>
         </a>
 
-        {/* 44x44px minimum tap target for hamburger toggle */}
-        <button
-          type="button"
-          aria-label={navOpen ? 'Close navigation' : 'Open navigation'}
-          aria-expanded={navOpen}
-          aria-controls="mobile-navigation-drawer"
-          onClick={onToggleNavigation}
-          className="grid h-11 w-11 min-h-[44px] min-w-[44px] place-items-center border border-line bg-surface text-ink transition-colors hover:bg-focus focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow lg:hidden"
-        >
-          {navOpen ? <X size={20} className="text-pink" /> : <Menu size={20} />}
-        </button>
+        {/* Action Controls: Mobile Command Trigger + Hamburger */}
+        <div className="flex items-center gap-2 lg:hidden">
+          <button
+            type="button"
+            onClick={onOpenCommandPalette}
+            aria-label="Open command palette"
+            className="grid h-11 w-11 min-h-[44px] min-w-[44px] place-items-center border border-line bg-surface font-mono text-xs text-lime transition-colors hover:bg-focus focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow"
+          >
+            &gt;_
+          </button>
+          <button
+            type="button"
+            aria-label={navOpen ? 'Close navigation' : 'Open navigation'}
+            aria-expanded={navOpen}
+            aria-controls="mobile-navigation-drawer"
+            onClick={onToggleNavigation}
+            className="grid h-11 w-11 min-h-[44px] min-w-[44px] place-items-center border border-line bg-surface text-ink transition-colors hover:bg-focus focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow"
+          >
+            {navOpen ? <X size={20} className="text-pink" /> : <Menu size={20} />}
+          </button>
+        </div>
 
-        <div className="hidden items-center gap-2 font-mono text-[10.5px] tracking-[.6px] text-ink-secondary lg:flex">
-          <span className="h-[7px] w-[7px] rounded-full bg-lime" /> SYSTEMS THINKING / ON PURPOSE
+        {/* Desktop Command Palette Badge + Systems Motto */}
+        <div className="hidden items-center gap-3 font-mono text-[10.5px] tracking-[.6px] text-ink-secondary lg:flex">
+          <button
+            type="button"
+            onClick={onOpenCommandPalette}
+            aria-label="Open command palette (Cmd+K)"
+            className="inline-flex min-h-[32px] items-center gap-1.5 border border-[#43443a] bg-[#1a1b18] px-2.5 py-1 text-[9.5px] text-[#c2c0af] transition hover:border-yellow hover:text-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+          >
+            <Terminal size={12} className="text-lime" />
+            <span>COMMANDS</span>
+            <kbd className="border border-[#4c4d42] bg-[#252621] px-1 text-[8.5px] text-ink">⌘K</kbd>
+          </button>
+          <a
+            href="/Aatir_Nadim_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="View Resume PDF"
+            className="inline-flex min-h-[32px] items-center gap-1.5 border border-[#43443a] bg-[#1a1b18] px-2.5 py-1 text-[9.5px] text-[#c2c0af] transition hover:border-lime hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+          >
+            <FileText size={12} className="text-yellow" />
+            <span>CV.PDF</span>
+          </a>
+          <div className="flex items-center gap-2">
+            <span className="h-[7px] w-[7px] rounded-full bg-lime" /> SYSTEMS THINKING / ON PURPOSE
+          </div>
         </div>
       </div>
 
