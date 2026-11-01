@@ -29,7 +29,7 @@ export default function ProjectsSection() {
             </div>
 
             {/* Main content grid */}
-            <div className={`mt-3.5 grid gap-4 ${project.image ? 'min-[700px]:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] min-[700px]:items-start' : ''}`}>
+            <div className={`mt-3.5 grid gap-4 ${project.image ? 'cq-split-project' : ''}`}>
               <div className="flex flex-col min-w-0">
                 <h3 className="mb-1 font-display text-lg font-bold tracking-tight text-ink min-[380px]:text-xl sm:text-2xl break-words">
                   {project.name}

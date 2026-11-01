@@ -313,7 +313,7 @@ export default function CursorCat({ active = false, onStatusChange }) {
   return (
     <div
       aria-hidden="true"
-      className="fixed pointer-events-none z-50 will-change-transform select-none"
+      className={`fixed pointer-events-none z-50 select-none ${isCaught ? '' : 'will-change-transform'}`}
       style={{
         left: 0,
         top: 0,
@@ -325,8 +325,14 @@ export default function CursorCat({ active = false, onStatusChange }) {
           <div
             role="status"
             aria-live="polite"
-            className={`pointer-events-none absolute left-1/2 -translate-x-1/2 max-w-[140px] truncate whitespace-nowrap bg-[#f0f0f0] text-[#0b0b0b] font-mono text-[9px] px-1.5 py-0.5 border border-[#0b0b0b] shadow-[1px_1px_0_#f92672] ${
+            className={`pointer-events-none absolute max-w-[140px] truncate whitespace-nowrap bg-[#f0f0f0] text-[#0b0b0b] font-mono text-[9px] px-1.5 py-0.5 border border-[#0b0b0b] shadow-[1px_1px_0_#f92672] ${
               pos.y < 40 ? 'top-full mt-1.5' : 'bottom-full mb-1.5'
+            } ${
+              pos.x < 75
+                ? 'left-0'
+                : pos.x > (typeof window !== 'undefined' ? window.innerWidth - 75 : 800)
+                ? 'right-0'
+                : 'left-1/2 -translate-x-1/2'
             }`}
           >
             {bubbleText}

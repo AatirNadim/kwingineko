@@ -294,32 +294,35 @@ export default function ParticlePortrait({ className = '' }) {
   }, []);
 
   // Resize and initialize canvas when container dimensions or image changes
-  useEffect(() => {
+  const updateDimensions = useCallback(() => {
     const container = containerRef.current;
     const canvas = canvasRef.current;
     if (!container || !canvas) return;
 
-    const updateDimensions = () => {
-      const rect = container.getBoundingClientRect();
-      if (!rect.width) return;
-      const width = Math.round(rect.width);
-      // Keep strict 4:5 aspect ratio
-      const height = Math.round(width * 1.25);
+    const rect = container.getBoundingClientRect();
+    if (!rect.width) return;
+    const width = Math.round(rect.width);
+    // Keep strict 4:5 aspect ratio
+    const height = Math.round(width * 1.25);
 
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
 
-      stateRef.current.width = width;
-      stateRef.current.height = height;
-      stateRef.current.dpr = dpr;
+    stateRef.current.width = width;
+    stateRef.current.height = height;
+    stateRef.current.dpr = dpr;
 
-      if (imageRef.current && imageRef.current.complete) {
-        initParticles(imageRef.current, width, height);
-      }
-    };
+    if (imageRef.current && imageRef.current.complete) {
+      initParticles(imageRef.current, width, height);
+    }
+  }, [initParticles]);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
 
     updateDimensions();
 
@@ -328,15 +331,15 @@ export default function ParticlePortrait({ className = '' }) {
     });
     resizeObserver.observe(container);
 
-    window.addEventListener('resize', updateDimensions);
-    window.addEventListener('orientationchange', updateDimensions);
+    window.addEventListener('resize', updateDimensions, { passive: true });
+    window.addEventListener('orientationchange', updateDimensions, { passive: true });
 
     return () => {
       resizeObserver.disconnect();
       window.removeEventListener('resize', updateDimensions);
       window.removeEventListener('orientationchange', updateDimensions);
     };
-  }, [initParticles]);
+  }, [updateDimensions]);
 
   // Pointer event handlers (Mouse / Stylus)
   const handlePointerMove = (e) => {
@@ -482,10 +485,7 @@ export default function ParticlePortrait({ className = '' }) {
             alt="Portrait of Aatir Nadim"
             onLoad={() => {
               setIsLoaded(true);
-              if (containerRef.current) {
-                const rect = containerRef.current.getBoundingClientRect();
-                initParticles(imageRef.current, rect.width, rect.width * 1.25);
-              }
+              updateDimensions();
             }}
             className={`pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_22%] contrast-125 brightness-75 transition-opacity duration-300 ${
               coords.active ? 'opacity-40' : 'opacity-20'

@@ -161,7 +161,7 @@ export default function BlogSection() {
           aria-label={`Article ${currentIndex + 1} of ${total}: ${current.title}`}
           className="border border-line bg-surface p-3.5 sm:p-5 shadow-panel"
         >
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-[280px_1fr] lg:grid-cols-[300px_1fr]">
+          <div className="grid grid-cols-1 gap-5 cq-split-blog">
             
             {/* Visual Well / Thumbnail Column */}
             <div className="flex flex-col gap-2.5">
