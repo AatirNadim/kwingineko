@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import ContactModal from './components/ContactModal.jsx';
+import DosPlayerModal from './components/DosPlayerModal.jsx';
 import ContactSection from './components/ContactSection.jsx';
 import CertificatesSection from './components/CertificatesSection.jsx';
 import BlogSection from './components/BlogSection.jsx';
@@ -22,6 +23,7 @@ export default function App() {
   const [followCursor, setFollowCursor] = useState(false);
   const [catStatus, setCatStatus] = useState('idle');
   const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [activeDosGame, setActiveDosGame] = useState(null);
 
   useEffect(() => {
     const timer = window.setInterval(() => setTime(new Date()), 60_000);
@@ -77,6 +79,8 @@ export default function App() {
             followEnabled={followCursor}
             onToggleFollow={() => setFollowCursor((prev) => !prev)}
             catStatus={catStatus}
+            onLaunchGame={(game) => setActiveDosGame(game)}
+            activeGame={activeDosGame}
           />
         </div>
         <SiteFooter
@@ -86,6 +90,12 @@ export default function App() {
           }}
         />
         <ContactModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} />
+        <DosPlayerModal
+          isOpen={Boolean(activeDosGame)}
+          game={activeDosGame}
+          onClose={() => setActiveDosGame(null)}
+          onGameChange={(nextGame) => setActiveDosGame(nextGame)}
+        />
       </div>
     </>
   );
