@@ -481,8 +481,12 @@ export default function ParticlePortrait({ className = '' }) {
           {/* Underlayer photographic portrait: calibrated contrast revealed through the dispersion hole */}
           <img
             ref={imageRef}
-            src="/assets/aatir-portrait.png"
+            src="/assets/aatir-portrait.webp"
             alt="Portrait of Aatir Nadim"
+            fetchPriority="high"
+            decoding="async"
+            width="953"
+            height="1651"
             onLoad={() => {
               setIsLoaded(true);
               updateDimensions();

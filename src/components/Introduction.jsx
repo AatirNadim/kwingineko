@@ -19,6 +19,7 @@ export default function Introduction({ onExplore }) {
       <div className="mt-5 grid grid-cols-1 items-start gap-6 sm:mt-6 cq-split-intro">
         <div className="min-w-0">
           <h1 className="mb-[18px] font-display text-[clamp(28px,6vw,56px)] font-semibold leading-[1.04] tracking-[-1.5px] sm:tracking-[-2.5px] text-ink">
+            <span className="sr-only">Aatir Nadim — Software Engineer &amp; Systems Workstation. </span>
             I work across<br /><em className="not-italic text-pink">the whole system.</em>
           </h1>
           <p className="m-0 max-w-[580px] text-xs leading-[1.8] text-ink-secondary sm:text-sm sm:leading-[1.85]">
@@ -36,11 +37,11 @@ export default function Introduction({ onExplore }) {
               href="/Aatir_Nadim_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-[44px] items-center gap-2 border border-[#48493e] bg-surface px-3 py-2.5 font-mono text-[10px] tracking-wide text-[#cbc9b9] font-semibold transition hover:border-yellow hover:text-yellow hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0_#e6db7450] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow sm:px-[13px]"
+              className="inline-flex min-h-[44px] items-center gap-2 border border-line bg-surface px-3 py-2.5 font-mono text-[10px] tracking-wide text-ink-secondary font-semibold transition hover:border-yellow hover:text-yellow hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0_#e6db7450] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow sm:px-[13px]"
             >
               <FileText size={14} className="text-yellow" />
               <span>RÉSUMÉ [PDF]</span>
-              <ExternalLink size={12} className="text-[#88846f]" />
+              <ExternalLink size={12} className="text-muted-dim" />
             </a>
             <span className="font-mono text-[9.5px] leading-[1.8] tracking-wide text-muted sm:text-[10px]">
               Backend systems<br />Cloud platforms<br />Developer tooling
