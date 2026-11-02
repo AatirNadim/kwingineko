@@ -15,17 +15,26 @@
       content="Aatir Nadim, Software Engineer, Backend Engineer, Systems Programming, Go, Bitcask, AWS, Terraform, Distributed Systems, WebSockets, Linux"
     />
 
+    <!-- Canonical URL (Update this domain once custom DNS is mapped) -->
+    <link rel="canonical" href="https://aatirnadim.com/" />
+
+    <!-- Google Search Console Verification placeholder (uncomment and replace when ready) -->
+    <!-- <meta name="google-site-verification" content="PASTE_YOUR_GSC_TOKEN_HERE" /> -->
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Aatir Nadim — Engineer's Desktop & Personal Workstation" />
+    <meta property="og:url" content="https://aatirnadim.com/" />
+    <meta property="og:title" content="Aatir Nadim — Engineer's Desktop &amp; Personal Workstation" />
     <meta
       property="og:description"
       content="Personal engineering workstation of Aatir Nadim. Tracing backend services, append-only storage engines, cloud infrastructure, and developer tooling."
     />
-    <meta property="og:image" content="/assets/windows.png" />
+    <meta property="og:image" content="https://aatirnadim.com/assets/windows.png" />
+    <meta property="og:image:secure_url" content="https://aatirnadim.com/assets/windows.png" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1672" />
     <meta property="og:image:height" content="941" />
     <meta property="og:image:alt" content="Aatir Nadim Retro Monokai Engineering Workstation Preview" />
@@ -34,21 +43,171 @@
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Aatir Nadim — Engineer's Desktop & Personal Workstation" />
+    <meta name="twitter:title" content="Aatir Nadim — Engineer's Desktop &amp; Personal Workstation" />
     <meta
       name="twitter:description"
       content="Personal engineering workstation of Aatir Nadim. Tracing backend services, append-only storage engines, cloud infrastructure, and developer tooling."
     />
-    <meta name="twitter:image" content="/assets/windows.png" />
+    <meta name="twitter:image" content="https://aatirnadim.com/assets/windows.png" />
     <meta name="twitter:image:alt" content="Aatir Nadim Retro Monokai Engineering Workstation Preview" />
 
-    <title>Aatir Nadim — Engineer's Desktop</title>
+    <title>Aatir Nadim — Software Engineer | Systems &amp; Infrastructure</title>
+
+    <!-- Preconnect to Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+Devanagari:wght@500;600;700&family=Noto+Sans+JP:wght@500;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Structured Data (Schema.org JSON-LD Graph: ProfilePage, Person, Projects & FAQ) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ProfilePage",
+          "@id": "https://aatirnadim.com/#profilepage",
+          "url": "https://aatirnadim.com/",
+          "name": "Aatir Nadim — Software Engineer",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://aatirnadim.com/#website",
+            "url": "https://aatirnadim.com/",
+            "name": "Aatir Nadim — Engineer's Desktop"
+          },
+          "mainEntity": {
+            "@type": "Person",
+            "@id": "https://aatirnadim.com/#person",
+            "name": "Aatir Nadim",
+            "jobTitle": "Software Engineer",
+            "description": "Software Engineer specializing in backend systems, distributed storage, cloud platforms, and developer tooling.",
+            "url": "https://aatirnadim.com/",
+            "sameAs": [
+              "https://github.com/AatirNadim",
+              "https://www.linkedin.com/in/aatirnadim/",
+              "https://techtom.hashnode.dev/",
+              "https://leetcode.com/user3405Ye/",
+              "https://www.cloudskillsboost.google/public_profiles/d61be509-d6cb-46fc-9b62-c083e3636598"
+            ],
+            "knowsAbout": [
+              "Backend Systems",
+              "Distributed Storage",
+              "Go",
+              "Bitcask",
+              "AWS",
+              "Terraform",
+              "Docker",
+              "WebRTC",
+              "WebSockets",
+              "Observability",
+              "Linux"
+            ]
+          }
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://aatirnadim.com/#projects",
+          "name": "Selected Engineering Projects",
+          "itemListElement": [
+            {
+              "@type": "SoftwareSourceCode",
+              "position": 1,
+              "name": "plan-parse",
+              "description": "An interactive Terraform plan workbench. Transforms complex HCL change-sets into a hierarchical Cytoscape dependency graph and evaluates blast radius before execution.",
+              "codeRepository": "https://github.com/AatirNadim/plan-parse",
+              "programmingLanguage": ["Go", "React", "Terraform"]
+            },
+            {
+              "@type": "SoftwareSourceCode",
+              "position": 2,
+              "name": "getMe",
+              "description": "A persistent, Bitcask-inspired key-value storage engine in Go. Features sequential append-only disk logging, in-memory hash indexing, concurrent startup reconstruction, and background compaction.",
+              "codeRepository": "https://github.com/AatirNadim/getMe",
+              "programmingLanguage": ["Go"]
+            },
+            {
+              "@type": "SoftwareSourceCode",
+              "position": 3,
+              "name": "Window",
+              "description": "A peer-to-peer file transfer system engineered with WebRTC Data Channels and Node.js WebSocket signaling coordinator.",
+              "codeRepository": "https://github.com/AatirNadim/window",
+              "programmingLanguage": ["JavaScript", "Node.js", "React"]
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://aatirnadim.com/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What kind of roles and technical challenges are you targeting?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "I’m focused on backend engineering, cloud platforms, and distributed systems roles. Specifically, problem spaces involving service resilience, data ingestion pipelines, storage engines, internal developer tooling, and telemetry. I thrive in teams that value clean system boundaries, proactive observability, and thoughtful technical investigation."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Are you open to remote work or relocation?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. I’m comfortable working asynchronously across distributed, remote-first engineering teams, as well as hybrid or onsite arrangements. For the right engineering opportunity and impactful problem space, I’m also open to relocation."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do you strictly write backend code, or do you touch frontend too?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "My primary depth is in backend services, cloud infrastructure, and systems programming (Go, Java/Kotlin, AWS, Terraform, Bitcask storage engines). That said, I am a firm believer in end-to-end product agency—whether building developer workbenches like plan-parse, WebRTC interfaces like Window, or custom workstations, I deliver polished frontend interfaces when building tools people rely on."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is your philosophy on system complexity and tech stacks?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Boring architecture where possible; high precision where necessary. Avoid distributed microservices until monolith boundaries actually strain; avoid complex external dependencies when a simple Unix domain socket, append-only log, or clean SQL schema solves the problem. Observability and deterministic testing aren’t afterthoughts—they’re how you sleep at night."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
   </head>
-  <body><div id="root"></div><script type="module" src="/src/main.jsx"></script></body>
+  <body>
+    <!-- Fallback content for search engine crawlers & non-JS visitors -->
+    <noscript>
+      <div style="max-width: 860px; margin: 40px auto; padding: 24px; font-family: monospace; background: #272822; color: #f8f8f2; border: 1px solid #45463e; line-height: 1.6;">
+        <h1 style="color: #f92672; font-size: 26px; margin-bottom: 8px;">Aatir Nadim — Software Engineer</h1>
+        <p style="color: #a6e22e; font-size: 14px; margin-bottom: 20px;">Backend Systems · Cloud Platforms · Distributed Storage · Developer Tooling</p>
+        <p style="color: #d6d4c5; margin-bottom: 20px;">
+          I work across the whole system. A software engineer drawn to the spaces between services, infrastructure, and the people who rely on them. I trace data flows, investigate ambiguous behavior, and shape changes with compatibility, testing, and clear documentation in mind.
+        </p>
+
+        <h2 style="color: #e6db74; font-size: 18px; margin-top: 24px; margin-bottom: 8px;">Selected Engineering Projects</h2>
+        <ul style="padding-left: 20px; color: #d6d4c5;">
+          <li><strong>plan-parse</strong>: Interactive Terraform plan workbench with hierarchical Cytoscape dependency graph and blast radius evaluator. (<a href="https://github.com/AatirNadim/plan-parse" style="color: #a6e22e;">GitHub</a>)</li>
+          <li><strong>getMe</strong>: Persistent Bitcask-inspired key-value storage engine in Go with append-only logging and background compaction. (<a href="https://github.com/AatirNadim/getMe" style="color: #a6e22e;">GitHub</a>)</li>
+          <li><strong>Window</strong>: Peer-to-peer chunked file streaming engine with WebRTC Data Channels and WebSocket signaling. (<a href="https://github.com/AatirNadim/window" style="color: #a6e22e;">GitHub</a>)</li>
+        </ul>
+
+        <h2 style="color: #e6db74; font-size: 18px; margin-top: 24px; margin-bottom: 8px;">Engineering Verified Profiles</h2>
+        <p>
+          <a href="https://github.com/AatirNadim" style="color: #a6e22e; margin-right: 14px;">GitHub</a>
+          <a href="https://www.linkedin.com/in/aatirnadim/" style="color: #a6e22e; margin-right: 14px;">LinkedIn</a>
+          <a href="https://techtom.hashnode.dev/" style="color: #a6e22e; margin-right: 14px;">Blog</a>
+          <a href="https://leetcode.com/user3405Ye/" style="color: #a6e22e; margin-right: 14px;">LeetCode</a>
+          <a href="/Aatir_Nadim_Resume.pdf" style="color: #e6db74; margin-right: 14px;">Download Résumé (PDF)</a>
+        </p>
+      </div>
+    </noscript>
+
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

@@ -83,12 +83,21 @@ export default function ProjectsSection() {
                     <span className="text-[9px] tracking-wider text-muted">{project.status}</span>
                   </div>
                   <div className="relative overflow-hidden bg-black/50">
-                    <img
-                      src={project.image}
-                      alt={project.imageAlt}
-                      loading="lazy"
-                      className="aspect-[16/10] w-full object-cover [image-rendering:pixelated] transition-transform duration-300 ease-out group-hover/art:scale-[1.03]"
-                    />
+                    <picture>
+                      <source
+                        type="image/webp"
+                        srcSet={project.image.replace(/\.(png|jpg|jpeg)$/, '.webp')}
+                      />
+                      <img
+                        src={project.image}
+                        alt={project.imageAlt}
+                        loading="lazy"
+                        decoding="async"
+                        width="1376"
+                        height="860"
+                        className="aspect-[16/10] w-full object-cover [image-rendering:pixelated] transition-transform duration-300 ease-out group-hover/art:scale-[1.03]"
+                      />
+                    </picture>
                   </div>
                   {project.imageCaption && (
                     <div className="border-t border-line-subtle bg-surface-inset px-2.5 py-1.5 font-mono text-[9.5px] leading-snug text-ink-secondary">
