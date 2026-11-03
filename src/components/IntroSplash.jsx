@@ -7,11 +7,14 @@ const GREETINGS = [
   { word: 'hola', language: 'SPANISH', color: 'text-pink' },
   { word: 'bonjour', language: 'FRENCH', color: 'text-yellow' },
   { word: 'jambo', language: 'SWAHILI', color: 'text-violet' },
-  { word: 'hello', language: 'ENGLISH', color: 'text-lime' },
+  { word: 'welcome', language: 'ENGLISH', color: 'text-lime' },
 ];
 
-const STEP_MS = 430;
-const EXIT_MS = 520;
+// Total sequence duration = 1500ms (1.5 seconds)
+// 6 initial steps @ 170ms = 1020ms; final greeting @ 480ms = 1500ms total.
+const STEP_MS = 170;
+const FINAL_STEP_MS = 480;
+const EXIT_MS = 600;
 
 export default function IntroSplash() {
   const [visible, setVisible] = useState(() => {
@@ -48,14 +51,17 @@ export default function IntroSplash() {
     };
     window.addEventListener('keydown', handleKeyDown);
 
+    const isLast = index === GREETINGS.length - 1;
+    const currentStepDuration = isLast ? FINAL_STEP_MS : STEP_MS;
+
     const timer = window.setTimeout(() => {
       if (index < GREETINGS.length - 1) {
-        setIndex(index + 1);
+        setIndex((prev) => prev + 1);
         return;
       }
 
       dismiss();
-    }, STEP_MS);
+    }, currentStepDuration);
 
     return () => {
       window.clearTimeout(timer);
@@ -73,11 +79,11 @@ export default function IntroSplash() {
       aria-modal="true"
       aria-label="Welcome splash screen"
       onClick={dismiss}
-      className={`intro-splash fixed inset-0 z-[100] grid place-items-center bg-canvas/95 backdrop-blur-[2px] p-3 sm:p-5 ${leaving ? 'intro-splash-leave' : ''}`}
+      className={`intro-splash fixed inset-0 z-[100] grid place-items-center bg-canvas p-3 sm:p-5 ${leaving ? 'intro-splash-leave' : ''}`}
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative flex max-h-[92vh] w-full max-w-[520px] flex-col items-center overflow-y-auto border border-line bg-surface px-4 pb-8 pt-14 shadow-[6px_6px_0_rgb(0_0_0_/_22%)] sm:px-10 sm:pb-12 sm:pt-14 md:pb-12 md:pt-14"
+        className={`intro-splash-card relative flex max-h-[92vh] w-full max-w-[520px] flex-col items-center overflow-y-auto border border-line bg-surface px-4 pb-8 pt-14 shadow-[6px_6px_0_rgb(0_0_0_/_30%)] sm:px-10 sm:pb-12 sm:pt-14 md:pb-12 md:pt-14 ${leaving ? 'intro-card-leave' : ''}`}
       >
         {/* Title Bar */}
         <div className="absolute left-0 right-0 top-0 flex min-h-[44px] items-center justify-between border-b border-line bg-[#292a25] px-2.5 font-mono text-[10px] tracking-wider text-muted sm:px-3">
@@ -87,6 +93,7 @@ export default function IntroSplash() {
             <button
               onClick={dismiss}
               type="button"
+              autoFocus
               aria-label="Skip introduction"
               className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center border border-[#4e5043] bg-[#1e1f1c] px-2.5 py-1.5 font-mono text-[10px] tracking-wider text-yellow transition-colors hover:border-pink hover:text-pink focus-visible:outline focus-visible:outline-1 focus-visible:outline-yellow"
             >
@@ -104,7 +111,7 @@ export default function IntroSplash() {
         <p className="mb-0 mt-3 font-mono text-[10px] tracking-widest text-muted sm:text-[10.5px]">{greeting.language}</p>
         <div className="mt-6 flex items-center gap-[4px] sm:mt-8 sm:gap-[5px]" aria-hidden="true">
           {GREETINGS.map((item, itemIndex) => (
-            <span key={`${item.language}-${itemIndex}`} className={`h-[3px] w-[14px] transition-colors duration-200 sm:w-[18px] ${itemIndex <= index ? 'bg-pink' : 'bg-focus'}`}/>
+            <span key={`${item.language}-${itemIndex}`} className={`h-[3px] w-[14px] transition-colors duration-150 sm:w-[18px] ${itemIndex <= index ? 'bg-pink' : 'bg-focus'}`}/>
           ))}
         </div>
         <div className="mt-4 flex flex-col items-center gap-1.5 text-center sm:mt-5">
