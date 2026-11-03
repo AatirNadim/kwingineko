@@ -3,15 +3,12 @@ import readingConfig from '../reading.config.json';
 import DeskCompanion from './DeskCompanion.jsx';
 import NightSkyWidget from './NightSkyWidget.jsx';
 import ReadingWidget from './ReadingWidget.jsx';
-import RecreationBayWidget from './RecreationBayWidget.jsx';
 import SocialLinks from './SocialLinks.jsx';
 
 export default function PersonalSidebar({
   followEnabled,
   onToggleFollow,
   catStatus,
-  onLaunchGame,
-  activeGame,
 }) {
   const [selectedTopicIds, setSelectedTopicIds] = useState(() => {
     try {
@@ -66,10 +63,7 @@ export default function PersonalSidebar({
         catStatus={catStatus}
       />
 
-      {/* 5. Retro DOS WebAssembly Arcade */}
-      <RecreationBayWidget onLaunchGame={onLaunchGame} activeGame={activeGame} />
-
-      {/* 6. Open Source Engineering Badge */}
+      {/* 5. Open Source Engineering Badge */}
       <div className="flex items-center gap-[10px] border border-dashed border-line bg-surface-card px-3 py-[11px] font-mono text-[10px] tracking-wide text-lime">
         <span className="text-lg">◎</span>
         <span>

@@ -386,8 +386,8 @@ export const faqs = [
     number: '06',
     question: 'Why does this portfolio look like a retro workstation with a playable arcade?',
     tag: 'SYS.LORE // AESTHETICS',
-    answer: 'Because software engineering used to feel tactile, playful, and exploratory. We spend all day looking at sleek, sterile, generic minimalist SaaS cards. Building this retro workstation—complete with Monokai syntax tokens, a playable DOS arcade, a night sky widget, and a desk cat—was my way of celebrating personal computing craft and having fun.',
-    highlight: 'Tactile retro computing · Anti-sterile web craft · Monokai devotion',
+    answer: 'Because software engineering used to feel tactile, playful, and exploratory. We spend all day looking at sleek, sterile, generic minimalist SaaS cards. Building this retro workstation—complete with Monokai syntax tokens, a night sky widget, and a desk cat—was my way of celebrating personal computing craft. As a hidden bonus, a full 7-disk WebAssembly DOS arcade is preserved directly in the terminal archive below—zero installs required.',
+    highlight: 'Tactile retro computing · 7-disk WASM arcade · Anti-sterile web craft',
   },
   {
     id: 'desk-cat',

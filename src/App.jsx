@@ -108,15 +108,13 @@ export default function App() {
             <ExpertiseSection />
             <CertificatesSection />
             <BlogSection />
-            <FaqSection />
+            <FaqSection onLaunchGame={(game) => setActiveDosGame(game)} />
             <ContactSection onOpenComposer={() => setContactModalOpen(true)} />
           </main>
           <PersonalSidebar
             followEnabled={followCursor}
             onToggleFollow={() => setFollowCursor((prev) => !prev)}
             catStatus={catStatus}
-            onLaunchGame={(game) => setActiveDosGame(game)}
-            activeGame={activeDosGame}
           />
         </div>
         <SiteFooter

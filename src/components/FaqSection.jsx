@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Search, Plus, Minus, Check, Copy, HelpCircle, Terminal, X, CornerDownRight } from 'lucide-react';
 import SectionHeading from './SectionHeading.jsx';
+import FaqArcadeVault from './FaqArcadeVault.jsx';
 import { faqs } from '../data/portfolio.js';
 
 const CATEGORIES = [
@@ -10,10 +11,10 @@ const CATEGORIES = [
   { id: 'lore', label: 'LORE & TRIVIA' },
 ];
 
-export default function FaqSection() {
+export default function FaqSection({ onLaunchGame }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [expandedIds, setExpandedIds] = useState(() => new Set(['roles-scope', 'portfolio-aesthetic']));
+  const [expandedIds, setExpandedIds] = useState(() => new Set(['roles-scope']));
   const [copiedId, setCopiedId] = useState(null);
 
   // Filter FAQs based on category and query
@@ -234,6 +235,11 @@ export default function FaqSection() {
                     <p className="text-xs leading-[1.85] text-[#d6d4c5] sm:text-[13px] sm:leading-[1.9]">
                       {faq.answer}
                     </p>
+
+                    {/* Embedded 7-Disk Retro Arcade Vault (FAQ #06) */}
+                    {faq.id === 'portfolio-aesthetic' && (
+                      <FaqArcadeVault onLaunchGame={onLaunchGame} />
+                    )}
 
                     {/* Highlight Footer + Action Bar */}
                     <div className="mt-3.5 flex flex-wrap items-center justify-between gap-2.5 border-t border-[#2e2f27] pt-3 font-mono text-[9.5px] sm:text-[10px]">
