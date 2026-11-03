@@ -194,7 +194,7 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
       role="dialog"
       aria-modal="true"
       aria-labelledby="dos-player-title"
-      className="fixed inset-0 z-[120] grid place-items-center bg-canvas/90 p-2 backdrop-blur-sm sm:p-4"
+      className="fixed inset-0 z-[110] grid place-items-center bg-canvas/90 p-2 backdrop-blur-sm sm:p-4"
     >
       <div
         ref={modalContainerRef}

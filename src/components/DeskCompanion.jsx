@@ -229,6 +229,8 @@ export default function DeskCompanion({ followEnabled = false, onToggleFollow, c
           <span className="text-muted-dim">SYS.STALKER //</span>
           {!followEnabled ? (
             <span className="text-muted">{isTouchDevice ? 'TOUCH SCREEN · TAP TO STALK' : 'STANDBY · CLICK TO DEPLOY'}</span>
+          ) : catStatus === 'observing' ? (
+            <span className="font-semibold text-yellow tracking-wide">◐ CURIOUS · OBSERVING PORTRAIT</span>
           ) : catStatus === 'caught' ? (
             <span className="font-semibold text-pink">♥ TARGET CAUGHT! [PURR]</span>
           ) : catStatus === 'stalking' ? (

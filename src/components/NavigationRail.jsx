@@ -83,7 +83,7 @@ export default function NavigationRail({ open, onClose, active, time, onNavigate
           role="dialog"
           aria-modal="true"
           aria-label="Site navigation drawer"
-          className="fixed inset-0 z-50 flex items-start justify-center p-3 sm:p-6 lg:hidden"
+          className="fixed inset-0 z-[100] flex items-start justify-center p-3 sm:p-6 lg:hidden"
         >
           {/* Backdrop with click-to-close */}
           <div

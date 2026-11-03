@@ -90,7 +90,7 @@ export default function ContactModal({ isOpen, onClose }) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-mail-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-2.5 sm:p-5"
     >
       {/* Dimmed Retro Backdrop */}
       <div

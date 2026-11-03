@@ -106,6 +106,7 @@ export default function CursorCat({ active = false, onStatusChange }) {
   const mouseRef = useRef({ x: null, y: null, active: false });
   const statusRef = useRef('idle');
   const isCaughtRef = useRef(false);
+  const isObservingRef = useRef(false);
   const runAnimTimerRef = useRef(0);
   const currentFrameRef = useRef('CAUGHT');
   const rafRef = useRef(null);
@@ -206,7 +207,66 @@ export default function CursorCat({ active = false, onStatusChange }) {
       const dy = mouse.y - currentPos.y;
       const dist = Math.hypot(dx, dy);
 
+      // Inspect hero portrait boundary so cat respects the interactive canvas
+      const portraitEl = typeof document !== 'undefined' ? document.getElementById('hero-portrait') : null;
+      const portraitRect = portraitEl ? portraitEl.getBoundingClientRect() : null;
+      const PORTRAIT_BUFFER = 20;
+      const hasPortrait = Boolean(portraitRect && portraitRect.width > 0 && portraitRect.height > 0);
+      const pLeft = hasPortrait ? portraitRect.left - PORTRAIT_BUFFER : -9999;
+      const pRight = hasPortrait ? portraitRect.right + PORTRAIT_BUFFER : -9999;
+      const pTop = hasPortrait ? portraitRect.top - PORTRAIT_BUFFER : -9999;
+      const pBottom = hasPortrait ? portraitRect.bottom + PORTRAIT_BUFFER : -9999;
+
+      const isMouseInPortrait = Boolean(
+        hasPortrait &&
+        mouse.x >= pLeft &&
+        mouse.x <= pRight &&
+        mouse.y >= pTop &&
+        mouse.y <= pBottom
+      );
+
+      // Determine target position: if mouse is in portrait, clamp target to outer perimeter
+      let targetX = mouse.x;
+      let targetY = mouse.y;
+
+      if (isMouseInPortrait) {
+        const dL = Math.abs(mouse.x - pLeft);
+        const dR = Math.abs(mouse.x - pRight);
+        const dT = Math.abs(mouse.y - pTop);
+        const dB = Math.abs(mouse.y - pBottom);
+        const minD = Math.min(dL, dR, dT, dB);
+
+        if (minD === dL) {
+          targetX = pLeft;
+          targetY = Math.max(pTop, Math.min(pBottom, mouse.y));
+        } else if (minD === dR) {
+          targetX = pRight;
+          targetY = Math.max(pTop, Math.min(pBottom, mouse.y));
+        } else if (minD === dT) {
+          targetY = pTop;
+          targetX = Math.max(pLeft, Math.min(pRight, mouse.x));
+        } else {
+          targetY = pBottom;
+          targetX = Math.max(pLeft, Math.min(pRight, mouse.x));
+        }
+
+        targetX = Math.max(CAT_HALF_SIZE, Math.min(window.innerWidth - CAT_HALF_SIZE, targetX));
+        targetY = Math.max(CAT_HALF_SIZE, Math.min(window.innerHeight - CAT_HALF_SIZE, targetY));
+      }
+
       if (prefersReducedMotion) {
+        if (isMouseInPortrait) {
+          isCaughtRef.current = false;
+          setIsCaught(false);
+          setCatStatus('observing');
+          setPos({ x: targetX, y: targetY });
+          const portraitCenterX = (portraitRect.left + portraitRect.right) / 2;
+          setFacingLeft(targetX > portraitCenterX);
+          setFrame('CAUGHT');
+          rafRef.current = requestAnimationFrame(loop);
+          return;
+        }
+
         // Reduced motion: sit quietly near target without fast running animation
         const isClose = dist <= CATCH_RADIUS;
         if (isClose) {
@@ -230,7 +290,77 @@ export default function CursorCat({ active = false, onStatusChange }) {
         return;
       }
 
-      // Hysteresis logic: catch when dist <= 22, resume when dist > 28
+      // If mouse is inside portrait, cat stalks to the boundary and perches observing
+      if (isMouseInPortrait) {
+        isCaughtRef.current = false;
+        setIsCaught(false);
+        const tdx = targetX - currentPos.x;
+        const tdy = targetY - currentPos.y;
+        const tdist = Math.hypot(tdx, tdy);
+
+        // Hysteresis window: settle at <=12px, re-engage stalking if target shifts >24px
+        if (isObservingRef.current) {
+          if (tdist > 24) {
+            isObservingRef.current = false;
+            setCatStatus('stalking');
+          } else {
+            setCatStatus('observing');
+            if (currentFrameRef.current !== 'CAUGHT') {
+              currentFrameRef.current = 'CAUGHT';
+              setFrame('CAUGHT');
+            }
+            const portraitCenterX = (portraitRect.left + portraitRect.right) / 2;
+            setFacingLeft(currentPos.x > portraitCenterX);
+            rafRef.current = requestAnimationFrame(loop);
+            return;
+          }
+        } else {
+          if (tdist <= 12) {
+            isObservingRef.current = true;
+            setCatStatus('observing');
+            if (currentFrameRef.current !== 'CAUGHT') {
+              currentFrameRef.current = 'CAUGHT';
+              setFrame('CAUGHT');
+            }
+            const portraitCenterX = (portraitRect.left + portraitRect.right) / 2;
+            setFacingLeft(currentPos.x > portraitCenterX);
+            rafRef.current = requestAnimationFrame(loop);
+            return;
+          } else {
+            setCatStatus('stalking');
+          }
+        }
+
+        // Moving towards boundary perimeter
+        const step = Math.min(SPEED * dt, tdist);
+        let nextX = currentPos.x + (tdx / tdist) * step;
+        let nextY = currentPos.y + (tdy / tdist) * step;
+
+        const clampedX = Math.max(CAT_HALF_SIZE, Math.min(window.innerWidth - CAT_HALF_SIZE, nextX));
+        const clampedY = Math.max(CAT_HALF_SIZE, Math.min(window.innerHeight - CAT_HALF_SIZE, nextY));
+
+        setPos({ x: clampedX, y: clampedY });
+
+        if (tdx < -1) {
+          setFacingLeft(true);
+        } else if (tdx > 1) {
+          setFacingLeft(false);
+        }
+
+        runAnimTimerRef.current += dt * 1000;
+        if (runAnimTimerRef.current >= 120) {
+          runAnimTimerRef.current = 0;
+          const nextFrame = currentFrameRef.current === 'RUN_1' ? 'RUN_2' : 'RUN_1';
+          currentFrameRef.current = nextFrame;
+          setFrame(nextFrame);
+        }
+
+        rafRef.current = requestAnimationFrame(loop);
+        return;
+      }
+
+      // Standard hysteresis logic when mouse is outside the portrait
+      isObservingRef.current = false;
       if (isCaughtRef.current) {
         if (dist > RESUME_RADIUS) {
           isCaughtRef.current = false;
@@ -263,10 +393,23 @@ export default function CursorCat({ active = false, onStatusChange }) {
         }
       }
 
-      // Moving towards mouse
+      // Moving towards mouse outside the portrait
       const step = Math.min(SPEED * dt, dist);
-      const nextX = currentPos.x + (dx / dist) * step;
-      const nextY = currentPos.y + (dy / dist) * step;
+      let nextX = currentPos.x + (dx / dist) * step;
+      let nextY = currentPos.y + (dy / dist) * step;
+
+      // Prevent cat from cutting through the portrait bounding box
+      if (hasPortrait && nextX >= pLeft && nextX <= pRight && nextY >= pTop && nextY <= pBottom) {
+        const dL = Math.abs(nextX - pLeft);
+        const dR = Math.abs(nextX - pRight);
+        const dT = Math.abs(nextY - pTop);
+        const dB = Math.abs(nextY - pBottom);
+        const minD = Math.min(dL, dR, dT, dB);
+        if (minD === dL) nextX = pLeft;
+        else if (minD === dR) nextX = pRight;
+        else if (minD === dT) nextY = pTop;
+        else nextY = pBottom;
+      }
 
       // Viewport boundary clamping
       const clampedX = Math.max(CAT_HALF_SIZE, Math.min(window.innerWidth - CAT_HALF_SIZE, nextX));
@@ -313,7 +456,7 @@ export default function CursorCat({ active = false, onStatusChange }) {
   return (
     <div
       aria-hidden="true"
-      className={`fixed pointer-events-none z-50 select-none ${isCaught ? '' : 'will-change-transform'}`}
+      className={`fixed pointer-events-none z-40 select-none ${isCaught ? '' : 'will-change-transform'}`}
       style={{
         left: 0,
         top: 0,
