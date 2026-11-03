@@ -22,21 +22,53 @@
 }
 
 @keyframes intro-greeting-in {
-  from { opacity: 0; transform: translateY(7px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes intro-splash-out {
-  to { opacity: 0; visibility: hidden; }
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes intro-card-out {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.975) translateY(4px);
+  }
 }
 
 .intro-greeting {
-  animation: intro-greeting-in 220ms ease-out both;
+  animation: intro-greeting-in 110ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
 }
 
 .intro-splash-leave {
-  animation: intro-splash-out 520ms ease-out forwards;
+  animation: intro-splash-out 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
   pointer-events: none;
+  will-change: opacity;
+}
+
+.intro-card-leave {
+  animation: intro-card-out 480ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: none;
+  will-change: transform, opacity;
 }
 
 .starfield-background {
