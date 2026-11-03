@@ -384,12 +384,16 @@ export default function CommandPalette({
         </div>
 
         {/* Footer Quick Shortcuts */}
-        <div className="flex items-center justify-between border-t border-[#36372f] bg-[#1a1b18] px-3 py-2 font-mono text-[9px] text-[#88846f]">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#36372f] bg-[#1a1b18] px-3 py-2 font-mono text-[9px] text-[#88846f]">
           <div className="flex items-center gap-3">
             <span><kbd className="border border-[#43443a] bg-[#252621] px-1 text-ink">↑</kbd> <kbd className="border border-[#43443a] bg-[#252621] px-1 text-ink">↓</kbd> navigate</span>
             <span><kbd className="border border-[#43443a] bg-[#252621] px-1 text-ink">↵</kbd> select</span>
           </div>
-          <span>KONAMI CODE: <span className="text-yellow">↑↑↓↓←→←→BA</span></span>
+          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+            <span>ARCADE: <span className="font-semibold text-lime">FAQ #06</span></span>
+            <span className="text-[#55564c]" aria-hidden="true">·</span>
+            <span>KONAMI: <span className="text-yellow">↑↑↓↓←→←→BA</span></span>
+          </div>
         </div>
       </div>
     </div>
