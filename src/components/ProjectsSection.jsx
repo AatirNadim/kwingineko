@@ -10,22 +10,54 @@ export default function ProjectsSection() {
         {projects.map((project) => (
           <article
             key={project.name}
-            className="border border-line bg-surface-card p-3 shadow-panel transition-all duration-200 hover:-translate-y-0.5 hover:border-line sm:p-5"
+            className="border border-line bg-surface-card p-3 shadow-panel transition-all duration-200 hover:-translate-y-0.5 hover:border-muted-dim sm:p-5"
           >
             {/* Top metadata strip */}
-            <div className="flex flex-wrap items-center gap-2 border-b border-line-subtle pb-2.5">
-              <span className="font-mono text-[10.5px] font-bold text-pink">{project.number}</span>
-              <span className="font-mono text-[10px] uppercase tracking-wider text-muted">{project.kind}</span>
-              <a
-                aria-label={`${project.name} repository on GitHub`}
-                href={project.href}
-                target="_blank"
-                rel="noreferrer"
-                className="ml-auto inline-flex min-h-[44px] min-w-[44px] items-center justify-end gap-1 -my-2.5 -mr-1 p-2 font-mono text-[10px] text-yellow transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
-              >
-                <span className="hidden text-[10px] text-muted min-[440px]:inline">SOURCE</span>
-                <ArrowUpRight size={16} />
-              </a>
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-subtle pb-2.5">
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-[10.5px] font-bold text-pink">{project.number}</span>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-muted">{project.kind}</span>
+              </div>
+
+              {/* Action Links Strip */}
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                {project.links ? (
+                  project.links.map((link) => {
+                    const badgeStyles = {
+                      demo: 'border-lime/40 text-lime hover:border-lime hover:bg-lime/10',
+                      docker: 'border-yellow/40 text-yellow hover:border-yellow hover:bg-yellow/10',
+                      article: 'border-violet/40 text-violet hover:border-violet hover:bg-violet/10',
+                      source: 'border-line text-ink-secondary hover:border-muted hover:text-white hover:bg-surface-inset',
+                    };
+                    const styleClass = badgeStyles[link.type] || badgeStyles.source;
+
+                    return (
+                      <a
+                        key={link.label}
+                        aria-label={`${project.name} ${link.label}`}
+                        href={link.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={`inline-flex min-h-[44px] sm:min-h-[28px] items-center gap-1 border bg-surface px-2.5 sm:px-2 py-1 sm:py-0.5 font-mono text-[10px] font-semibold tracking-wider transition-all duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${styleClass}`}
+                      >
+                        <span>{link.label}</span>
+                        <ArrowUpRight size={12} className="opacity-80" />
+                      </a>
+                    );
+                  })
+                ) : (
+                  <a
+                    aria-label={`${project.name} repository on GitHub`}
+                    href={project.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex min-h-[44px] sm:min-h-[28px] items-center gap-1 border border-line bg-surface px-2.5 sm:px-2 py-1 sm:py-0.5 font-mono text-[10px] text-yellow transition-colors hover:border-yellow hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+                  >
+                    <span>SOURCE</span>
+                    <ArrowUpRight size={12} />
+                  </a>
+                )}
+              </div>
             </div>
 
             {/* Main content grid */}
@@ -38,18 +70,43 @@ export default function ProjectsSection() {
                   {project.description}
                 </p>
 
-                {/* Lore callout */}
-                {project.lore && (
-                  <div className="my-3 border-l-2 border-l-pink border-y border-r border-line-subtle bg-surface-inset p-2.5 sm:p-3">
-                    <div className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-violet">
-                      <span className="text-pink">✦</span>
-                      <span>lore transmission</span>
+                {/* Architecture / Engineering Callout */}
+                {(project.highlight || project.lore) && (
+                  <div className="my-2.5 border-l-2 border-l-lime border-y border-r border-line-subtle bg-surface-inset p-2.5 sm:p-3">
+                    <div className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-muted">
+                      <span className="text-lime">✦</span>
+                      <span className="font-semibold text-ink">SYSTEM HIGHLIGHT</span>
                       <span className="text-muted-dim">//</span>
-                      <span className="text-lime">{project.loreTag}</span>
+                      <span className="text-yellow">{project.highlightTag || project.loreTag}</span>
                     </div>
-                    <p className="mt-1 font-sans text-xs italic leading-relaxed text-yellow">
-                      &ldquo;{project.lore}&rdquo;
+                    <p className="mt-1.5 font-sans text-xs leading-relaxed text-ink-secondary sm:text-[12.5px]">
+                      {project.highlight || project.lore}
                     </p>
+                  </div>
+                )}
+
+                {/* System Telemetry & Packaging */}
+                {project.telemetry && (
+                  <div className="my-2.5 border border-line-subtle bg-surface-inset p-2.5 font-mono text-[10px] leading-relaxed shadow-sm">
+                    <div className="mb-1.5 flex items-center justify-between border-b border-line-subtle pb-1 font-mono text-[9.5px] uppercase tracking-wider text-muted">
+                      <span className="flex items-center gap-1 text-violet font-semibold">
+                        <span>⚡</span>
+                        <span>SYSTEM TELEMETRY &amp; PACKAGING</span>
+                      </span>
+                      <span className="text-muted-dim">ACTIVE</span>
+                    </div>
+                    <div className="grid gap-1">
+                      {Object.entries(project.telemetry).map(([key, val]) => (
+                        <div key={key} className="flex flex-col min-[480px]:flex-row min-[480px]:items-baseline gap-0.5 min-[480px]:gap-2">
+                          <span className="shrink-0 font-mono text-[9.5px] uppercase tracking-wider text-muted font-medium">
+                            {key.replace(/([A-Z])/g, ' $1')}:
+                          </span>
+                          <span className="font-mono text-[9.5px] sm:text-[10px] text-ink-secondary min-w-0 break-words">
+                            {val}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
 
@@ -80,7 +137,7 @@ export default function ProjectsSection() {
                       <span className="h-1.5 w-1.5 rounded-full bg-lime" />
                       <span className="font-semibold tracking-wider text-ink">{project.name.toUpperCase()}.PNG</span>
                     </span>
-                    <span className="text-[9px] tracking-wider text-muted">{project.status}</span>
+                    <span className="text-[9.5px] tracking-wider text-muted">{project.status}</span>
                   </div>
                   <div className="relative overflow-hidden bg-black/50">
                     <picture>
