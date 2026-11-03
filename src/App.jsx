@@ -40,6 +40,11 @@ export default function App() {
   // Global keyboard shortcut listeners (Cmd+K / Ctrl+K and /)
   useEffect(() => {
     const handleKeyDown = (e) => {
+      // Suppress global shortcuts during active DOS game sessions or contact composer modal
+      if (activeDosGame !== null || contactModalOpen) {
+        return;
+      }
+
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         setCommandPaletteOpen((prev) => !prev);
@@ -53,7 +58,7 @@ export default function App() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [commandPaletteOpen]);
+  }, [commandPaletteOpen, activeDosGame, contactModalOpen]);
 
   // DevTools Console Easter Egg initialization
   useEffect(() => {
@@ -79,7 +84,7 @@ export default function App() {
       <div className="relative z-[1] mx-auto w-[calc(100%-16px)] max-w-[1360px] pt-2 min-[380px]:w-[calc(100%-24px)] min-[380px]:pt-3 sm:w-[calc(100%-32px)] sm:pt-4 md:w-[calc(100%-48px)] lg:w-[calc(100%-64px)] lg:pt-[30px]">
         <a
           href="#main"
-          className="fixed left-[-10000px] top-[10px] z-50 bg-yellow p-[10px] text-surface focus:left-[10px]"
+          className="fixed left-[-10000px] top-[10px] z-[120] bg-yellow p-[10px] text-surface focus:left-[10px]"
         >
           Skip to content
         </a>

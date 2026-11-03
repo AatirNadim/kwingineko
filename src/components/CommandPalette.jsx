@@ -281,7 +281,7 @@ export default function CommandPalette({
       role="dialog"
       aria-modal="true"
       aria-label="Command Palette"
-      className="fixed inset-0 z-50 flex items-start justify-center bg-black/75 p-3 pt-[10vh] backdrop-blur-[2px] sm:p-4 sm:pt-[12vh]"
+      className="fixed inset-0 z-[100] flex items-start justify-center bg-black/75 p-3 pt-[10vh] backdrop-blur-[2px] sm:p-4 sm:pt-[12vh]"
       onClick={onClose}
     >
       <div

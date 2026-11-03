@@ -66,6 +66,20 @@ export default function CrtOverlay({ active, onToggle }) {
   const [toastMessage, setToastMessage] = useState('');
   const keySequenceRef = useRef([]);
 
+  // Accessibility: detect prefers-reduced-motion
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const onChange = (e) => setPrefersReducedMotion(e.matches);
+    media.addEventListener?.('change', onChange);
+    return () => media.removeEventListener?.('change', onChange);
+  }, []);
+
   // Konami code keyboard listener
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -75,11 +89,14 @@ export default function CrtOverlay({ active, onToggle }) {
         return;
       }
 
-      // Allow Esc key to deactivate CRT mode if active
+      // Allow Esc key to deactivate CRT mode if active AND no modal dialog is currently open
       if (e.key === 'Escape' && active) {
-        onToggle(false);
-        setToastMessage('RETRO CRT MODE DEACTIVATED');
-        return;
+        const hasOpenDialog = typeof document !== 'undefined' && Boolean(document.querySelector('[role="dialog"]'));
+        if (!hasOpenDialog) {
+          onToggle(false);
+          setToastMessage('RETRO CRT MODE DEACTIVATED');
+          return;
+        }
       }
 
       const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
@@ -94,7 +111,9 @@ export default function CrtOverlay({ active, onToggle }) {
           onToggle(!active);
           setToastMessage(
             !active
-              ? 'KONAMI CODE ACCEPTED // RETRO CRT PHOSPHOR MODE ACTIVATED'
+              ? prefersReducedMotion
+                ? 'KONAMI CODE ACCEPTED // CRT MODE (SCANLINES SUPPRESSED FOR ACCESSIBILITY)'
+                : 'KONAMI CODE ACCEPTED // RETRO CRT PHOSPHOR MODE ACTIVATED'
               : 'RETRO CRT MODE DEACTIVATED'
           );
         }
@@ -106,7 +125,7 @@ export default function CrtOverlay({ active, onToggle }) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [active, onToggle]);
+  }, [active, onToggle, prefersReducedMotion]);
 
   // Clear toast after 4 seconds
   useEffect(() => {
@@ -117,23 +136,23 @@ export default function CrtOverlay({ active, onToggle }) {
 
   return (
     <>
-      {/* Toast Notification when Konami Code or CRT toggles */}
+      {/* Toast Notification when Konami Code or CRT toggles (z-50) */}
       {toastMessage && (
         <div
           role="status"
           aria-live="polite"
-          className="fixed bottom-16 left-1/2 z-[60] -translate-x-1/2 border border-yellow bg-[#1e1f1c] px-4 py-2.5 font-mono text-xs text-yellow shadow-[4px_4px_0_rgba(0,0,0,0.5)] flex items-center gap-2 max-w-[90vw]"
+          className="fixed bottom-16 left-1/2 z-50 -translate-x-1/2 border border-yellow bg-[#1e1f1c] px-4 py-2.5 font-mono text-xs text-yellow shadow-[4px_4px_0_rgba(0,0,0,0.5)] flex items-center gap-2 max-w-[90vw]"
         >
-          <Sparkles size={16} className="text-lime shrink-0 animate-spin" />
+          <Sparkles size={16} className={`text-lime shrink-0 ${prefersReducedMotion ? '' : 'animate-spin'}`} />
           <span className="font-semibold">{toastMessage}</span>
         </div>
       )}
 
-      {/* Retro CRT Scanline Shader Elements */}
-      {active && (
+      {/* Retro CRT Scanline Shader Elements (z-30, suppressed under prefers-reduced-motion) */}
+      {active && !prefersReducedMotion && (
         <div
           aria-hidden="true"
-          className="pointer-events-none fixed inset-0 z-40 overflow-hidden"
+          className="pointer-events-none fixed inset-0 z-30 overflow-hidden"
         >
           {/* Scanline pattern */}
           <div
@@ -165,16 +184,16 @@ export default function CrtOverlay({ active, onToggle }) {
         </div>
       )}
 
-      {/* Floating HUD Controller (Clickable) */}
+      {/* Floating HUD Controller (z-50, Clickable) */}
       {active && (
-        <div className="fixed bottom-4 right-4 z-[50] flex items-center gap-2 border border-[#58594e] bg-[#1e1f1c] px-3 py-1.5 font-mono text-[10px] text-lime shadow-panel">
-          <Monitor size={14} className="text-lime animate-pulse" />
-          <span>CRT FILTER ON</span>
+        <div className="fixed bottom-4 right-4 z-50 flex items-center gap-2 border border-[#58594e] bg-[#1e1f1c] px-3 py-1.5 font-mono text-[10px] text-lime shadow-panel">
+          <Monitor size={14} className={`text-lime ${prefersReducedMotion ? '' : 'animate-pulse'}`} />
+          <span>{prefersReducedMotion ? 'CRT ACTIVE [REDUCED MOTION]' : 'CRT FILTER ON'}</span>
           <button
             type="button"
             onClick={() => onToggle(false)}
             aria-label="Deactivate CRT filter"
-            className="ml-2 inline-flex min-h-[36px] items-center gap-1.5 border border-[#48493e] bg-surface px-2.5 py-1 text-[9.5px] text-[#cbc9b9] hover:border-pink hover:text-pink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+            className="ml-2 inline-flex min-h-[44px] items-center gap-1.5 border border-[#48493e] bg-surface px-3 py-1.5 text-[9.5px] text-[#cbc9b9] hover:border-pink hover:text-pink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
           >
             <X size={13} />
             <span>DISABLE [ESC]</span>

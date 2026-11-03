@@ -214,7 +214,7 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
           role="dialog"
           aria-modal="true"
           aria-label="Aatir's Arcade Retro Games Catalog"
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6"
         >
           {/* Backdrop with click to close */}
           <div

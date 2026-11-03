@@ -50,7 +50,7 @@ export default function Introduction({ onExplore }) {
         </div>
 
         {/* Interactive Particle Dispersion Portrait Component */}
-        <aside aria-label="Interactive Portrait" className="mx-auto w-full max-w-[240px]">
+        <aside id="hero-portrait" aria-label="Interactive Portrait" className="mx-auto w-full max-w-[240px]">
           <ParticlePortrait />
         </aside>
       </div>
