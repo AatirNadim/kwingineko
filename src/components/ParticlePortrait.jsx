@@ -478,23 +478,51 @@ export default function ParticlePortrait({ className = '' }) {
           onTouchCancel={handleTouchEnd}
           className="relative aspect-[4/5] w-full cursor-crosshair overflow-hidden bg-surface-well select-none touch-pan-y"
         >
-          {/* Underlayer photographic portrait: calibrated contrast revealed through the dispersion hole */}
-          <img
-            ref={imageRef}
-            src="/assets/aatir-portrait.webp"
-            alt="Portrait of Aatir Nadim"
-            fetchPriority="high"
-            decoding="async"
-            width="953"
-            height="1651"
-            onLoad={() => {
-              setIsLoaded(true);
-              updateDimensions();
-            }}
-            className={`pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_22%] contrast-125 brightness-75 transition-opacity duration-300 ${
-              coords.active ? 'opacity-40' : 'opacity-20'
+          {/* Underlayer: Retro Monokai Calibrated Pixel & Phosphor Mesh */}
+          <div
+            className={`pointer-events-none absolute inset-0 z-0 overflow-hidden will-change-[opacity] transition-opacity duration-300 ease-out ${
+              coords.active ? 'opacity-85' : 'opacity-30'
             }`}
-          />
+          >
+            {/* Base photographic portrait with warm Monokai color grading */}
+            <img
+              ref={imageRef}
+              src="/assets/aatir-portrait.webp"
+              alt="Portrait of Aatir Nadim"
+              fetchPriority="high"
+              decoding="async"
+              width="953"
+              height="1651"
+              onLoad={() => {
+                setIsLoaded(true);
+                updateDimensions();
+              }}
+              className="h-full w-full object-cover object-[center_22%] contrast-125 brightness-90 saturate-[0.85] sepia-[0.2]"
+            />
+
+            {/* Calibrated 4px x 3px Pixel Raster Mesh Overlay (matches particle stepX ~4.1px & stepY ~3.3px) */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 mix-blend-multiply opacity-90 [image-rendering:pixelated]"
+              style={{
+                backgroundImage:
+                  'repeating-linear-gradient(0deg, rgba(24, 25, 21, 0.85) 0px, rgba(24, 25, 21, 0.85) 1px, transparent 1px, transparent 3px), repeating-linear-gradient(90deg, rgba(24, 25, 21, 0.85) 0px, rgba(24, 25, 21, 0.85) 1px, transparent 1px, transparent 4px)',
+                backgroundSize: '4px 3px',
+              }}
+            />
+
+            {/* Phosphor Shadow Mask & Vignette Shadowing */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 mix-blend-screen"
+              style={{
+                backgroundImage:
+                  'linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.03), rgba(0, 0, 255, 0.05))',
+                backgroundSize: '3px 100%',
+                boxShadow: 'inset 0 0 24px rgba(20, 21, 17, 0.85)',
+              }}
+            />
+          </div>
 
           {/* Particle Matrix Canvas */}
           <canvas
