@@ -138,7 +138,7 @@ export default function FaqSection({ onLaunchGame }) {
                 onClick={() => setSelectedCategory(cat.id)}
                 className={`inline-flex min-h-[44px] items-center gap-2 border px-3 py-2 font-mono text-[9.5px] tracking-wider transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
                   isSelected
-                    ? 'border-pink bg-[#36272c] text-pink font-semibold'
+                    ? 'border-pink bg-pink/15 text-pink font-semibold'
                     : 'border-[#383931] bg-[#1a1b18] text-[#c2c0af] hover:border-[#4d4e43] hover:text-ink'
                 }`}
               >

@@ -83,13 +83,13 @@ export default function ContactSection({ onOpenComposer }) {
           </div>
 
           {/* Quick Resume Link */}
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-[#35362e] pt-3 font-mono text-[9.5px] sm:text-[10px]">
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-line-subtle pt-3 font-mono text-[9.5px] sm:text-[10px]">
             <span className="text-muted">LOOKING FOR A FORMAL RESUME?</span>
             <a
               href="/Aatir_Nadim_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-[44px] sm:min-h-[36px] items-center gap-1.5 border border-[#48493e] bg-[#1a1b18] px-2.5 py-1 text-ink-secondary transition-colors hover:border-lime hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+              className="inline-flex min-h-[44px] sm:min-h-[36px] items-center gap-1.5 border border-line bg-surface-inset px-2.5 py-1 text-ink-secondary transition-colors hover:border-lime hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
             >
               <FileText size={12} className="opacity-80" />
               <span>DOWNLOAD RESUME (.PDF)</span>

@@ -278,7 +278,7 @@ export default function ContactModal({ isOpen, onClose }) {
               </>
             ) : (
               <>
-                <Copy size={12} className="text-yellow" />
+                <Copy size={12} className="text-muted" />
                 <span>COPY TEXT & ADDRESS</span>
               </>
             )}
