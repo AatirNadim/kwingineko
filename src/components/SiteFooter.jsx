@@ -27,14 +27,10 @@ export default function SiteFooter({ onHome, onOpenCommandPalette, crtActive, on
         </button>
       </div>
 
-      <span className="order-3 w-full text-center sm:order-none sm:w-auto">
-        HAND-ASSEMBLED WITH <b className="font-medium text-lime">REACT</b> + VITE <span className="text-pink">♥</span>
-      </span>
-
       <a
         href="#home"
         onClick={onHome}
-        className="inline-flex min-h-[44px] items-center text-ink-secondary hover:text-lime hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+        className="inline-flex min-h-[44px] shrink-0 items-center text-ink-secondary hover:text-lime hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
       >
         BACK TO TOP ↑
       </a>
