@@ -6,7 +6,7 @@ export default function PanelFrame({ title, symbol, icon, children, className = 
       <div className="flex h-[31px] items-center justify-between border-b border-line bg-surface px-[9px]">
         <span className="flex items-center gap-[7px] font-mono text-[10px] tracking-wide text-ink">
           {badge && (
-            <span aria-hidden="true" className="font-mono text-[9.5px] font-semibold text-pink">
+            <span aria-hidden="true" className="font-mono text-[9.5px] font-semibold text-muted">
               {typeof badge === 'string' ? (badge.startsWith('[') ? badge : `[${badge}]`) : badge}
             </span>
           )}

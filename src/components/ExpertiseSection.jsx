@@ -13,7 +13,7 @@ export default function ExpertiseSection() {
           >
             <div className="flex items-center gap-2 min-[440px]:contents">
               <span className="font-mono text-[10px] font-semibold text-violet sm:text-[10.5px]">0{i + 1}</span>
-              <span className="font-mono text-[10px] font-semibold text-yellow sm:text-[10.5px]">{group}</span>
+              <span className="font-mono text-[10px] font-semibold text-ink sm:text-[10.5px]">{group}</span>
             </div>
             <span className="text-[11px] leading-[1.6] text-ink-secondary sm:text-xs">{items}</span>
           </div>

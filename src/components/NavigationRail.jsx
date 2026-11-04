@@ -62,14 +62,14 @@ export default function NavigationRail({ open, onClose, active, time, onNavigate
             </div>
           </div>
           <div className="px-[9px] py-[17px]">
-            <span className="font-mono text-[10px] tracking-wider text-violet">/// CURRENT FOCUS</span>
+            <span className="font-mono text-[10px] font-semibold tracking-wider text-muted">/// CURRENT FOCUS</span>
             <p className="mb-0 mt-[7px] text-xs leading-[1.6] text-[#dedccd]">
               Making complex systems easier to understand, change, and operate.
             </p>
           </div>
           <div className="mx-[9px] flex items-center justify-between border-t border-dashed border-line py-[11px]">
-            <span className="font-mono text-[10px] tracking-wider text-violet">LOCAL SESSION</span>
-            <b className="font-mono text-xs font-medium text-yellow">
+            <span className="font-mono text-[10px] font-semibold tracking-wider text-muted">LOCAL SESSION</span>
+            <b className="font-mono text-xs font-medium text-ink">
               {time.toLocaleTimeString('en', { hour: '2-digit', minute: '2-digit' })}
             </b>
           </div>
@@ -135,8 +135,8 @@ export default function NavigationRail({ open, onClose, active, time, onNavigate
               {/* Drawer metadata footer */}
               <div className="mt-4 border-t border-dashed border-line pt-3 font-mono">
                 <div className="flex items-center justify-between text-[10px] tracking-wider">
-                  <span className="text-violet">LOCAL SESSION</span>
-                  <b className="font-mono text-xs font-medium text-yellow">
+                  <span className="text-muted font-semibold">LOCAL SESSION</span>
+                  <b className="font-mono text-xs font-medium text-ink">
                     {time.toLocaleTimeString('en', { hour: '2-digit', minute: '2-digit' })}
                   </b>
                 </div>

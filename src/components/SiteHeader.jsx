@@ -46,7 +46,7 @@ export default function SiteHeader({ time, navOpen, onToggleNavigation, onHome, 
             type="button"
             onClick={onOpenCommandPalette}
             aria-label="Open command palette (Cmd+K)"
-            className="inline-flex min-h-[32px] items-center gap-1.5 border border-[#43443a] bg-[#1a1b18] px-2.5 py-1 text-[9.5px] text-[#c2c0af] transition hover:border-yellow hover:text-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+            className="inline-flex min-h-[32px] items-center gap-1.5 border border-[#43443a] bg-[#1a1b18] px-2.5 py-1 text-[9.5px] text-[#c2c0af] transition hover:border-lime hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
           >
             <Terminal size={12} className="text-lime" />
             <span>COMMANDS</span>
@@ -59,7 +59,7 @@ export default function SiteHeader({ time, navOpen, onToggleNavigation, onHome, 
             aria-label="View Resume PDF"
             className="inline-flex min-h-[32px] items-center gap-1.5 border border-[#43443a] bg-[#1a1b18] px-2.5 py-1 text-[9.5px] text-[#c2c0af] transition hover:border-lime hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
           >
-            <FileText size={12} className="text-yellow" />
+            <FileText size={12} className="opacity-80" />
             <span>CV.PDF</span>
           </a>
           <div className="flex items-center gap-2">
@@ -73,7 +73,7 @@ export default function SiteHeader({ time, navOpen, onToggleNavigation, onHome, 
         <span className="truncate font-mono text-[9px] tracking-[.4px] text-ink-secondary min-[360px]:text-[9.5px] min-[420px]:tracking-[.5px] sm:text-[10.5px]">
           SOFTWARE ENGINEER <b className="px-1 text-pink">·</b> BACKEND / CLOUD / SYSTEMS
         </span>
-        <span className="ml-auto font-mono text-[9px] tracking-[.55px] text-violet min-[360px]:text-[9.5px] sm:text-[10.5px]">
+        <span className="ml-auto font-mono text-[9px] tracking-[.55px] text-muted min-[360px]:text-[9.5px] sm:text-[10.5px]">
           {time.toLocaleDateString('en', { weekday: 'short', day: '2-digit', month: 'short' }).toUpperCase()}
         </span>
       </div>

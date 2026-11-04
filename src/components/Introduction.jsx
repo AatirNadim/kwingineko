@@ -5,10 +5,12 @@ export default function Introduction({ onExplore }) {
   return (
     <section id="home" className="border-b border-line px-3 py-4 sm:px-[14px] sm:py-[18px] md:pl-5">
       {/* Section Header */}
-      <div className="flex items-center justify-between border-b border-line-subtle pb-2.5 font-mono text-[10.5px] tracking-wider text-lime">
+      <div className="flex items-center justify-between border-b border-line-subtle pb-2.5 font-mono text-[10.5px] tracking-wider text-muted">
         <div className="flex items-center gap-[10px]">
-          <span className="h-px w-[22px] bg-lime" />
-          A LITTLE ABOUT HOW I WORK
+          <span className="h-px w-[22px] bg-violet" />
+          <span className="text-violet">01 / OVERVIEW</span>
+          <span className="text-muted-dim">//</span>
+          <span>A LITTLE ABOUT HOW I WORK</span>
         </div>
         <span className="hidden sm:inline font-mono text-[9.5px] tracking-wider text-muted">
           SYS.ID // 001
@@ -37,9 +39,9 @@ export default function Introduction({ onExplore }) {
               href="/Aatir_Nadim_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-[44px] items-center gap-2 border border-line bg-surface px-3 py-2.5 font-mono text-[10px] tracking-wide text-ink-secondary font-semibold transition hover:border-yellow hover:text-yellow hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0_#e6db7450] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow sm:px-[13px]"
+              className="inline-flex min-h-[44px] items-center gap-2 border border-line bg-surface px-3 py-2.5 font-mono text-[10px] tracking-wide text-ink-secondary font-semibold transition hover:border-lime hover:text-lime hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0_#a6e22e40] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow sm:px-[13px]"
             >
-              <FileText size={14} className="text-yellow" />
+              <FileText size={14} className="opacity-80" />
               <span>RÉSUMÉ [PDF]</span>
               <ExternalLink size={12} className="text-muted-dim" />
             </a>

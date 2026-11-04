@@ -25,8 +25,8 @@ export default function ContactSection({ onOpenComposer }) {
         {/* Main Transmission Card */}
         <div className="border border-line bg-surface p-3.5 sm:p-5 shadow-panel">
           <div className="flex items-center justify-between border-b border-line-subtle pb-2.5 font-mono text-[10px] text-muted">
-            <span className="flex items-center gap-1.5 text-pink">
-              <span className="font-mono text-[9.5px] font-bold text-pink">[MSG]</span> new_message.eml
+            <span className="flex items-center gap-1.5 text-muted">
+              <span className="font-mono text-[9.5px] font-bold text-muted">[MSG]</span> new_message.eml
             </span>
             <span className="text-lime">STATUS: OPEN</span>
           </div>
@@ -41,7 +41,7 @@ export default function ContactSection({ onOpenComposer }) {
               <span className="font-mono text-[10px] text-muted">DESTINATION:</span>
               <a
                 href={`mailto:${contact.email}`}
-                className="break-all font-mono text-xs font-semibold text-yellow underline hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+                className="break-all font-mono text-xs font-semibold text-ink underline hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
               >
                 {contact.email}
               </a>
@@ -58,7 +58,7 @@ export default function ContactSection({ onOpenComposer }) {
                 </>
               ) : (
                 <>
-                  <Copy size={12} className="text-yellow" />
+                  <Copy size={12} className="text-muted" />
                   <span>COPY</span>
                 </>
               )}
@@ -89,9 +89,9 @@ export default function ContactSection({ onOpenComposer }) {
               href="/Aatir_Nadim_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-[44px] sm:min-h-[36px] items-center gap-1.5 border border-[#48493e] bg-[#1a1b18] px-2.5 py-1 text-yellow transition-colors hover:border-yellow hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+              className="inline-flex min-h-[44px] sm:min-h-[36px] items-center gap-1.5 border border-[#48493e] bg-[#1a1b18] px-2.5 py-1 text-ink-secondary transition-colors hover:border-lime hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
             >
-              <FileText size={12} className="text-yellow" />
+              <FileText size={12} className="opacity-80" />
               <span>DOWNLOAD RESUME (.PDF)</span>
               <ExternalLink size={11} className="opacity-75" />
             </a>
@@ -101,7 +101,7 @@ export default function ContactSection({ onOpenComposer }) {
         {/* Telemetry & Inbox Metadata Card */}
         <div className="flex flex-col justify-between border border-line bg-surface p-3.5 sm:p-5 shadow-panel">
           <div>
-            <div className="flex items-center justify-between border-b border-line-subtle pb-2 font-mono text-[10px] tracking-wider text-violet">
+            <div className="flex items-center justify-between border-b border-line-subtle pb-2 font-mono text-[10px] tracking-wider text-muted">
               <span>TELEMETRY // LOG</span>
               <span className="text-lime">● ACTIVE</span>
             </div>
@@ -109,11 +109,11 @@ export default function ContactSection({ onOpenComposer }) {
             <div className="mt-3 space-y-2.5 font-mono text-[10px]">
               <div className="flex justify-between border-b border-line-subtle pb-1.5">
                 <span className="text-muted">RESPONSE CADENCE:</span>
-                <span className="text-yellow">{contact.responseWindow}</span>
+                <span className="text-ink-secondary">{contact.responseWindow}</span>
               </div>
               <div className="flex justify-between border-b border-line-subtle pb-1.5">
                 <span className="text-muted">LOCAL TIMEZONE:</span>
-                <span className="text-ink">{contact.location}</span>
+                <span className="text-ink-secondary">{contact.location}</span>
               </div>
               <div className="flex justify-between border-b border-line-subtle pb-1.5">
                 <span className="text-muted">ENCRYPTION / PROTOCOL:</span>
@@ -121,13 +121,13 @@ export default function ContactSection({ onOpenComposer }) {
               </div>
               <div className="flex justify-between border-b border-line-subtle pb-1.5">
                 <span className="text-muted">URL CHAR LIMIT:</span>
-                <span className="text-pink">1,800 SAFE BYTES</span>
+                <span className="text-ink-secondary">1,800 SAFE BYTES</span>
               </div>
             </div>
           </div>
 
-          <div className="mt-4 border-l-2 border-yellow bg-surface-inset p-2.5">
-            <span className="block font-mono text-[9.5px] uppercase tracking-wider text-yellow">
+          <div className="mt-4 border-l-2 border-line bg-surface-inset p-2.5">
+            <span className="block font-mono text-[9.5px] uppercase tracking-wider text-muted font-semibold">
               TRANSMISSION TIP
             </span>
             <p className="mt-1 m-0 text-[11px] leading-relaxed text-ink-secondary">

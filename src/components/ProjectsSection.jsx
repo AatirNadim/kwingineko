@@ -15,43 +15,33 @@ export default function ProjectsSection() {
             {/* Top metadata strip */}
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-subtle pb-2.5">
               <div className="flex items-center gap-2">
-                <span className="font-mono text-[10.5px] font-bold text-pink">{project.number}</span>
+                <span className="font-mono text-[10.5px] font-semibold text-violet">{project.number}</span>
                 <span className="font-mono text-[10px] uppercase tracking-wider text-muted">{project.kind}</span>
               </div>
 
               {/* Action Links Strip */}
               <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                 {project.links ? (
-                  project.links.map((link) => {
-                    const badgeStyles = {
-                      demo: 'border-lime/40 text-lime hover:border-lime hover:bg-lime/10',
-                      docker: 'border-yellow/40 text-yellow hover:border-yellow hover:bg-yellow/10',
-                      article: 'border-violet/40 text-violet hover:border-violet hover:bg-violet/10',
-                      source: 'border-line text-ink-secondary hover:border-muted hover:text-white hover:bg-surface-inset',
-                    };
-                    const styleClass = badgeStyles[link.type] || badgeStyles.source;
-
-                    return (
-                      <a
-                        key={link.label}
-                        aria-label={`${project.name} ${link.label}`}
-                        href={link.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className={`inline-flex min-h-[44px] sm:min-h-[28px] items-center gap-1 border bg-surface px-2.5 sm:px-2 py-1 sm:py-0.5 font-mono text-[10px] font-semibold tracking-wider transition-all duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${styleClass}`}
-                      >
-                        <span>{link.label}</span>
-                        <ArrowUpRight size={12} className="opacity-80" />
-                      </a>
-                    );
-                  })
+                  project.links.map((link) => (
+                    <a
+                      key={link.label}
+                      aria-label={`${project.name} ${link.label}`}
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex min-h-[44px] sm:min-h-[28px] items-center gap-1 border border-line bg-surface px-2.5 sm:px-2 py-1 sm:py-0.5 font-mono text-[10px] font-semibold tracking-wider text-ink-secondary transition-all duration-150 hover:border-lime hover:text-lime hover:bg-lime/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+                    >
+                      <span>{link.label}</span>
+                      <ArrowUpRight size={12} className="opacity-80" />
+                    </a>
+                  ))
                 ) : (
                   <a
                     aria-label={`${project.name} repository on GitHub`}
                     href={project.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex min-h-[44px] sm:min-h-[28px] items-center gap-1 border border-line bg-surface px-2.5 sm:px-2 py-1 sm:py-0.5 font-mono text-[10px] text-yellow transition-colors hover:border-yellow hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+                    className="inline-flex min-h-[44px] sm:min-h-[28px] items-center gap-1 border border-line bg-surface px-2.5 sm:px-2 py-1 sm:py-0.5 font-mono text-[10px] font-semibold text-ink-secondary transition-colors hover:border-lime hover:text-lime hover:bg-lime/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
                   >
                     <span>SOURCE</span>
                     <ArrowUpRight size={12} />
@@ -77,7 +67,7 @@ export default function ProjectsSection() {
                       <span className="text-lime">✦</span>
                       <span className="font-semibold text-ink">SYSTEM HIGHLIGHT</span>
                       <span className="text-muted-dim">//</span>
-                      <span className="text-yellow">{project.highlightTag || project.loreTag}</span>
+                      <span className="text-muted">{project.highlightTag || project.loreTag}</span>
                     </div>
                     <p className="mt-1.5 font-sans text-xs leading-relaxed text-ink-secondary sm:text-[12.5px]">
                       {project.highlight || project.lore}
@@ -89,8 +79,8 @@ export default function ProjectsSection() {
                 {project.telemetry && (
                   <div className="my-2.5 border border-line-subtle bg-surface-inset p-2.5 font-mono text-[10px] leading-relaxed shadow-sm">
                     <div className="mb-1.5 flex items-center justify-between border-b border-line-subtle pb-1 font-mono text-[9.5px] uppercase tracking-wider text-muted">
-                      <span className="flex items-center gap-1 text-violet font-semibold">
-                        <span>⚡</span>
+                      <span className="flex items-center gap-1 font-semibold text-muted">
+                        <span className="text-muted-dim">⚡</span>
                         <span>SYSTEM TELEMETRY &amp; PACKAGING</span>
                       </span>
                       <span className="text-muted-dim">ACTIVE</span>
@@ -158,7 +148,7 @@ export default function ProjectsSection() {
                   </div>
                   {project.imageCaption && (
                     <div className="border-t border-line-subtle bg-surface-inset px-2.5 py-1.5 font-mono text-[9.5px] leading-snug text-ink-secondary">
-                      <span className="text-violet mr-1">►</span>
+                      <span className="text-muted-dim mr-1">►</span>
                       {project.imageCaption}
                     </div>
                   )}
