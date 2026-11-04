@@ -390,7 +390,7 @@ export default function CommandPalette({
             <span><kbd className="border border-[#43443a] bg-[#252621] px-1 text-ink">↵</kbd> select</span>
           </div>
           <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
-            <span>ARCADE: <span className="font-semibold text-lime">FAQ #06</span></span>
+            <span>SURPRISE: <span className="font-semibold text-lime">FAQ #09</span></span>
             <span className="text-[#55564c]" aria-hidden="true">·</span>
             <span>KONAMI: <span className="text-yellow">↑↑↓↓←→←→BA</span></span>
           </div>

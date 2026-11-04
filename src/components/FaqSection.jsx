@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react';
-import { Search, Plus, Minus, Check, Copy, HelpCircle, Terminal, X, CornerDownRight } from 'lucide-react';
+import { Search, Plus, Minus, Check, Copy, HelpCircle, Terminal, X, CornerDownRight, Play, Volume2 } from 'lucide-react';
 import SectionHeading from './SectionHeading.jsx';
-import FaqArcadeVault from './FaqArcadeVault.jsx';
 import { faqs } from '../data/portfolio.js';
+import { retroGames } from '../data/games.js';
 
 const CATEGORIES = [
   { id: 'all', label: 'ALL QUERIES' },
@@ -50,6 +50,11 @@ export default function FaqSection({ onLaunchGame }) {
 
   const handleCollapseAll = () => {
     setExpandedIds(new Set());
+  };
+
+  const handleLaunchRandom = () => {
+    const randomIndex = Math.floor(Math.random() * retroGames.length);
+    onLaunchGame?.(retroGames[randomIndex]);
   };
 
   const handleCopyAnswer = async (faq) => {
@@ -236,9 +241,37 @@ export default function FaqSection({ onLaunchGame }) {
                       {faq.answer}
                     </p>
 
-                    {/* Embedded 7-Disk Retro Arcade Vault (FAQ #06) */}
-                    {faq.id === 'portfolio-aesthetic' && (
-                      <FaqArcadeVault onLaunchGame={onLaunchGame} />
+                    {/* Interactive Easter Egg Discovery Area (FAQ #09) */}
+                    {faq.id === 'hidden-arcade' && (
+                      <div className="mt-4 border border-[#3e4036] bg-[#161713] p-3 sm:p-4">
+                        <div className="flex flex-wrap items-center gap-2.5">
+                          <button
+                            type="button"
+                            onClick={() => onLaunchGame?.(retroGames[0])}
+                            className="inline-flex min-h-[44px] items-center justify-center gap-2 border border-lime bg-lime/10 px-4 py-2 font-mono text-xs font-bold text-lime transition-all hover:-translate-y-0.5 hover:bg-lime hover:text-[#181915] hover:shadow-[3px_3px_0_#a6e22e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow active:translate-y-0"
+                            aria-label="Yes, launch arcade with DOOM"
+                          >
+                            <Play size={13} className="fill-current shrink-0" />
+                            <span>[Yes]</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={handleLaunchRandom}
+                            className="inline-flex min-h-[44px] items-center justify-center gap-2 border border-pink bg-pink/15 px-4 py-2 font-mono text-xs font-bold text-pink transition-all hover:-translate-y-0.5 hover:bg-pink hover:text-[#181915] hover:shadow-[3px_3px_0_#f92672] focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow active:translate-y-0"
+                            aria-label="Yes (louder), launch arcade with a random retro game"
+                          >
+                            <Volume2 size={14} className="shrink-0" />
+                            <span>[Yes (louder)]</span>
+                            <span className="font-mono text-[10px] opacity-80">🎲 RANDOM ROM</span>
+                          </button>
+                        </div>
+
+                        <div className="mt-2.5 flex items-center gap-2 font-mono text-[9.5px] text-[#8e8b78]">
+                          <Terminal size={11} className="text-yellow shrink-0" />
+                          <span>Boots MS-DOS 6.22 WASM kernel in-browser · Sound Blaster 16 stereo · 7 classic titles</span>
+                        </div>
+                      </div>
                     )}
 
                     {/* Highlight Footer + Action Bar */}
