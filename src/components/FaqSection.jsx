@@ -138,7 +138,7 @@ export default function FaqSection({ onLaunchGame }) {
                 onClick={() => setSelectedCategory(cat.id)}
                 className={`inline-flex min-h-[44px] items-center gap-2 border px-3 py-2 font-mono text-[9.5px] tracking-wider transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
                   isSelected
-                    ? 'border-pink bg-[#36272c] text-pink font-semibold'
+                    ? 'border-pink bg-pink/15 text-pink font-semibold'
                     : 'border-[#383931] bg-[#1a1b18] text-[#c2c0af] hover:border-[#4d4e43] hover:text-ink'
                 }`}
               >
@@ -204,7 +204,7 @@ export default function FaqSection({ onLaunchGame }) {
                     <div className="flex flex-wrap items-center gap-2 font-mono text-[9.5px] tracking-wider text-muted sm:text-[10px]">
                       <span className="text-violet">#{faq.number}</span>
                       <span className="text-[#55564c]">/</span>
-                      <span className="text-yellow">{faq.categoryLabel}</span>
+                      <span className="text-muted">{faq.categoryLabel}</span>
                       <span className="hidden min-[480px]:inline text-[#55564c]">/</span>
                       <span className="hidden min-[480px]:inline text-[#989582]">{faq.tag}</span>
                     </div>
@@ -268,7 +268,7 @@ export default function FaqSection({ onLaunchGame }) {
                         </div>
 
                         <div className="mt-2.5 flex items-center gap-2 font-mono text-[9.5px] text-[#8e8b78]">
-                          <Terminal size={11} className="text-yellow shrink-0" />
+                          <Terminal size={11} className="text-muted-dim shrink-0" />
                           <span>Boots MS-DOS 6.22 WASM kernel in-browser · Sound Blaster 16 stereo · 7 classic titles</span>
                         </div>
                       </div>
@@ -294,7 +294,7 @@ export default function FaqSection({ onLaunchGame }) {
                           </>
                         ) : (
                           <>
-                            <Copy size={12} className="text-yellow" />
+                            <Copy size={12} className="text-muted" />
                             <span>COPY ANSWER</span>
                           </>
                         )}

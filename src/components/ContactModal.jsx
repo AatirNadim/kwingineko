@@ -133,7 +133,7 @@ export default function ContactModal({ isOpen, onClose }) {
           
           {/* Step 1: Preset Templates */}
           <div className="mb-4">
-            <label className="mb-1.5 flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-violet">
+            <label className="mb-1.5 flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-muted">
               <span>01. CHOOSE TEMPLATE</span>
               <span className="text-[9.5px] text-muted">PRE-FILLED TOPIC</span>
             </label>
@@ -160,9 +160,9 @@ export default function ContactModal({ isOpen, onClose }) {
 
           {/* Step 2: Avatar / Stamp Picker */}
           <div className="mb-4 border-t border-dashed border-[#35362e] pt-3">
-            <label className="mb-1.5 flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-lime">
+            <label className="mb-1.5 flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-muted">
               <span className="flex items-center gap-1.5">
-                <Sparkles size={11} className="text-yellow" /> 02. SENDER COMPANION / STAMP (OPTIONAL)
+                <Sparkles size={11} className="text-muted-dim" /> 02. SENDER COMPANION / STAMP (OPTIONAL)
               </span>
               <span className="text-[9.5px] text-muted">INJECTED INTO BODY</span>
             </label>
@@ -176,7 +176,7 @@ export default function ContactModal({ isOpen, onClose }) {
                     onClick={() => setSelectedAvatar(avatar.id)}
                     className={`flex min-h-[40px] items-center gap-1.5 border px-2.5 py-2 text-left font-mono text-[10px] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
                       active
-                        ? 'border-lime bg-lime/10 text-lime font-medium'
+                        ? 'border-pink bg-pink/15 text-pink font-medium'
                         : 'border-[#3f4037] bg-[#22231e] text-muted hover:border-line hover:text-[#d6d4c5]'
                     }`}
                   >
@@ -197,7 +197,7 @@ export default function ContactModal({ isOpen, onClose }) {
                 <span>TO:</span>
                 <span className="text-lime">VERIFIED INBOX</span>
               </div>
-              <div className="mt-1 border border-[#3e4037] bg-[#171815] px-3 py-2 font-mono text-xs text-yellow">
+              <div className="mt-1 border border-[#3e4037] bg-[#171815] px-3 py-2 font-mono text-xs text-ink">
                 {contact.email}
               </div>
             </div>
@@ -278,7 +278,7 @@ export default function ContactModal({ isOpen, onClose }) {
               </>
             ) : (
               <>
-                <Copy size={12} className="text-yellow" />
+                <Copy size={12} className="text-muted" />
                 <span>COPY TEXT & ADDRESS</span>
               </>
             )}

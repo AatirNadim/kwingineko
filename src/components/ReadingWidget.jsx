@@ -34,11 +34,11 @@ export default function ReadingWidget({ topic, selectedTopicIds, onTopicChange, 
   return (
     <PanelFrame title="READING_RADIO" symbol="RAD">
       <div className="mx-2 mb-2 mt-3 border border-line bg-surface p-[9px]">
-        <div className="font-mono text-[9.5px] tracking-wider text-lime">YOUR READING MIX</div>
+        <div className="font-mono text-[9.5px] font-semibold tracking-wider text-muted">YOUR READING MIX</div>
         <p className="mb-[7px] mt-1 text-[10px] leading-[1.45] text-ink-secondary">Choose up to {maxSelectedTopics} topics to follow. You can change them any time.</p>
         <details className="group border border-line bg-surface-card">
-        <summary className="flex min-h-[36px] cursor-pointer list-none items-center justify-between px-[8px] py-[7px] font-mono text-[9.5px] text-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow">
-          <span>CHANGE TOPICS <span className="text-lime">{selectedTopics.length}/{maxSelectedTopics} SELECTED</span></span>
+        <summary className="flex min-h-[36px] cursor-pointer list-none items-center justify-between px-[8px] py-[7px] font-mono text-[9.5px] font-medium text-muted focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow">
+          <span>CHANGE TOPICS <span className="text-ink-secondary">{selectedTopics.length}/{maxSelectedTopics} SELECTED</span></span>
           <span aria-hidden="true" className="group-open:rotate-180">⌄</span>
         </summary>
         <div role="group" aria-label="Choose topics to display" className="grid gap-[2px] border-t border-line p-1">
@@ -59,21 +59,21 @@ export default function ReadingWidget({ topic, selectedTopicIds, onTopicChange, 
           {selectedTopics.map((item) => <button key={item.id} aria-pressed={selected.id === item.id} onClick={() => onTopicChange(item.id)} className={`min-h-[32px] border px-2.5 py-1.5 text-[10px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-yellow ${selected.id === item.id ? 'border-line bg-focus text-ink font-medium' : 'border-transparent bg-transparent text-ink-secondary hover:bg-focus'}`}>{item.label}</button>)}
         </div>
         <div className="m-2 border border-dashed border-line bg-surface-well px-[11px] py-[14px]">
-          <div className="mb-2 font-mono text-[9.5px] font-semibold text-violet">[CHANNEL // RSS]</div>
+          <div className="mb-2 font-mono text-[9.5px] font-semibold text-muted">[CHANNEL // RSS]</div>
           <b className="block font-display text-xs font-medium text-ink">{selected.label}</b>
           {loading && !currentFeed && <p role="status" className="mt-2 text-[10px] text-muted">Loading selected feeds…</p>}
           {!loading && currentFeed?.items?.length > 0 && <ul className="mt-2 grid gap-2">
             {currentFeed.items.map((item, index) => <li key={`${item.link}-${index}`} className="border-t border-line pt-2">
-              <a href={item.link} target="_blank" rel="noreferrer" className="text-[11px] leading-[1.45] text-ink underline decoration-muted-dim underline-offset-2 hover:text-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow">{item.title}</a>
+              <a href={item.link} target="_blank" rel="noreferrer" className="text-[11px] leading-[1.45] text-ink underline decoration-muted-dim underline-offset-2 hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow">{item.title}</a>
               <div className="mt-1 flex justify-between gap-2 font-mono text-[9px] text-muted-dim"><span>{item.source}</span>{item.date && <time dateTime={item.date}>{formatDate(item.date)}</time>}</div>
             </li>)}
           </ul>}
           {!loading && hasSources && !currentFeed?.items?.length && <p className="mt-2 text-[10px] leading-[1.5] text-muted">{currentFeed?.errors?.length ? currentFeed.errors[0] : 'No recent articles were returned by this feed.'}</p>}
           {!hasSources && <p className="mb-0 mt-[5px] text-[10px] leading-[1.55] text-muted">No feed sources yet. Add RSS or Atom URLs to this topic in reading.config.json.</p>}
-          {hasSources && <span className="mt-2 flex items-center gap-[6px] font-mono text-[9px] text-ink-secondary"><i className={`h-[5px] w-[5px] rounded-full ${currentFeed?.errors?.length ? 'bg-pink' : 'bg-yellow'}`}/>{currentFeed?.errors?.length ? 'FEED LOAD ISSUE' : 'SESSION CACHE · 6H'}</span>}
+          {hasSources && <span className="mt-2 flex items-center gap-[6px] font-mono text-[9px] text-ink-secondary"><i className={`h-[5px] w-[5px] rounded-full ${currentFeed?.errors?.length ? 'bg-pink' : 'bg-lime'}`}/>{currentFeed?.errors?.length ? 'FEED LOAD ISSUE' : 'SESSION CACHE · 6H'}</span>}
         </div>
       </> : <div className="m-2 border border-dashed border-line px-[11px] py-[14px] text-[10px] leading-[1.55] text-muted">Choose up to {maxSelectedTopics} topics above to display here.</div>}
-      <div className="flex justify-between border-t border-line px-[10px] py-[9px] font-mono text-[9px] text-muted-dim"><span>UPDATE STATUS</span><span className="text-yellow">{loading ? 'FETCHING SELECTED' : hasSources ? 'SELECTED FEEDS' : 'AWAITING SOURCES'}</span></div>
+      <div className="flex justify-between border-t border-line px-[10px] py-[9px] font-mono text-[9px] text-muted-dim"><span>UPDATE STATUS</span><span className="text-muted">{loading ? 'FETCHING SELECTED' : hasSources ? 'SELECTED FEEDS' : 'AWAITING SOURCES'}</span></div>
     </PanelFrame>
   );
 }

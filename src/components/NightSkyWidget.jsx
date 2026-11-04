@@ -14,9 +14,9 @@ export default function NightSkyWidget() {
         </span>
 
         {/* Ambient star symbols */}
-        <span className="absolute left-[47px] top-[23px] text-[10px] text-violet">✦</span>
-        <span className="absolute right-[48px] top-[37px] text-[20px] leading-none text-lime">·</span>
-        <span className="absolute bottom-6 right-[66px] text-[11px] text-yellow">✧</span>
+        <span className="absolute left-[47px] top-[23px] text-[10px] text-muted-dim">✦</span>
+        <span className="absolute right-[48px] top-[37px] text-[20px] leading-none text-muted-dim">·</span>
+        <span className="absolute bottom-6 right-[66px] text-[11px] text-muted-dim">✧</span>
       </div>
       <div className="flex items-center justify-between border-t border-line-subtle px-[9px] py-[9px]">
         <b className="font-mono text-[10px] tracking-wide text-ink">TAKE A BREATH</b>

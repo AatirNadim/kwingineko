@@ -11,7 +11,7 @@ export default function ExperienceSection() {
             <span className="absolute -left-[9px] top-px grid h-[17px] w-[17px] place-items-center border border-violet bg-canvas font-mono text-[9.5px] font-bold text-violet">
               0{i + 1}
             </span>
-            <div className="font-mono text-[10px] text-yellow sm:text-[10.5px]">{item.date}</div>
+            <div className="font-mono text-[10px] text-muted sm:text-[10.5px]">{item.date}</div>
             <h3 className="mb-px mt-1 font-display text-base font-semibold text-ink">{item.role}</h3>
             <div className="font-mono text-xs font-medium text-lime">{item.org}</div>
             <p className="mb-0 mt-[7px] max-w-[640px] text-xs leading-[1.7] text-ink-secondary">{item.note}</p>

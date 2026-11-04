@@ -100,7 +100,7 @@ export default function BlogSection() {
         <div className="mb-4 flex flex-col gap-2.5 border border-line bg-surface p-2.5 sm:p-3 shadow-panel">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-subtle pb-2 font-mono text-[10px] sm:text-[10.5px]">
             <div className="flex items-center gap-2 text-muted">
-              <span className="font-mono text-pink font-bold">[LOG]</span>
+              <span className="font-mono text-muted font-bold">[LOG]</span>
               <span className="text-ink-secondary">DISPATCH LOG</span>
               <span className="text-muted-dim">//</span>
               <span className="text-lime">● FEED ACTIVE</span>
@@ -109,7 +109,7 @@ export default function BlogSection() {
                 href="https://techtom.hashnode.dev/"
                 target="_blank"
                 rel="noreferrer noopener"
-                className="hidden items-center gap-1 text-yellow underline hover:text-white sm:inline-flex"
+                className="hidden items-center gap-1 text-ink-secondary underline hover:text-lime sm:inline-flex"
               >
                 <span>techtom.hashnode.dev</span>
                 <ArrowUpRight size={10} />
@@ -119,7 +119,7 @@ export default function BlogSection() {
             {/* Tactile Carousel Controls */}
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1 font-mono text-[10px] text-muted">
-                <span className="text-yellow font-semibold">[{currentNumber}</span>
+                <span className="text-ink-secondary font-semibold">[{currentNumber}</span>
                 <span>/</span>
                 <span>{totalNumber}]</span>
               </div>
@@ -129,19 +129,19 @@ export default function BlogSection() {
                   type="button"
                   onClick={handlePrev}
                   aria-label="Previous article"
-                  className="inline-flex min-h-[44px] min-w-[44px] sm:min-h-[34px] sm:min-w-[34px] items-center justify-center border border-line-subtle bg-surface-card font-mono text-[10px] text-ink-secondary transition hover:border-pink hover:bg-focus hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+                  className="inline-flex min-h-[44px] min-w-[44px] sm:min-h-[34px] sm:min-w-[34px] items-center justify-center border border-line-subtle bg-surface-card font-mono text-[10px] text-ink-secondary transition hover:border-pink hover:bg-focus hover:text-pink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
                 >
-                  <ChevronLeft size={14} className="text-pink" />
+                  <ChevronLeft size={14} className="opacity-80" />
                   <span className="sr-only sm:not-sr-only sm:pr-1">PREV</span>
                 </button>
                 <button
                   type="button"
                   onClick={handleNext}
                   aria-label="Next article"
-                  className="inline-flex min-h-[44px] min-w-[44px] sm:min-h-[34px] sm:min-w-[34px] items-center justify-center border border-line-subtle bg-surface-card font-mono text-[10px] text-ink-secondary transition hover:border-lime hover:bg-focus hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+                  className="inline-flex min-h-[44px] min-w-[44px] sm:min-h-[34px] sm:min-w-[34px] items-center justify-center border border-line-subtle bg-surface-card font-mono text-[10px] text-ink-secondary transition hover:border-pink hover:bg-focus hover:text-pink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
                 >
                   <span className="sr-only sm:not-sr-only sm:pl-1">NEXT</span>
-                  <ChevronRight size={14} className="text-lime" />
+                  <ChevronRight size={14} className="opacity-80" />
                 </button>
               </div>
             </div>
@@ -150,7 +150,7 @@ export default function BlogSection() {
           {/* Quick Hub Note */}
           <div className="flex flex-wrap items-center justify-between gap-1 text-[9.5px] font-mono text-muted">
             <span>USE [← / →] KEYS OR SWIPE TO BROWSE</span>
-            <span className="text-violet">TOPIC: {current.category.toUpperCase()}</span>
+            <span className="text-muted">TOPIC: {current.category.toUpperCase()}</span>
           </div>
         </div>
 
@@ -177,15 +177,15 @@ export default function BlogSection() {
                 ) : (
                   <div className="flex h-full w-full flex-col justify-between p-3 font-mono">
                     <div className="flex items-center justify-between text-[9.5px] text-muted">
-                      <span className="flex items-center gap-1 text-pink">
-                        <Terminal size={11} />
+                      <span className="flex items-center gap-1 text-muted">
+                        <Terminal size={11} className="text-muted-dim" />
                         DISPATCH_{currentNumber}
                       </span>
-                      <span className="text-lime">RAW_TEXT</span>
+                      <span className="text-muted-dim">RAW_TEXT</span>
                     </div>
 
                     <div className="my-auto text-center">
-                      <div className="font-mono text-[10.5px] tracking-wider text-yellow">
+                      <div className="font-mono text-[10.5px] tracking-wider text-ink-secondary">
                         [ TECHTOM ARCHIVE ]
                       </div>
                       <div className="mt-1 text-[10px] text-muted">
@@ -200,7 +200,7 @@ export default function BlogSection() {
                   </div>
                 )}
                 {/* Monokai corner highlight */}
-                <div className="pointer-events-none absolute right-1 top-1 font-mono text-[9.5px] text-yellow/80">
+                <div className="pointer-events-none absolute right-1 top-1 font-mono text-[9.5px] text-muted-dim">
                   #{currentNumber}
                 </div>
               </div>
@@ -208,11 +208,11 @@ export default function BlogSection() {
               {/* Quick Card Telemetry */}
               <div className="flex flex-wrap items-center justify-between gap-1 border border-line-subtle bg-surface-inset px-2.5 py-1.5 font-mono text-[9.5px]">
                 <div className="flex items-center gap-1 text-muted">
-                  <Calendar size={11} className="text-violet" />
+                  <Calendar size={11} className="text-muted-dim" />
                   <span>{current.date}</span>
                 </div>
-                <div className="flex items-center gap-1 text-yellow">
-                  <Clock size={11} />
+                <div className="flex items-center gap-1 text-muted">
+                  <Clock size={11} className="text-muted-dim" />
                   <span>{current.readTime}</span>
                 </div>
               </div>
@@ -236,7 +236,7 @@ export default function BlogSection() {
                     href={current.url}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="transition hover:text-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+                    className="transition hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
                   >
                     {current.title}
                   </a>
@@ -250,7 +250,7 @@ export default function BlogSection() {
                 {/* Tags Pill List */}
                 <div className="mt-4 flex flex-wrap items-center gap-1.5">
                   <span className="mr-1 inline-flex items-center gap-0.5 font-mono text-[9.5px] text-muted">
-                    <Hash size={10} className="text-violet" />
+                    <Hash size={10} className="text-muted-dim" />
                     TAGS:
                   </span>
                   {current.tags.map((tag) => (
@@ -284,7 +284,7 @@ export default function BlogSection() {
                   className="inline-flex min-h-[44px] items-center gap-1.5 border border-line-subtle bg-surface-card px-3.5 py-2.5 font-mono text-[9.5px] text-ink-secondary transition hover:border-line hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow sm:text-[10px]"
                 >
                   <span>ALL POSTS ON TECHTOM</span>
-                  <ExternalLink size={11} className="text-yellow" />
+                  <ExternalLink size={11} className="text-muted-dim" />
                 </a>
               </div>
             </div>
