@@ -72,7 +72,7 @@ export default function BlogSection() {
   return (
     <section
       id="writing"
-      className="scroll-mt-4 border-b border-line px-3 py-6 sm:px-[14px] sm:py-8 md:pl-5"
+      className="scroll-mt-6 border-b border-line px-3 py-6 sm:px-[14px] sm:py-8 md:pl-5"
     >
       <SectionHeading
         index="06 / DISPATCHES & WRITING"

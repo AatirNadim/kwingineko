@@ -3,7 +3,7 @@ import SectionHeading from './SectionHeading.jsx';
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="scroll-mt-4 border-b border-line px-3 py-6 sm:px-[14px] sm:py-8 md:pl-5">
+    <section id="experience" className="scroll-mt-6 border-b border-line px-3 py-6 sm:px-[14px] sm:py-8 md:pl-5">
       <SectionHeading index="03 / THE PATH HERE" title="Experience" />
       <div className="ml-2.5 sm:ml-3 mt-5 border-l border-line">
         {experience.map((item, i) => (

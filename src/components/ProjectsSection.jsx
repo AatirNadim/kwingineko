@@ -4,7 +4,7 @@ import SectionHeading from './SectionHeading.jsx';
 
 export default function ProjectsSection() {
   return (
-    <section id="work" className="scroll-mt-4 border-b border-line px-3 py-6 sm:px-[14px] sm:py-8 md:pl-5">
+    <section id="work" className="scroll-mt-6 border-b border-line px-3 py-6 sm:px-[14px] sm:py-8 md:pl-5">
       <SectionHeading index="02 / FIELD NOTES" title="Selected work" aside="03 PROJECTS" />
       <div className="grid gap-4">
         {projects.map((project) => (

@@ -71,7 +71,7 @@ export default function FaqSection({ onLaunchGame }) {
   }, []);
 
   return (
-    <section id="faq" className="scroll-mt-4 border-b border-line px-3 py-6 sm:px-[14px] sm:py-8 md:pl-5">
+    <section id="faq" className="scroll-mt-6 border-b border-line px-3 py-6 sm:px-[14px] sm:py-8 md:pl-5">
       <SectionHeading index="07 / KNOWLEDGE_BASE" title="Frequently asked questions" aside="QUERY // FAQ.MD" />
 
       {/* Control Console: Search & Category Tabs */}

@@ -17,7 +17,7 @@ export default function ContactSection({ onOpenComposer }) {
   };
 
   return (
-    <section id="contact" className="scroll-mt-4 border-b border-line px-3 py-6 sm:px-[14px] sm:py-8 md:pl-5">
+    <section id="contact" className="scroll-mt-6 border-b border-line px-3 py-6 sm:px-[14px] sm:py-8 md:pl-5">
       <SectionHeading index="08 / TRANSMISSION" title="Get in touch" aside="CHANNEL // DIRECT" />
 
       <div className="grid grid-cols-1 gap-4 cq-split-contact">
