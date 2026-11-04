@@ -27,8 +27,8 @@ export default function NavigationRail({ open, onClose, active, time, onNavigate
 
   return (
     <>
-      {/* 1. Desktop Persistent Rail (>= 1024px) */}
-      <aside className="hidden lg:flex lg:min-h-[calc(100vh-190px)] lg:flex-col lg:border-0 lg:border-r lg:border-[#4a4a40]/25 lg:bg-transparent lg:py-[10px] lg:pr-[14px] lg:pl-0">
+      {/* 1. Desktop Persistent Sticky Rail (>= 1024px) */}
+      <aside className="hidden lg:flex lg:sticky lg:top-6 lg:self-start lg:max-h-[calc(100vh-48px)] lg:min-h-[calc(100vh-190px)] lg:overflow-y-auto lg:flex-col lg:border-0 lg:border-r lg:border-[#4a4a40]/25 lg:bg-transparent lg:py-[10px] lg:pr-[14px] lg:pl-0 [scrollbar-width:thin] [scrollbar-color:#45463e_transparent] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-[#45463e] [&::-webkit-scrollbar-track]:bg-transparent">
         <div className="flex justify-between border-b border-line px-[10px] pb-[13px] font-mono text-[10.5px] tracking-wider text-muted">
           DIRECTORY <span className="text-[#9d9b89]">01—0{navigation.length}</span>
         </div>

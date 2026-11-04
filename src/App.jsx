@@ -60,13 +60,40 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [commandPaletteOpen, activeDosGame, contactModalOpen]);
 
-  // DevTools Console Easter Egg initialization
+  // DEVTOOLS easter egg and scrollspy for active directory item
   useEffect(() => {
     initConsoleEasterEgg({
       onToggleCrt: () => setCrtActive((prev) => !prev),
       onLaunchArcade: () => setActiveDosGame(retroGames[0]),
       onOpenComposer: () => setContactModalOpen(true),
     });
+  }, []);
+
+  // Synchronize active section in sticky NavigationRail with viewport scroll
+  useEffect(() => {
+    const sectionIds = ['home', 'work', 'experience', 'expertise', 'certificates', 'writing', 'faq', 'contact'];
+    const elements = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    if (elements.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (visible.length > 0) {
+          visible.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: '-15% 0px -50% 0px',
+        threshold: [0.1, 0.25, 0.5],
+      }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
   const navigateTo = (id) => {

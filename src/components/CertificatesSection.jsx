@@ -13,7 +13,7 @@ export default function CertificatesSection() {
     : certificates.filter((cert) => cert.category === selectedCategory);
 
   return (
-    <section id="certificates" className="scroll-mt-4 border-b border-line px-3 py-6 sm:px-[14px] sm:py-8 md:pl-5">
+    <section id="certificates" className="scroll-mt-6 border-b border-line px-3 py-6 sm:px-[14px] sm:py-8 md:pl-5">
       <SectionHeading
         index="05 / VERIFIED CREDENTIALS"
         title="Certificates"
