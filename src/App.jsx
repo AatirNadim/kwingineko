@@ -130,6 +130,8 @@ export default function App() {
             navigateTo('home');
           }}
           onOpenCommandPalette={() => setCommandPaletteOpen(true)}
+          crtActive={crtActive}
+          onToggleCrt={setCrtActive}
         />
         <div className="grid grid-cols-1 items-start gap-3 pt-3 sm:gap-4 sm:pt-4 lg:grid-cols-[200px_minmax(0,1fr)_258px] lg:gap-[22px] lg:pt-6">
           <NavigationRail
@@ -161,8 +163,6 @@ export default function App() {
             navigateTo('home');
           }}
           onOpenCommandPalette={() => setCommandPaletteOpen(true)}
-          crtActive={crtActive}
-          onToggleCrt={setCrtActive}
         />
         <ContactModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} />
         <DosPlayerModal

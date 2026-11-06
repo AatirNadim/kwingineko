@@ -66,7 +66,7 @@ export default function NavigationRail({ open, onClose, active, time, onNavigate
             </div>
             <div>
               <b className="block text-xs">Aatir Nadim</b>
-              <small className="mt-0.5 block font-mono text-[10px] text-muted">Engineer · builder</small>
+              <small className="mt-0.5 block font-mono text-[10px] text-muted">engineer · builder</small>
             </div>
           </div>
           <div className="px-[9px] py-[17px]">
