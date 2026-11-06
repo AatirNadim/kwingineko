@@ -28,8 +28,10 @@ function firstText(node, names) {
 }
 
 function parseFeed(xmlText, feedUrl) {
-  const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
-  if (doc.querySelector('parsererror')) throw new Error('Feed returned invalid XML.');
+  let doc = new DOMParser().parseFromString(xmlText, 'text/xml');
+  if (doc.querySelector('parsererror')) {
+    doc = new DOMParser().parseFromString(xmlText, 'text/html');
+  }
   const rssItems = [...doc.getElementsByTagName('item')];
   const atomItems = [...doc.getElementsByTagName('entry')];
   const nodes = rssItems.length ? rssItems : atomItems;
@@ -55,18 +57,109 @@ function parseFeed(xmlText, feedUrl) {
 async function fetchFeed(url) {
   const cached = readCache(url);
   if (cached) return cached;
+
+  let xmlText = '';
+  let lastError = null;
+
+  // 1. Direct fetch (fastest, works when remote feed allows CORS like Wired)
   try {
-    const response = await fetch(url, { headers: { Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml' } });
-    if (!response.ok) throw new Error(`Feed returned HTTP ${response.status}.`);
-    const items = parseFeed(await response.text(), url);
-    const result = { items };
-    writeCache(url, result);
-    return result;
+    const response = await fetch(url, {
+      headers: { Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml' }
+    });
+    if (response.ok) {
+      xmlText = await response.text();
+    } else {
+      lastError = new Error(`Feed returned HTTP ${response.status}.`);
+    }
   } catch (error) {
-    const result = { items: [], error: error instanceof TypeError ? 'This feed may block browser access (CORS).' : error.message };
-    writeCache(url, result);
-    return result;
+    lastError = error;
   }
+
+  // 2. Same-origin proxy endpoint (/api/feed?url=...) handled by Vite dev server or Vercel serverless function
+  if (!xmlText) {
+    try {
+      const proxyUrl = `/api/feed?url=${encodeURIComponent(url)}`;
+      const proxyResponse = await fetch(proxyUrl);
+      if (proxyResponse.ok) {
+        xmlText = await proxyResponse.text();
+        lastError = null;
+      } else {
+        lastError = new Error(`Proxy returned HTTP ${proxyResponse.status}.`);
+      }
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  // 3. Fallback: Public RSS-to-JSON aggregator if local proxy is unavailable (e.g. pure static hosting)
+  if (!xmlText) {
+    try {
+      const r2jUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`;
+      const r2jResponse = await fetch(r2jUrl);
+      if (r2jResponse.ok) {
+        const data = await r2jResponse.json();
+        if (data.status === 'ok' && Array.isArray(data.items) && data.items.length > 0) {
+          const source = data.feed?.title || new URL(url).hostname.replace(/^www\./, '');
+          const items = data.items.slice(0, MAX_ITEMS_PER_FEED).map((item) => {
+            let link = '';
+            try {
+              const parsedLink = new URL(item.link, url);
+              if (parsedLink.protocol === 'http:' || parsedLink.protocol === 'https:') link = parsedLink.href;
+            } catch { /* Ignore malformed article URLs. */ }
+            return {
+              title: item.title || 'Untitled article',
+              link,
+              date: item.pubDate || '',
+              source,
+            };
+          }).filter((item) => item.link);
+          if (items.length > 0) {
+            const result = { items };
+            writeCache(url, result);
+            return result;
+          }
+        }
+      }
+    } catch { /* Continue to next fallback */ }
+  }
+
+  // 4. Fallback: Public CORS proxy
+  if (!xmlText) {
+    try {
+      const aoUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+      const aoResponse = await fetch(aoUrl);
+      if (aoResponse.ok) {
+        const text = await aoResponse.text();
+        if (text && (text.includes('<rss') || text.includes('<feed') || text.includes('<xml'))) {
+          xmlText = text;
+          lastError = null;
+        }
+      }
+    } catch { /* Final catch below */ }
+  }
+
+  // Parse retrieved XML if available
+  if (xmlText) {
+    try {
+      const items = parseFeed(xmlText, url);
+      if (items.length > 0) {
+        const result = { items };
+        writeCache(url, result);
+        return result;
+      }
+      lastError = new Error('No recent articles were returned by this feed.');
+    } catch (parseError) {
+      lastError = parseError;
+    }
+  }
+
+  const errorMessage = lastError instanceof TypeError
+    ? 'This feed could not be loaded due to browser network/CORS restrictions.'
+    : (lastError?.message || 'Could not load feed articles.');
+
+  const result = { items: [], error: errorMessage };
+  writeCache(url, result);
+  return result;
 }
 
 function loadFeed(url) {

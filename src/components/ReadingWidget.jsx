@@ -70,7 +70,7 @@ export default function ReadingWidget({ topic, selectedTopicIds, onTopicChange, 
           </ul>}
           {!loading && hasSources && !currentFeed?.items?.length && <p className="mt-2 text-[10px] leading-[1.5] text-muted">{currentFeed?.errors?.length ? currentFeed.errors[0] : 'No recent articles were returned by this feed.'}</p>}
           {!hasSources && <p className="mb-0 mt-[5px] text-[10px] leading-[1.55] text-muted">No feed sources yet. Add RSS or Atom URLs to this topic in reading.config.json.</p>}
-          {hasSources && <span className="mt-2 flex items-center gap-[6px] font-mono text-[9px] text-ink-secondary"><i className={`h-[5px] w-[5px] rounded-full ${currentFeed?.errors?.length ? 'bg-pink' : 'bg-lime'}`}/>{currentFeed?.errors?.length ? 'FEED LOAD ISSUE' : 'SESSION CACHE · 6H'}</span>}
+          {hasSources && <span className="mt-2 flex items-center gap-[6px] font-mono text-[9px] text-ink-secondary"><i className={`h-[5px] w-[5px] rounded-full ${currentFeed?.errors?.length && !currentFeed?.items?.length ? 'bg-pink' : 'bg-lime'}`}/>{currentFeed?.errors?.length && !currentFeed?.items?.length ? 'FEED LOAD ISSUE' : 'SESSION CACHE · 6H'}</span>}
         </div>
       </> : <div className="m-2 border border-dashed border-line px-[11px] py-[14px] text-[10px] leading-[1.55] text-muted">Choose up to {maxSelectedTopics} topics above to display here.</div>}
       <div className="flex justify-between border-t border-line px-[10px] py-[9px] font-mono text-[9px] text-muted-dim"><span>UPDATE STATUS</span><span className="text-muted">{loading ? 'FETCHING SELECTED' : hasSources ? 'SELECTED FEEDS' : 'AWAITING SOURCES'}</span></div>
