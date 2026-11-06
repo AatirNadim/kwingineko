@@ -5,21 +5,49 @@ export default function ExperienceSection() {
   return (
     <section id="experience" className="scroll-mt-6 border-b border-line px-3 py-6 sm:px-[14px] sm:py-8 md:pl-5">
       <SectionHeading index="03 / THE PATH HERE" title="Experience" />
-      <div className="ml-2.5 sm:ml-3 mt-5 border-l border-line">
+      <div className="ml-2.5 sm:ml-3 mt-6 border-l border-line">
         {experience.map((item, i) => (
-          <article key={item.org} className="relative pb-6 pl-5 sm:pl-[21px] last:pb-1">
+          <article key={item.org} className="relative pb-8 pl-5 sm:pl-[24px] last:pb-2">
             <span className="absolute -left-[9px] top-px grid h-[17px] w-[17px] place-items-center border border-violet bg-canvas font-mono text-[9.5px] font-bold text-violet">
               0{i + 1}
             </span>
-            <div className="font-mono text-[10px] text-muted sm:text-[10.5px]">{item.date}</div>
-            <h3 className="mb-px mt-1 font-display text-base font-semibold text-ink">{item.role}</h3>
-            <div className="font-mono text-xs font-medium text-lime">{item.org}</div>
-            <p className="mb-0 mt-[7px] max-w-[640px] text-xs leading-[1.7] text-ink-secondary">{item.note}</p>
+            <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
+              <span className="font-semibold text-yellow tracking-wide">{item.date}</span>
+              {item.location && (
+                <>
+                  <span className="text-muted-dim">//</span>
+                  <span className="text-muted text-[11px]">{item.location}</span>
+                </>
+              )}
+            </div>
+            <h3 className="mb-0.5 mt-1 font-display text-base font-bold text-ink sm:text-lg">{item.role}</h3>
+            <div className="flex items-center gap-2 font-mono text-xs sm:text-[13px]">
+              <span className="font-semibold text-lime">{item.org}</span>
+              {item.team && (
+                <>
+                  <span className="text-muted-dim">·</span>
+                  <span className="text-muted text-[11.5px]">{item.team}</span>
+                </>
+              )}
+            </div>
+            <p className="mb-0 mt-2 max-w-[640px] font-sans text-xs leading-relaxed text-ink-secondary sm:text-[13px]">{item.note}</p>
+            {item.stack && (
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {item.stack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="border border-line-subtle bg-surface px-1.5 py-0.5 font-mono text-[10.5px] text-muted font-medium"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            )}
           </article>
         ))}
       </div>
       <p className="mb-0 ml-2.5 sm:ml-3 mt-4 border-t border-dashed border-line pt-[10px] font-mono text-[10px] text-muted sm:text-[10.5px]">
-        Selected themes from documented work. Delivery and impact are described conservatively.
+        Selected production and internship responsibilities. Verified engineering delivery and impact.
       </p>
     </section>
   );

@@ -6,11 +6,11 @@ const LINES = [
   'meow!',
   'have you tried turning it off and on again?',
   'aatir wrote this site. i supervised.',
-  'purr... TypeScript > JavaScript',
+  'purr... 0 errors, 0 warnings, 1 purr',
   'i sat on the keyboard and fixed a bug',
-  'psst... check the very last question in the FAQ',
+  'all systems nominal on this workstation',
   'curiosity never killed nietzsche\'s cat',
-  'psst... try the konami code',
+  'kernel advisory: treats are running low',
   'nap time is sacred',
   'no mice were harmed making this site',
 ];
@@ -182,7 +182,7 @@ export default function DeskCompanion({ followEnabled = false, onToggleFollow, c
       {line && (
         <p
           aria-live="polite"
-          className="mx-[10px] mt-2 border border-line bg-surface px-[9px] py-[6px] text-center font-mono text-xs leading-[1.4] text-ink shadow-[2px_2px_0_#f92672]"
+          className="pointer-events-none select-none mx-[10px] mt-2 border border-line bg-surface px-[9px] py-[6px] text-center font-mono text-xs leading-[1.4] text-ink shadow-[2px_2px_0_#f92672]"
         >
           {line}
         </p>

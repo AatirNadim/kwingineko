@@ -33,22 +33,30 @@ export default function NavigationRail({ open, onClose, active, time, onNavigate
           DIRECTORY <span className="text-[#9d9b89]">01—0{navigation.length}</span>
         </div>
         <nav aria-label="Main desktop navigation" className="grid grid-cols-1 gap-[3px] pt-[10px]">
-          {navigation.map(([id, number, label]) => (
-            <button
-              key={id}
-              onClick={() => onNavigate(id)}
-              className={`group flex items-center gap-3 border px-[10px] py-[11px] text-left text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
-                active === id
-                  ? 'border-[#55564b] bg-focus text-ink font-medium'
-                  : 'border-transparent bg-transparent text-[#c7c5b7] hover:bg-focus hover:text-ink'
-              }`}
-            >
-              <span className={`font-mono text-[11px] ${active === id ? 'text-pink' : 'text-[#9d9b89]'}`}>
-                {number}
-              </span>
-              <span>{label}</span>
-              {active === id && <span className="ml-auto text-lime">↗</span>}
-            </button>
+          {navigation.map(([id, number, label], idx) => (
+            <div key={id}>
+              {idx === 4 && (
+                <div className="my-2 border-t border-dashed border-line-subtle pt-2 px-[10px]">
+                  <span className="font-mono text-[9px] uppercase tracking-wider text-muted-dim">
+                    EXTENSIONS &amp; NOTES
+                  </span>
+                </div>
+              )}
+              <button
+                onClick={() => onNavigate(id)}
+                className={`w-full group flex items-center gap-3 border px-[10px] py-[11px] text-left text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
+                  active === id
+                    ? 'border-[#55564b] bg-focus text-ink font-medium'
+                    : 'border-transparent bg-transparent text-[#c7c5b7] hover:bg-focus hover:text-ink'
+                }`}
+              >
+                <span className={`font-mono text-[11px] ${active === id ? 'text-pink' : 'text-[#9d9b89]'}`}>
+                  {number}
+                </span>
+                <span>{label}</span>
+                {active === id && <span className="ml-auto text-lime">↗</span>}
+              </button>
+            </div>
           ))}
         </nav>
         <div className="mt-auto hidden md:block">
@@ -112,23 +120,31 @@ export default function NavigationRail({ open, onClose, active, time, onNavigate
             {/* Navigation links with touch targets >= 44px */}
             <nav aria-label="Mobile navigation" className="overflow-y-auto p-3">
               <div className="grid grid-cols-1 gap-2">
-                {navigation.map(([id, number, label]) => (
-                  <button
-                    key={id}
-                    type="button"
-                    onClick={() => onNavigate(id)}
-                    className={`flex min-h-[44px] items-center gap-3 border px-3.5 py-3 text-left text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
-                      active === id
-                        ? 'border-pink bg-focus text-ink font-medium shadow-[2px_2px_0_#f9267240]'
-                        : 'border-[#3f4037] bg-[#22231e] text-[#c7c5b7] hover:border-line hover:bg-focus hover:text-ink'
-                    }`}
-                  >
-                    <span className={`font-mono text-[11px] font-bold ${active === id ? 'text-pink' : 'text-[#9d9b89]'}`}>
-                      {number}
-                    </span>
-                    <span className="tracking-wide text-[13px]">{label}</span>
-                    {active === id && <span className="ml-auto text-lime text-sm">↗</span>}
-                  </button>
+                {navigation.map(([id, number, label], idx) => (
+                  <div key={id}>
+                    {idx === 4 && (
+                      <div className="my-2 border-t border-dashed border-line-subtle pt-2 px-1">
+                        <span className="font-mono text-[9.5px] uppercase tracking-wider text-muted-dim">
+                          EXTENSIONS &amp; NOTES
+                        </span>
+                      </div>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => onNavigate(id)}
+                      className={`w-full flex min-h-[44px] items-center gap-3 border px-3.5 py-3 text-left text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
+                        active === id
+                          ? 'border-pink bg-focus text-ink font-medium shadow-[2px_2px_0_#f9267240]'
+                          : 'border-[#3f4037] bg-[#22231e] text-[#c7c5b7] hover:border-line hover:bg-focus hover:text-ink'
+                      }`}
+                    >
+                      <span className={`font-mono text-[11px] font-bold ${active === id ? 'text-pink' : 'text-[#9d9b89]'}`}>
+                        {number}
+                      </span>
+                      <span className="tracking-wide text-[13px]">{label}</span>
+                      {active === id && <span className="ml-auto text-lime text-sm">↗</span>}
+                    </button>
+                  </div>
                 ))}
               </div>
 
