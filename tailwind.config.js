@@ -4,10 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        canvas: '#272822',
+        canvas: '#171814',
         surface: '#1e1f1c',
         'surface-card': '#20211e',
-        'surface-inset': '#171815',
+        'surface-inset': '#141512',
         'surface-well': '#242520',
         focus: '#414339',
         line: '#45463e',
