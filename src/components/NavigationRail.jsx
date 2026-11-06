@@ -35,22 +35,22 @@ export default function NavigationRail({ open, onClose, active, time, onNavigate
         <nav aria-label="Main desktop navigation" className="grid grid-cols-1 gap-[3px] pt-[10px]">
           {navigation.map(([id, number, label], idx) => (
             <div key={id}>
-              {idx === 4 && (
+              {idx === 5 && (
                 <div className="my-2 border-t border-dashed border-line-subtle pt-2 px-[10px]">
                   <span className="font-mono text-[9px] uppercase tracking-wider text-muted-dim">
-                    EXTENSIONS &amp; NOTES
+                    CREDENTIALS &amp; NOTES
                   </span>
                 </div>
               )}
               <button
                 onClick={() => onNavigate(id)}
-                className={`w-full group flex items-center gap-3 border px-[10px] py-[11px] text-left text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
+                className={`w-full group flex items-center gap-3 border border-l-2 px-[10px] py-[11px] text-left text-xs transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
                   active === id
-                    ? 'border-[#55564b] bg-focus text-ink font-medium'
-                    : 'border-transparent bg-transparent text-[#c7c5b7] hover:bg-focus hover:text-ink'
+                    ? 'border-[#55564b] border-l-pink bg-focus text-ink font-semibold shadow-[2px_2px_0_rgba(0,0,0,0.3)]'
+                    : 'border-transparent border-l-transparent bg-transparent text-[#c7c5b7] hover:border-line-subtle hover:border-l-transparent hover:bg-focus hover:text-ink'
                 }`}
               >
-                <span className={`font-mono text-[11px] ${active === id ? 'text-pink' : 'text-[#9d9b89]'}`}>
+                <span className={`font-mono text-[11px] ${active === id ? 'font-bold text-pink' : 'text-[#9d9b89]'}`}>
                   {number}
                 </span>
                 <span>{label}</span>
@@ -122,10 +122,10 @@ export default function NavigationRail({ open, onClose, active, time, onNavigate
               <div className="grid grid-cols-1 gap-2">
                 {navigation.map(([id, number, label], idx) => (
                   <div key={id}>
-                    {idx === 4 && (
+                    {idx === 5 && (
                       <div className="my-2 border-t border-dashed border-line-subtle pt-2 px-1">
                         <span className="font-mono text-[9.5px] uppercase tracking-wider text-muted-dim">
-                          EXTENSIONS &amp; NOTES
+                          CREDENTIALS &amp; NOTES
                         </span>
                       </div>
                     )}

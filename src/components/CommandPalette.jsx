@@ -86,17 +86,6 @@ export default function CommandPalette({
         },
       },
       {
-        id: 'nav-certificates',
-        category: 'NAVIGATION',
-        label: 'Jump to Verified Certificates',
-        icon: Award,
-        shortcut: 'G C',
-        action: () => {
-          onNavigate('certificates');
-          onClose();
-        },
-      },
-      {
         id: 'nav-writing',
         category: 'NAVIGATION',
         label: 'Jump to Technical Articles & Writing',
@@ -104,6 +93,17 @@ export default function CommandPalette({
         shortcut: 'G A',
         action: () => {
           onNavigate('writing');
+          onClose();
+        },
+      },
+      {
+        id: 'nav-certificates',
+        category: 'NAVIGATION',
+        label: 'Jump to Verified Certificates',
+        icon: Award,
+        shortcut: 'G C',
+        action: () => {
+          onNavigate('certificates');
           onClose();
         },
       },

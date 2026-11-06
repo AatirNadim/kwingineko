@@ -15,7 +15,7 @@ export default function CertificatesSection() {
   return (
     <section id="certificates" className="scroll-mt-6 border-b border-line px-3 py-6 sm:px-[14px] sm:py-8 md:pl-5">
       <SectionHeading
-        index="05 / VERIFIED CREDENTIALS"
+        index="06 / VERIFIED CREDENTIALS"
         title="Certificates"
         aside={`0${certificates.length} ACCREDITATIONS`}
       />

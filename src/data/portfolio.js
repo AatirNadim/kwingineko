@@ -3,8 +3,8 @@ export const navigation = [
   ['work', '02', 'Selected work'],
   ['experience', '03', 'Experience'],
   ['expertise', '04', 'Expertise'],
-  ['certificates', '05', 'Certificates'],
-  ['writing', '06', 'Writing'],
+  ['writing', '05', 'Writing'],
+  ['certificates', '06', 'Certificates'],
   ['faq', '07', 'FAQ & Trivia'],
   ['contact', '08', 'Contact'],
 ];
