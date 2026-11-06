@@ -39,7 +39,7 @@
       ]
     },
     {
-      "source": "/(.*\\.(?:js|css|woff2|webp|png|svg|ico))",
+      "source": "/(.*\\.(?:js|css|woff2|webp|png|svg|ico|wasm|jsdos))",
       "headers": [
         {
           "key": "Cache-Control",

@@ -3,6 +3,7 @@ import { Search, Plus, Minus, Check, Copy, HelpCircle, Terminal, X, CornerDownRi
 import SectionHeading from './SectionHeading.jsx';
 import { faqs } from '../data/portfolio.js';
 import { retroGames } from '../data/games.js';
+import { prefetchBundle } from '../utils/arcadeCache.js';
 
 const CATEGORIES = [
   { id: 'all', label: 'ALL QUERIES' },
@@ -248,6 +249,8 @@ export default function FaqSection({ onLaunchGame }) {
                           <button
                             type="button"
                             onClick={() => onLaunchGame?.(retroGames[0])}
+                            onMouseEnter={() => prefetchBundle(retroGames[0].bundleUrl)}
+                            onFocus={() => prefetchBundle(retroGames[0].bundleUrl)}
                             className="inline-flex min-h-[44px] items-center justify-center gap-2 border border-lime bg-lime/10 px-4 py-2 font-mono text-xs font-bold text-lime transition-all hover:-translate-y-0.5 hover:bg-lime hover:text-[#181915] hover:shadow-[3px_3px_0_#a6e22e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow active:translate-y-0"
                             aria-label="Yes, launch arcade with DOOM"
                           >

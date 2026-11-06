@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { X, Maximize2, Minimize2, Terminal, ShieldAlert, RotateCcw, Disc, Volume2, VolumeX, Pause, Play } from 'lucide-react';
 import { retroGames } from '../data/games.js';
+import { getOrFetchBundle, releaseBundleUrl, formatBytes, prefetchBundle } from '../utils/arcadeCache.js';
 
 function loadJsDos() {
   return new Promise((resolve, reject) => {
@@ -45,7 +46,18 @@ function loadJsDos() {
 export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) {
   const mountRef = useRef(null);
   const dosInstanceRef = useRef(null);
+  const activeBlobUrlRef = useRef(null);
   const [bootState, setBootState] = useState('idle'); // 'idle' | 'loading' | 'ready' | 'error'
+  const [loadingStage, setLoadingStage] = useState(1); // 1: WASM init, 2: VFS Cartridge, 3: Executing binary
+  const [bundleProgress, setBundleProgress] = useState({
+    percentage: 0,
+    loaded: 0,
+    total: 0,
+    cached: false,
+    latencyMs: 0,
+    loadedFormatted: '',
+    totalFormatted: '',
+  });
   const [errorMessage, setErrorMessage] = useState('');
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -64,10 +76,24 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
       }
       dosInstanceRef.current = null;
     }
+    if (activeBlobUrlRef.current) {
+      releaseBundleUrl(activeBlobUrlRef.current);
+      activeBlobUrlRef.current = null;
+    }
     if (mountRef.current) {
       mountRef.current.innerHTML = '';
     }
     setBootState('idle');
+    setLoadingStage(1);
+    setBundleProgress({
+      percentage: 0,
+      loaded: 0,
+      total: 0,
+      cached: false,
+      latencyMs: 0,
+      loadedFormatted: '',
+      totalFormatted: '',
+    });
     setIsPaused(false);
     setIsMuted(false);
   }, []);
@@ -139,17 +165,65 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
     let isMounted = true;
     setBootState('loading');
     setErrorMessage('');
+    setLoadingStage(1);
+    setBundleProgress({
+      percentage: 0,
+      loaded: 0,
+      total: 0,
+      cached: false,
+      latencyMs: 0,
+      loadedFormatted: '',
+      totalFormatted: '',
+    });
 
     async function startEmulator() {
       try {
+        // Clean any previously held blob URL
+        if (activeBlobUrlRef.current) {
+          releaseBundleUrl(activeBlobUrlRef.current);
+          activeBlobUrlRef.current = null;
+        }
+
+        // [STAGE 1/3] INITIALIZING WASM SUBSYSTEM (wdosbox.wasm)
+        setLoadingStage(1);
         const Dos = await loadJsDos();
         if (!isMounted || !mountRef.current) return;
 
-        // Clean any leftover elements
+        // [STAGE 2/3] MOUNTING VFS CARTRIDGE (X% · Y MB of Z MB / CACHE HIT)
+        setLoadingStage(2);
+        const bundle = await getOrFetchBundle(game.bundleUrl, (progress) => {
+          if (isMounted) {
+            setBundleProgress(progress);
+          }
+        });
+
+        if (!isMounted || !mountRef.current) {
+          if (bundle.isBlobUrl) releaseBundleUrl(bundle.url);
+          return;
+        }
+
+        activeBlobUrlRef.current = bundle.url;
+        setBundleProgress({
+          loaded: bundle.totalBytes,
+          total: bundle.totalBytes,
+          percentage: 100,
+          cached: bundle.cached,
+          latencyMs: bundle.latencyMs ?? 0,
+          loadedFormatted: formatBytes(bundle.totalBytes),
+          totalFormatted: formatBytes(bundle.totalBytes),
+        });
+
+        // [STAGE 3/3] EXECUTING BINARY ({executable})
+        setLoadingStage(3);
+        // Brief pause to allow the diagnostic telemetry line to register visually
+        await new Promise((r) => setTimeout(r, 90));
+        if (!isMounted || !mountRef.current) return;
+
+        // Clean any leftover elements before mounting
         mountRef.current.innerHTML = '';
 
         const instance = Dos(mountRef.current, {
-          url: game.bundleUrl,
+          url: bundle.url,
           pathPrefix: '/js-dos/emulators/',
           theme: 'dark',
           autoStart: true,
@@ -188,6 +262,15 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
   };
 
   if (!isOpen || !game) return null;
+
+  const effectivePercent =
+    loadingStage === 1
+      ? 20
+      : loadingStage === 2
+      ? bundleProgress.cached
+        ? 100
+        : Math.max(20, bundleProgress.percentage)
+      : 100;
 
   return (
     <div
@@ -244,7 +327,9 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
               }`}
             >
               {isMuted ? <VolumeX size={13} /> : <Volume2 size={13} />}
-              <span className="hidden sm:inline">{isMuted ? 'MUTED' : 'AUDIO'}</span>
+              <span className="hidden sm:inline">
+                {isMuted ? 'MUTED' : game.audio?.status === 'pc-speaker' ? 'SPEAKER' : 'AUDIO'}
+              </span>
             </button>
             <button
               type="button"
@@ -291,7 +376,9 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
                   key={g.id}
                   type="button"
                   onClick={() => handleSwitchGame(g)}
-                  className={`px-2 py-1 border text-[9px] transition-all font-mono min-h-[28px] ${
+                  onMouseEnter={() => prefetchBundle(g.bundleUrl)}
+                  onFocus={() => prefetchBundle(g.bundleUrl)}
+                  className={`relative px-2 py-1 border text-[9px] transition-all font-mono min-h-[34px] sm:min-h-[28px] touch-manipulation focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow focus-visible:outline-offset-1 ${
                     isCurrent
                       ? 'border-lime bg-lime/20 text-lime font-bold shadow-[0_0_6px_#a6e22e30]'
                       : 'border-[#383a30] bg-[#22231e] text-[#a09e8e] hover:border-[#5a5c4d] hover:text-ink'
@@ -313,7 +400,7 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
             aria-hidden="true"
             className="pointer-events-none absolute top-2 left-1/2 -translate-x-1/2 z-10 select-none rounded border border-[#2b2d24] bg-[#141512]/85 px-2.5 py-0.5 font-mono text-[9px] tracking-[0.2em] text-[#8a8775] backdrop-blur-[2px]"
           >
-            AATIR'S ARCADE CAB · SB16 STEREO
+            AATIR'S ARCADE CAB · {game.audio?.label || 'SB16 STEREO'}
           </div>
 
           {/* Active Canvas Mount */}
@@ -322,27 +409,131 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
             className="h-full w-full max-h-[58vh] aspect-[4/3] flex items-center justify-center"
           />
 
-          {/* Loading Screen Overlay */}
+          {/* Authentic BIOS/DOS Diagnostic Telemetry Loading State */}
           {bootState === 'loading' && (
-            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[#131411] p-6 font-mono text-[#d6d4c5]">
-              <div className="w-full max-w-[420px] space-y-2 border border-[#35362e] bg-[#1a1b17] p-4 text-[10px] leading-relaxed shadow-[4px_4px_0_#000]">
-                <div className="flex items-center justify-between border-b border-[#35362e] pb-1.5 text-lime">
-                  <span>AATIR'S ARCADE // MS-DOS 6.22 WASM KERNEL</span>
-                  <span className="text-[9.5px] text-muted">SB16 DETECTED</span>
+            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[#131411] p-4 sm:p-6 font-mono text-[#d6d4c5]">
+              <div className="w-full max-w-[490px] space-y-3 border border-[#35362e] bg-[#1a1b17] p-4 sm:p-5 text-[10px] leading-relaxed shadow-[6px_6px_0_#000]">
+                {/* BIOS Telemetry Header */}
+                <div className="flex items-center justify-between border-b border-[#35362e] pb-2 text-lime">
+                  <div className="flex items-center gap-1.5">
+                    <Terminal size={12} className="text-lime shrink-0" />
+                    <span className="font-bold tracking-wider">AATIR BIOS // MS-DOS 6.22 WASM VFS</span>
+                  </div>
+                  <span className="text-[9px] text-[#8e8b78]">
+                    {(game.audio?.hardware || 'SB16').toUpperCase()} DETECTED
+                  </span>
                 </div>
-                <div className="pt-1 text-[#aaa897]">
-                  <p className="m-0">C:\&gt; MOUNT C {game.bundleUrl}</p>
-                  <p className="m-0">Drive C mounted from WebAssembly VFS.</p>
+
+                {/* Simulated DOS Boot Log */}
+                <div className="space-y-1 text-[#aaa897] text-[9.5px]">
+                  <p className="m-0 text-[#88846f]">Phoenix ROM BIOS PLUS Version 1.10 · 640KB BASE · 16MB XMS</p>
+                  <p className="m-0 text-pink">C:\&gt; MOUNT C {game.bundleUrl}</p>
+                  <p className="m-0 text-[#dedccd]">Drive C: mapped to WebAssembly Virtual File System</p>
+                  {game.audio && (
+                    <p className="m-0 text-yellow">
+                      Sound Subsystem: {game.audio.label} ({game.audio.hasMusic ? 'SFX + OPL3 FM Music' : 'SFX Only'})
+                    </p>
+                  )}
                   <p className="m-0 text-pink">C:\&gt; CD {game.cartridgeCode || game.id.toUpperCase()}</p>
                   <p className="m-0 text-yellow">
                     C:\{game.cartridgeCode || game.id.toUpperCase()}\&gt; {game.executable}
                   </p>
-                  <p className="m-0 text-lime animate-pulse">
-                    Aatir's Arcade: Loading {game.title} ({game.size})...
-                  </p>
                 </div>
-                <div className="mt-3 h-2 w-full overflow-hidden border border-line bg-canvas">
-                  <div className="h-full w-3/4 animate-[pulse_1s_infinite] bg-lime" />
+
+                {/* Real Stage Indicator Telemetry Box */}
+                <div className="border border-[#2d2e26] bg-[#141512] p-2.5 space-y-1.5 text-[9.5px]">
+                  {/* Stage 1 */}
+                  <div className="flex items-center justify-between">
+                    <span className={loadingStage === 1 ? 'text-yellow font-semibold' : loadingStage > 1 ? 'text-lime font-semibold' : 'text-[#686659]'}>
+                      [STAGE 1/3] INITIALIZING WASM SUBSYSTEM (wdosbox.wasm)
+                    </span>
+                    <span className={loadingStage > 1 ? 'text-lime font-bold' : 'text-yellow font-bold animate-pulse'}>
+                      {loadingStage > 1 ? '[OK]' : '[INIT]'}
+                    </span>
+                  </div>
+
+                  {/* Stage 2 */}
+                  <div className="flex items-center justify-between">
+                    <span className={loadingStage === 2 ? 'text-yellow font-semibold' : loadingStage > 2 ? 'text-lime font-semibold' : 'text-[#686659]'}>
+                      [STAGE 2/3] MOUNTING VFS CARTRIDGE ({bundleProgress.cached ? 'CACHE HIT' : `${bundleProgress.percentage}% · ${bundleProgress.loadedFormatted || formatBytes(bundleProgress.loaded)} of ${bundleProgress.totalFormatted || game.size}`})
+                    </span>
+                    <span className={loadingStage > 2 ? 'text-lime font-bold' : loadingStage === 2 ? 'text-yellow font-bold' : 'text-[#686659]'}>
+                      {loadingStage > 2 ? '[MOUNTED]' : loadingStage === 2 ? (bundleProgress.cached ? '[HIT]' : `[${bundleProgress.percentage}%]`) : '[QUEUED]'}
+                    </span>
+                  </div>
+
+                  {/* Stage 3 */}
+                  <div className="flex items-center justify-between">
+                    <span className={loadingStage === 3 ? 'text-yellow font-semibold animate-pulse' : 'text-[#686659]'}>
+                      [STAGE 3/3] EXECUTING BINARY ({game.executable})
+                    </span>
+                    <span className={loadingStage === 3 ? 'text-yellow font-bold animate-pulse' : 'text-[#686659]'}>
+                      {loadingStage === 3 ? '[EXEC]' : '[STANDBY]'}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Precision Retro Progress Bar & Cache Status Pill */}
+                <div className="space-y-1.5 pt-1">
+                  <div className="flex items-center justify-between text-[9.5px]">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[#8e8b78] uppercase tracking-wider">PROGRESS:</span>
+                      <span className="font-bold text-yellow">{effectivePercent}%</span>
+                    </div>
+                    <div>
+                      {bundleProgress.cached ? (
+                        <span className="border border-lime/60 bg-lime/10 px-1.5 py-0.5 text-[9px] font-bold text-lime shadow-[0_0_6px_rgba(166,226,46,0.25)]">
+                          [CACHE HIT: {bundleProgress.latencyMs ?? 0}ms]
+                        </span>
+                      ) : (
+                        <span className="border border-yellow/60 bg-yellow/10 px-1.5 py-0.5 text-[9px] font-bold text-yellow">
+                          [STREAMING: {bundleProgress.percentage}%]
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* 28-Segment Retro Precision Pixel Progress Bar */}
+                  <div
+                    role="progressbar"
+                    aria-valuenow={effectivePercent}
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-label={`Emulation loading progress: ${effectivePercent}%`}
+                    className="flex h-3.5 w-full gap-[2px] border border-[#35362e] bg-[#12130f] p-[2px]"
+                  >
+                    {Array.from({ length: 28 }).map((_, i) => {
+                      const segmentThreshold = (i + 1) * (100 / 28);
+                      const isFilled = effectivePercent >= segmentThreshold;
+                      const isCurrent = !isFilled && effectivePercent >= i * (100 / 28);
+                      return (
+                        <div
+                          key={i}
+                          className={`h-full flex-1 transition-colors duration-75 ${
+                            isFilled
+                              ? i >= 22
+                                ? 'bg-yellow shadow-[0_0_4px_rgba(230,219,116,0.4)]'
+                                : 'bg-lime shadow-[0_0_4px_rgba(166,226,46,0.4)]'
+                              : isCurrent
+                              ? 'bg-lime/50 animate-pulse'
+                              : 'bg-[#1f201a]'
+                          }`}
+                        />
+                      );
+                    })}
+                  </div>
+
+                  {/* ASCII Block Visual Gauge & Stream Telemetry */}
+                  <div className="flex items-center justify-between text-[9px] text-[#8e8b78]">
+                    <span className="tracking-tight text-lime select-none">
+                      [{'█'.repeat(Math.min(20, Math.floor(effectivePercent / 5)))}{'░'.repeat(Math.max(0, 20 - Math.floor(effectivePercent / 5)))}]
+                    </span>
+                    <span className="text-[#a4a18e]">
+                      {bundleProgress.cached
+                        ? `VFS CARTRIDGE READY (${game.size})`
+                        : `${bundleProgress.loadedFormatted || formatBytes(bundleProgress.loaded)} / ${bundleProgress.totalFormatted || game.size}`}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -356,7 +547,7 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
                   // EMULATION PAUSED //
                 </p>
                 <p className="mt-1.5 text-[10px] text-[#dedccd] m-0">
-                  WASM CPU & Sound Blaster 16 halted
+                  WASM CPU & {game.audio?.hardware || 'Sound Blaster 16'} halted
                 </p>
                 <button
                   type="button"
@@ -405,7 +596,10 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
               )}
             </div>
             <div className="text-[9px] text-muted">
-              <span className="text-yellow font-medium">[CLICK CANVAS TO ENGAGE SB16 AUDIO & MOUSE]</span> · [ESC] TO UNLOCK
+              <span className="text-yellow font-medium">
+                [CLICK CANVAS TO ENGAGE {game.audio?.status === 'pc-speaker' ? 'PC SPEAKER' : 'AUDIO'} & MOUSE]
+              </span>{' '}
+              · [ESC] TO UNLOCK
             </div>
           </div>
 
@@ -417,6 +611,25 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
               {game.loreTag}
             </span>
           </div>
+
+          {game.audio?.note && (
+            <div className="mt-1.5 flex flex-wrap items-center gap-1.5 border-t border-[#2a2b24] pt-1.5 font-mono text-[9px]">
+              <span
+                className={`border border-[#45463e] bg-[#171815] px-1.5 py-0.5 text-[8.5px] font-bold uppercase ${
+                  game.audio.status === 'sfx-only'
+                    ? 'text-yellow'
+                    : game.audio.status === 'pc-speaker'
+                    ? 'text-violet'
+                    : 'text-lime'
+                }`}
+              >
+                {game.audio.label}
+              </span>
+              <span className="text-[#b5b3a3] text-[9px] font-mono">
+                AUDIO ARCH: {game.audio.note}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>

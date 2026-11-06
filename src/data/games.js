@@ -16,6 +16,14 @@ export const retroGames = [
     rating: 'LEGENDARY SHAREWARE',
     executable: 'DOOM.EXE',
     size: '2.45 MB',
+    audio: {
+      status: 'full',
+      label: 'SB16 + OPL3 STEREO',
+      hardware: 'Sound Blaster 16',
+      hasSfx: true,
+      hasMusic: true,
+      note: 'Digitized sound effects and dynamic FM synthesis music.',
+    },
     controls: [
       { key: 'ARROWS / WASD', action: 'Move / Turn' },
       { key: 'CTRL / L-CLICK', action: 'Fire weapon' },
@@ -42,6 +50,14 @@ export const retroGames = [
     rating: 'GENRE DEFINING',
     executable: 'WOLF3D.EXE',
     size: '756 KB',
+    audio: {
+      status: 'full',
+      label: 'SB + ADLIB FM',
+      hardware: 'Sound Blaster / AdLib',
+      hasSfx: true,
+      hasMusic: true,
+      note: 'Digitized voices and AdLib FM synthesis soundtrack.',
+    },
     controls: [
       { key: 'ARROWS / WASD', action: 'Move / Turn' },
       { key: 'CTRL', action: 'Fire gun' },
@@ -68,6 +84,14 @@ export const retroGames = [
     rating: 'CINEMATIC CLASSIC',
     executable: 'PRINCE.EXE',
     size: '1.08 MB',
+    audio: {
+      status: 'full',
+      label: 'SB16 + MIDI',
+      hardware: 'Sound Blaster 16',
+      hasSfx: true,
+      hasMusic: true,
+      note: 'Full digital sound effects, sword combat audio, and MIDI music.',
+    },
     controls: [
       { key: 'LEFT / RIGHT', action: 'Run / Turn' },
       { key: 'UP', action: 'Jump / Climb up' },
@@ -93,6 +117,14 @@ export const retroGames = [
     rating: 'TRUE 3D PIONEER',
     executable: 'DCNTSHR.EXE',
     size: '3.04 MB',
+    audio: {
+      status: 'full',
+      label: 'SB16 STEREO + MIDI',
+      hardware: 'Sound Blaster 16',
+      hasSfx: true,
+      hasMusic: true,
+      note: 'Full 3D spatial sound effects and dynamic MIDI music.',
+    },
     controls: [
       { key: 'W / S', action: 'Pitch down / up' },
       { key: 'A / D', action: 'Turn left / right' },
@@ -118,6 +150,14 @@ export const retroGames = [
     rating: 'ORIGINAL MAYHEM',
     executable: 'DEMO24.EXE',
     size: '9.54 MB',
+    audio: {
+      status: 'sfx-only',
+      label: 'MILES SFX (NO CD MUSIC)',
+      hardware: 'Miles Sound System',
+      hasSfx: true,
+      hasMusic: false,
+      note: 'In-game SFX, car engines, sirens, and voice acting active. Radio music tracks were on physical CD-ROM and omitted from this 9MB demo.',
+    },
     controls: [
       { key: 'ARROWS', action: 'Steer / Move' },
       { key: 'ENTER', action: 'Enter / Exit vehicle' },
@@ -144,6 +184,14 @@ export const retroGames = [
     rating: 'RETRO GEM',
     executable: 'JETPACK.EXE',
     size: '486 KB',
+    audio: {
+      status: 'full',
+      label: 'ADLIB / SB STEREO',
+      hardware: 'AdLib / Sound Blaster',
+      hasSfx: true,
+      hasMusic: true,
+      note: 'FM synthesized sound effects and chip melody.',
+    },
     controls: [
       { key: 'ARROWS', action: 'Move / Thrust' },
       { key: 'CTRL / SPACE', action: 'Thrust jetpack' },
@@ -168,6 +216,14 @@ export const retroGames = [
     rating: 'TINY TECH DEMO',
     executable: 'MARIO.EXE',
     size: '58 KB',
+    audio: {
+      status: 'pc-speaker',
+      label: 'PC SPEAKER BEEPER',
+      hardware: 'PC Speaker (Port 0x61)',
+      hasSfx: true,
+      hasMusic: false,
+      note: 'Synthesized purely via 1-bit PC Speaker pulses. Does not utilize Sound Blaster 16 hardware.',
+    },
     controls: [
       { key: 'LEFT / RIGHT', action: 'Walk' },
       { key: 'CTRL + ARROWS', action: 'Run' },
