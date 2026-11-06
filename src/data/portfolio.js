@@ -91,11 +91,11 @@ export const projects = [
 ];
 
 export const socials = [
-  { name: 'LinkedIn', handle: 'aatirnadim', url: 'https://www.linkedin.com/in/aatirnadim/' },
-  { name: 'GitHub', handle: 'AatirNadim', url: 'https://github.com/AatirNadim' },
-  { name: 'Blog', handle: 'Techtom', url: 'https://techtom.hashnode.dev/' },
-  { name: 'LeetCode', handle: 'AatirNadim', url: 'https://leetcode.com/user3405Ye/' },
-  { name: 'Google Cloud Skills Boost', handle: 'Aatir Nadim', url: 'https://www.cloudskillsboost.google/public_profiles/d61be509-d6cb-46fc-9b62-c083e3636598' },
+  { name: 'LinkedIn', handle: 'aatirnadim', url: 'https://www.linkedin.com/in/aatirnadim/', icon: 'linkedin' },
+  { name: 'GitHub', handle: 'AatirNadim', url: 'https://github.com/AatirNadim', icon: 'github' },
+  { name: 'Blog', handle: 'techtom.hashnode.dev', url: 'https://techtom.hashnode.dev/', icon: 'hashnode' },
+  { name: 'LeetCode', handle: 'AatirNadim', url: 'https://leetcode.com/user3405Ye/', icon: 'leetcode' },
+  { name: 'Google Cloud Skills Boost', handle: 'Aatir Nadim', url: 'https://www.cloudskillsboost.google/public_profiles/d61be509-d6cb-46fc-9b62-c083e3636598', icon: 'gcp' },
 ];
 
 export const experience = [
