@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Gamepad2, Play, Flame, Disc, Layers, X, ChevronRight, Terminal } from 'lucide-react';
 import PanelFrame from './PanelFrame.jsx';
 import { retroGames } from '../data/games.js';
+import { prefetchBundle } from '../utils/arcadeCache.js';
 
 export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
   const [selectedGameIndex, setSelectedGameIndex] = useState(0);
@@ -134,6 +135,8 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
                   key={g.id}
                   type="button"
                   onClick={() => setSelectedGameIndex(idx)}
+                  onMouseEnter={() => prefetchBundle(g.bundleUrl)}
+                  onFocus={() => prefetchBundle(g.bundleUrl)}
                   className={`relative flex flex-col items-center justify-center border px-1 py-1 transition-all after:absolute after:-inset-1.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${getAccentClass(
                     g.diskColor,
                     isActive
@@ -169,6 +172,18 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
             <span className="border border-line-subtle bg-surface-card px-1.5 py-0.5 text-lime">
               {game.genre}
             </span>
+            <span
+              className={`border border-line-subtle bg-surface-card px-1.5 py-0.5 ${
+                game.audio?.status === 'sfx-only'
+                  ? 'text-yellow'
+                  : game.audio?.status === 'pc-speaker'
+                  ? 'text-violet'
+                  : 'text-lime'
+              }`}
+              title={game.audio?.note}
+            >
+              {game.audio?.label || 'SB16 STEREO'}
+            </span>
             <span className="border border-line-subtle bg-surface-card px-1.5 py-0.5 text-yellow">
               {game.telemetry}
             </span>
@@ -182,6 +197,8 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
             <button
               type="button"
               onClick={() => onLaunchGame(game)}
+              onMouseEnter={() => prefetchBundle(game.bundleUrl)}
+              onFocus={() => prefetchBundle(game.bundleUrl)}
               className="flex min-h-[44px] flex-1 items-center justify-center gap-2 border border-lime bg-lime/10 px-3 py-2 font-mono text-[10.5px] font-semibold tracking-wider text-lime transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-lime hover:text-[#181915] hover:shadow-[3px_3px_0_#a6e22e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow active:translate-x-0 active:translate-y-0"
             >
               <Play size={13} className="fill-current" />
@@ -244,13 +261,14 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
             {/* Catalog List */}
             <div className="overflow-y-auto p-4 space-y-3 font-mono">
               <p className="m-0 text-[10px] text-muted leading-relaxed">
-                All 7 titles run directly in-browser using compiled WebAssembly DOSBox kernels and Sound Blaster 16 emulation. Zero downloads required.
+                All 7 titles run directly in-browser using compiled WebAssembly DOSBox kernels with authentic hardware audio emulation (Sound Blaster 16, OPL3, AdLib, Miles & PC Speaker). Zero downloads required.
               </p>
 
               <div className="grid grid-cols-1 gap-2.5">
                 {retroGames.map((item, idx) => (
                   <div
                     key={item.id}
+                    onMouseEnter={() => prefetchBundle(item.bundleUrl)}
                     className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border border-line-subtle bg-surface-inset p-3 transition-colors hover:border-line"
                   >
                     <div className="min-w-0 flex-1">
@@ -267,7 +285,19 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
                       <p className="m-0 mt-0.5 text-[10px] text-[#dedccd] leading-normal">
                         {item.lore}
                       </p>
-                      <div className="mt-1.5 flex flex-wrap gap-2 text-[9px] text-[#9c9987]">
+                      <div className="mt-1.5 flex flex-wrap items-center gap-2 text-[9px] text-[#9c9987]">
+                        <span
+                          className={`border border-line-subtle bg-[#1e1f1c] px-1.5 py-0.5 font-semibold ${
+                            item.audio?.status === 'sfx-only'
+                              ? 'text-yellow'
+                              : item.audio?.status === 'pc-speaker'
+                              ? 'text-violet'
+                              : 'text-lime'
+                          }`}
+                          title={item.audio?.note}
+                        >
+                          {item.audio?.label || 'SB16 STEREO'}
+                        </span>
                         <span className="text-yellow">{item.telemetry}</span>
                         <span>· {item.size}</span>
                         <span>· {item.publisher}</span>
@@ -281,7 +311,9 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
                         setCatalogOpen(false);
                         onLaunchGame(item);
                       }}
-                      className="flex min-h-[40px] items-center justify-center gap-1.5 border border-lime bg-lime/10 px-3 py-1.5 text-[10px] font-semibold text-lime transition-all hover:bg-lime hover:text-[#181915] active:translate-y-0.5 shrink-0"
+                      onMouseEnter={() => prefetchBundle(item.bundleUrl)}
+                      onFocus={() => prefetchBundle(item.bundleUrl)}
+                      className="flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 border border-lime bg-lime/10 px-3 py-1.5 text-[10px] font-semibold text-lime transition-all hover:bg-lime hover:text-[#181915] active:translate-y-0.5 shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow focus-visible:outline-offset-1"
                     >
                       <Play size={11} className="fill-current" />
                       <span>PLAY</span>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Play, Disc, Terminal, Flame, Cpu, Sparkles, ChevronRight } from 'lucide-react';
 import { retroGames } from '../data/games.js';
+import { prefetchBundle } from '../utils/arcadeCache.js';
 
 export default function FaqArcadeVault({ onLaunchGame }) {
   const [selectedIdx, setSelectedIdx] = useState(0);
@@ -62,6 +63,8 @@ export default function FaqArcadeVault({ onLaunchGame }) {
                 key={game.id}
                 type="button"
                 onClick={() => setSelectedIdx(idx)}
+                onMouseEnter={() => prefetchBundle(game.bundleUrl)}
+                onFocus={() => prefetchBundle(game.bundleUrl)}
                 className={`flex min-h-[44px] flex-col items-center justify-center border px-2 py-1.5 text-center transition-all last:col-span-2 min-[420px]:last:col-span-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${getDiskTheme(
                   game.diskColor,
                   isSelected
@@ -123,16 +126,48 @@ export default function FaqArcadeVault({ onLaunchGame }) {
             <span>·</span>
             <span className="text-yellow">{activeGame.telemetry}</span>
             <span>·</span>
+            <span
+              className={`font-semibold ${
+                activeGame.audio?.status === 'sfx-only'
+                  ? 'text-yellow'
+                  : activeGame.audio?.status === 'pc-speaker'
+                  ? 'text-violet'
+                  : 'text-lime'
+              }`}
+              title={activeGame.audio?.note}
+            >
+              {activeGame.audio?.label || 'SOUND BLASTER 16'}
+            </span>
+            <span>·</span>
             <span className="text-lime">{activeGame.size}</span>
             <span>·</span>
             <span>{activeGame.publisher}</span>
           </div>
+
+          {activeGame.audio?.note && (
+            <div className="mt-2.5 flex items-center gap-1.5 border border-[#36372f] bg-[#141512] px-2.5 py-1 text-[9px]">
+              <span
+                className={`font-bold uppercase tracking-wider ${
+                  activeGame.audio.status === 'sfx-only'
+                    ? 'text-yellow'
+                    : activeGame.audio.status === 'pc-speaker'
+                    ? 'text-violet'
+                    : 'text-lime'
+                }`}
+              >
+                AUDIO ARCH:
+              </span>
+              <span className="text-[#b5b3a3]">{activeGame.audio.note}</span>
+            </div>
+          )}
 
           {/* Action Row */}
           <div className="mt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
             <button
               type="button"
               onClick={() => onLaunchGame?.(activeGame)}
+              onMouseEnter={() => prefetchBundle(activeGame.bundleUrl)}
+              onFocus={() => prefetchBundle(activeGame.bundleUrl)}
               className="flex min-h-[44px] flex-1 items-center justify-center gap-2 border border-lime bg-lime/15 px-4 py-2.5 text-xs font-bold tracking-wider text-lime transition-all hover:-translate-y-0.5 hover:bg-lime hover:text-[#181915] hover:shadow-[3px_3px_0_#a6e22e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow active:translate-y-0"
             >
               <Play size={14} className="fill-current shrink-0" />
@@ -140,10 +175,29 @@ export default function FaqArcadeVault({ onLaunchGame }) {
               <ChevronRight size={14} className="shrink-0" />
             </button>
 
-            <div className="flex items-center justify-between sm:justify-start gap-3 border border-[#3e4036] bg-[#161713] px-3 py-2 text-[9px] text-[#88846f]">
-              <span className="flex items-center gap-1.5 text-lime">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-lime animate-pulse" />
-                <span>SOUND BLASTER 16</span>
+            <div
+              className="flex items-center justify-between sm:justify-start gap-3 border border-[#3e4036] bg-[#161713] px-3 py-2 text-[9px] text-[#88846f]"
+              title={activeGame.audio?.note}
+            >
+              <span
+                className={`flex items-center gap-1.5 ${
+                  activeGame.audio?.status === 'sfx-only'
+                    ? 'text-yellow'
+                    : activeGame.audio?.status === 'pc-speaker'
+                    ? 'text-violet'
+                    : 'text-lime'
+                }`}
+              >
+                <span
+                  className={`inline-block h-1.5 w-1.5 rounded-full animate-pulse ${
+                    activeGame.audio?.status === 'sfx-only'
+                      ? 'bg-yellow'
+                      : activeGame.audio?.status === 'pc-speaker'
+                      ? 'bg-violet'
+                      : 'bg-lime'
+                  }`}
+                />
+                <span>{activeGame.audio?.label || 'SOUND BLASTER 16'}</span>
               </span>
               <span>·</span>
               <span className="text-[#bbb8a5]">ZERO INSTALLS</span>
