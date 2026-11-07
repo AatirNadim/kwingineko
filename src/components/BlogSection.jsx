@@ -32,6 +32,7 @@ export default function BlogSection() {
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchStartY, setTouchStartY] = useState(null);
   const [imageErrors, setImageErrors] = useState({});
+  const [loadedImages, setLoadedImages] = useState({});
   const carouselRef = useRef(null);
 
   const loadArticles = useCallback(async (force = false) => {
@@ -112,10 +113,31 @@ export default function BlogSection() {
     setImageErrors((prev) => ({ ...prev, [id]: true }));
   };
 
+  const handleImageLoad = (id) => {
+    setLoadedImages((prev) => ({ ...prev, [id]: true }));
+  };
+
+  // Preload adjacent covers so cycling through the carousel feels instantaneous
+  useEffect(() => {
+    if (!articles || articles.length === 0) return;
+    const nextIdx = (currentIndex + 1) % articles.length;
+    const prevIdx = (currentIndex - 1 + articles.length) % articles.length;
+    [articles[nextIdx], articles[prevIdx]].forEach((art) => {
+      if (art?.cover && !loadedImages[art.id] && typeof Image !== 'undefined') {
+        const img = new Image();
+        img.src = art.cover;
+        img.onload = () => {
+          setLoadedImages((prev) => ({ ...prev, [art.id]: true }));
+        };
+      }
+    });
+  }, [currentIndex, articles, loadedImages]);
+
   const currentNumber =
     currentIndex + 1 < 10 ? `0${currentIndex + 1}` : `${currentIndex + 1}`;
   const totalNumber = total < 10 ? `0${total}` : `${total}`;
   const hasCover = Boolean(current?.cover) && !imageErrors[current?.id];
+  const isCoverLoaded = Boolean(current?.id && loadedImages[current.id]);
 
   return (
     <section
@@ -438,13 +460,37 @@ export default function BlogSection() {
                   className="group/thumb relative block aspect-[16/10] w-full overflow-hidden border border-line-subtle bg-surface-inset transition hover:border-pink focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
                 >
                   {hasCover ? (
-                    <img
-                      src={current.cover}
-                      alt={current.title}
-                      onError={() => handleImageError(current.id)}
-                      className="h-full w-full object-cover transition duration-300 group-hover/thumb:scale-105"
-                      loading="lazy"
-                    />
+                    <>
+                      {/* Loading skeleton & buffer indicator while image is fetching from CDN */}
+                      {!isCoverLoaded && (
+                        <div
+                          className="absolute inset-0 flex flex-col items-center justify-center bg-surface-inset p-3 font-mono text-muted select-none"
+                          aria-label="Buffering cover image"
+                        >
+                          <Terminal size={18} className="text-muted-dim/40 mb-2 animate-pulse" />
+                          <div className="flex items-center gap-1.5 text-[9px] tracking-wider text-muted-dim">
+                            <span className="text-pink animate-spin">◐</span>
+                            <span>[ BUFFERING COVER STREAM ]</span>
+                          </div>
+                          <div className="mt-2.5 h-1 w-24 overflow-hidden border border-line-subtle bg-surface-well">
+                            <div className="h-full w-2/3 bg-pink/50 animate-pulse" />
+                          </div>
+                        </div>
+                      )}
+
+                      <img
+                        key={current.id || current.cover}
+                        src={current.cover}
+                        alt={current.title}
+                        onLoad={() => handleImageLoad(current.id)}
+                        onError={() => handleImageError(current.id)}
+                        className={`h-full w-full object-cover transition-all duration-300 group-hover/thumb:scale-105 ${
+                          isCoverLoaded ? 'opacity-100' : 'opacity-0'
+                        }`}
+                        loading="eager"
+                        decoding="async"
+                      />
+                    </>
                   ) : (
                     <div className="flex h-full w-full flex-col justify-between p-3 font-mono transition group-hover/thumb:bg-surface-well/50">
                       <div className="flex items-center justify-between text-[9.5px] text-muted">
