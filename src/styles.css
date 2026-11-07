@@ -212,6 +212,26 @@
   container-type: inline-size;
 }
 
+/* Keep long pages responsive by postponing off-screen section rendering while
+   reserving approximate space to avoid scroll jumps as content enters view. */
+.main-container > section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}
+
+img,
+canvas,
+video,
+iframe {
+  max-width: 100%;
+}
+
+@media (max-width: 380px) {
+  .main-container > section {
+    contain-intrinsic-size: auto 620px;
+  }
+}
+
 @container (min-width: 620px) {
   .cq-split-intro {
     grid-template-columns: minmax(0, 1fr) 210px !important;

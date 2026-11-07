@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import ContactModal from './components/ContactModal.jsx';
-import DosPlayerModal from './components/DosPlayerModal.jsx';
+const DosPlayerModal = lazy(() => import('./components/DosPlayerModal.jsx'));
 import ContactSection from './components/ContactSection.jsx';
 import BlogSection from './components/BlogSection.jsx';
 import CertificatesSection from './components/CertificatesSection.jsx';
@@ -261,12 +261,16 @@ export default function App() {
           onOpenCommandPalette={() => setCommandPaletteOpen(true)}
         />
         <ContactModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} />
-        <DosPlayerModal
-          isOpen={Boolean(activeDosGame)}
-          game={activeDosGame}
-          onClose={() => setActiveDosGame(null)}
-          onGameChange={(nextGame) => setActiveDosGame(nextGame)}
-        />
+        {activeDosGame && (
+          <Suspense fallback={<div className="fixed inset-0 z-[110] grid place-items-center bg-canvas/90 p-4" role="status">Loading game player…</div>}>
+            <DosPlayerModal
+              isOpen
+              game={activeDosGame}
+              onClose={() => setActiveDosGame(null)}
+              onGameChange={(nextGame) => setActiveDosGame(nextGame)}
+            />
+          </Suspense>
+        )}
         <CommandPalette
           isOpen={commandPaletteOpen}
           onClose={() => setCommandPaletteOpen(false)}

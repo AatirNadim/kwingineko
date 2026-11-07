@@ -59,6 +59,7 @@ export default function StarfieldBackground() {
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const pointerFine = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const animateBackground = () => !reducedMotion.matches && pointerFine.matches;
     let width = 0;
     let height = 0;
     let pixelRatio = 1;
@@ -114,7 +115,7 @@ export default function StarfieldBackground() {
       }
 
       context.globalAlpha = 1;
-      if (!still && !reducedMotion.matches) frame = window.requestAnimationFrame(draw);
+      if (!still && animateBackground()) frame = window.requestAnimationFrame(draw);
     };
 
     const onPointerMove = (event) => {
@@ -131,12 +132,13 @@ export default function StarfieldBackground() {
     const onMotionChange = () => {
       window.cancelAnimationFrame(frame);
       lastTime = 0;
-      if (reducedMotion.matches) draw(0, true);
-      else frame = window.requestAnimationFrame(draw);
+      if (animateBackground()) frame = window.requestAnimationFrame(draw);
+      else draw(0, true);
     };
 
     resize();
-    if (!reducedMotion.matches) frame = window.requestAnimationFrame(draw);
+    if (animateBackground()) frame = window.requestAnimationFrame(draw);
+    else draw(0, true);
     window.addEventListener('resize', resize, { passive: true });
 
     if (pointerFine.matches && !reducedMotion.matches) {
@@ -144,6 +146,7 @@ export default function StarfieldBackground() {
       window.addEventListener('pointerleave', onPointerLeave, { passive: true });
     }
     reducedMotion.addEventListener?.('change', onMotionChange);
+    pointerFine.addEventListener?.('change', onMotionChange);
 
     return () => {
       window.cancelAnimationFrame(frame);
@@ -151,6 +154,7 @@ export default function StarfieldBackground() {
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('pointerleave', onPointerLeave);
       reducedMotion.removeEventListener?.('change', onMotionChange);
+      pointerFine.removeEventListener?.('change', onMotionChange);
     };
   }, []);
 

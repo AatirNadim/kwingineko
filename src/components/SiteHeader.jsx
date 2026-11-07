@@ -34,7 +34,7 @@ export default function SiteHeader({
             aria-label={crtActive ? 'Deactivate retro CRT phosphor filter' : 'Activate retro CRT phosphor filter'}
             aria-pressed={crtActive}
             title={crtActive ? 'CRT Filter: ON' : 'CRT Filter: OFF'}
-            className={`grid h-11 w-11 min-h-[44px] min-w-[44px] place-items-center border transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow ${
+            className={`hidden min-[360px]:grid h-11 w-11 min-h-[44px] min-w-[44px] place-items-center border transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow ${
               crtActive
                 ? 'border-lime bg-lime/10 text-lime'
                 : 'border-line bg-surface text-muted hover:bg-focus hover:text-ink'

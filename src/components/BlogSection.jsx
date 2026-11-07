@@ -578,7 +578,7 @@ export default function BlogSection() {
                             className={`h-full w-full object-cover transition-transform duration-500 ease-out group-hover/thumb:scale-[1.02] ${
                               isCoverLoaded ? 'opacity-100' : 'opacity-0'
                             }`}
-                            loading="eager"
+                            loading="lazy"
                             decoding="async"
                           />
                         </>
