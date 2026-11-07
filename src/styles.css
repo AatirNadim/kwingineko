@@ -21,6 +21,75 @@
   animation: tail-swish 6s ease-in-out infinite;
 }
 
+/* Fortune Cookie Stepped Retro Animations */
+@keyframes cookie-breathe {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+.animate-cookie-breathe {
+  animation: cookie-breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes cookie-shudder {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(-3px, -1px) rotate(-4deg); }
+  50% { transform: translate(3px, 1px) rotate(4deg); }
+  75% { transform: translate(-2px, 2px) rotate(-2deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.animate-cookie-shudder {
+  animation: cookie-shudder 0.28s steps(4);
+}
+
+@keyframes slip-dispense {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-slip-dispense {
+  animation: slip-dispense 0.28s steps(4);
+}
+
+@keyframes crumb-fly-1 {
+  0% { transform: translate(0, 0); opacity: 1; }
+  100% { transform: translate(-22px, -16px); opacity: 0; }
+}
+@keyframes crumb-fly-2 {
+  0% { transform: translate(0, 0); opacity: 1; }
+  100% { transform: translate(22px, -14px); opacity: 0; }
+}
+@keyframes crumb-fly-3 {
+  0% { transform: translate(0, 0); opacity: 1; }
+  100% { transform: translate(-16px, 16px); opacity: 0; }
+}
+@keyframes crumb-fly-4 {
+  0% { transform: translate(0, 0); opacity: 1; }
+  100% { transform: translate(18px, 14px); opacity: 0; }
+}
+@keyframes crumb-fly-5 {
+  0% { transform: translate(0, 0); opacity: 1; }
+  100% { transform: translate(-6px, -22px); opacity: 0; }
+}
+@keyframes crumb-fly-6 {
+  0% { transform: translate(0, 0); opacity: 1; }
+  100% { transform: translate(8px, 20px); opacity: 0; }
+}
+
+.animate-crumb-1 { animation: crumb-fly-1 0.35s steps(4) forwards; }
+.animate-crumb-2 { animation: crumb-fly-2 0.35s steps(4) forwards; }
+.animate-crumb-3 { animation: crumb-fly-3 0.35s steps(4) forwards; }
+.animate-crumb-4 { animation: crumb-fly-4 0.35s steps(4) forwards; }
+.animate-crumb-5 { animation: crumb-fly-5 0.35s steps(4) forwards; }
+.animate-crumb-6 { animation: crumb-fly-6 0.35s steps(4) forwards; }
+
 @keyframes intro-greeting-in {
   from {
     opacity: 0;
