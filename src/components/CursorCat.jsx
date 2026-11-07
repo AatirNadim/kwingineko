@@ -131,7 +131,7 @@ function PixelSprite({ frame }) {
   );
 }
 
-export default function CursorCat({ active = false, hungry = false, feedProgress = 0, onFeed, onStatusChange }) {
+export default function CursorCat({ active = false, hungry = false, onStatusChange }) {
   const [pos, setPos] = useState(() => ({
     x: typeof window !== 'undefined' ? Math.max(CAT_HALF_SIZE, window.innerWidth - 80) : 100,
     y: typeof window !== 'undefined' ? Math.max(CAT_HALF_SIZE, window.innerHeight - 80) : 100,
@@ -140,7 +140,7 @@ export default function CursorCat({ active = false, hungry = false, feedProgress
   const [facingLeft, setFacingLeft] = useState(false);
   const [isCaught, setIsCaught] = useState(false);
   const [bubbleText, setBubbleText] = useState('♥ gotcha!');
-  const wasHungryRef = useRef(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   const posRef = useRef(pos);
   posRef.current = pos;
@@ -159,10 +159,10 @@ export default function CursorCat({ active = false, hungry = false, feedProgress
   onStatusChangeRef.current = onStatusChange;
 
   useEffect(() => {
-    if (hungry && !wasHungryRef.current) setBubbleText('meow... feed me?');
-    if (!hungry && wasHungryRef.current) setBubbleText('♥ thank you!');
-    wasHungryRef.current = hungry;
-  }, [hungry]);
+    if (!toastMessage) return;
+    const timer = window.setTimeout(() => setToastMessage(''), 3500);
+    return () => window.clearTimeout(timer);
+  }, [toastMessage]);
 
   const setCatStatus = (status) => {
     if (statusRef.current !== status) {
@@ -241,11 +241,11 @@ export default function CursorCat({ active = false, hungry = false, feedProgress
       const mouse = mouseRef.current;
       const currentPos = posRef.current;
 
-      // Feeding takes priority over petting and cursor-chasing interactions.
+      // Hold position while hungry so the cursor cat can be clicked for a feeding hint.
       if (hungry) {
         isCaughtRef.current = false;
         setIsCaught(false);
-        setCatStatus('feeding');
+        setCatStatus('hungry');
         if (currentFrameRef.current !== 'CAUGHT') {
           currentFrameRef.current = 'CAUGHT';
           setFrame('CAUGHT');
@@ -515,7 +515,9 @@ export default function CursorCat({ active = false, hungry = false, feedProgress
   if (!active) return null;
 
   return (
+    <>
     <div
+      aria-hidden={!hungry}
       className={`fixed z-40 select-none ${isCaught ? '' : 'will-change-transform'} ${hungry ? 'pointer-events-auto' : 'pointer-events-none'}`}
       style={{
         left: 0,
@@ -523,7 +525,7 @@ export default function CursorCat({ active = false, hungry = false, feedProgress
         transform: `translate3d(${pos.x - CAT_HALF_SIZE}px, ${pos.y - CAT_HALF_SIZE}px, 0)`,
       }}
     >
-      <div className="relative pointer-events-none select-none">
+      <div className={`relative select-none ${hungry ? 'pointer-events-auto' : 'pointer-events-none'}`}>
         {(isCaught || hungry) && (
           <div
             role="status"
@@ -538,21 +540,32 @@ export default function CursorCat({ active = false, hungry = false, feedProgress
                 : 'left-1/2 -translate-x-1/2'
             }`}
           >
-            {hungry ? `feed me · ${feedProgress}/5` : bubbleText}
+            {hungry ? 'feed me' : bubbleText}
           </div>
         )}
         <div style={{ transform: facingLeft ? 'scaleX(-1)' : 'scaleX(1)' }}>
-          <button
-            type="button"
-            onClick={hungry ? onFeed : undefined}
-            disabled={!hungry}
-            aria-label={hungry ? `Feed the cat, ${5 - feedProgress} clicks remaining` : 'Cat'}
-            className={`block rounded-sm ${hungry ? 'cursor-pointer pointer-events-auto focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#e6db74]' : 'cursor-default pointer-events-none'}`}
-          >
-            <PixelSprite frame={frame} />
-          </button>
+          {hungry ? (
+            <button
+              type="button"
+              onClick={() => setToastMessage('Feed me in the Desk Companion panel — click the cat there five times.')}
+              aria-label="Show where to feed the hungry cursor cat"
+              className="block cursor-pointer rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#e6db74]"
+            >
+              <PixelSprite frame={frame} />
+            </button>
+          ) : <PixelSprite frame={frame} />}
         </div>
       </div>
     </div>
+      {toastMessage && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed bottom-16 left-1/2 z-50 -translate-x-1/2 border border-yellow bg-[#1e1f1c] px-4 py-2.5 font-mono text-xs text-yellow shadow-[4px_4px_0_rgba(0,0,0,0.5)] max-w-[90vw]"
+        >
+          {toastMessage}
+        </div>
+      )}
+    </>
   );
 }

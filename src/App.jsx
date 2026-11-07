@@ -29,7 +29,6 @@ export default function App() {
   const [followCursor, setFollowCursor] = useState(false);
   const [catStatus, setCatStatus] = useState('idle');
   const [catHungry, setCatHungry] = useState(false);
-  const [feedProgress, setFeedProgress] = useState(0);
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [activeDosGame, setActiveDosGame] = useState(null);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
@@ -42,7 +41,7 @@ export default function App() {
     return () => window.clearInterval(timer);
   }, []);
 
-  // First hunger cue arrives shortly after the page is ready; later cues settle into a five minute rhythm.
+  // First hunger cue arrives shortly after the page is ready; later cues return every minute.
   useEffect(() => {
     let repeatTimer;
     const firstTimer = window.setTimeout(() => {
@@ -91,16 +90,6 @@ export default function App() {
       document.title = originalTitle;
     };
   }, [catHungry]);
-
-  const feedCat = () => {
-    if (!catHungry) return;
-    if (feedProgress >= 4) {
-      setFeedProgress(0);
-      setCatHungry(false);
-      return;
-    }
-    setFeedProgress((count) => count + 1);
-  };
 
   // Idle pre-warm shared emulator runtime (wdosbox.wasm, js-dos.js)
   useEffect(() => {
@@ -218,7 +207,7 @@ export default function App() {
     <>
       <StarfieldBackground />
       <IntroSplash />
-      <CursorCat active={followCursor || catHungry} hungry={catHungry} feedProgress={feedProgress} onFeed={feedCat} onStatusChange={setCatStatus} />
+      <CursorCat active={followCursor} hungry={catHungry} onStatusChange={setCatStatus} />
       <div className="relative z-[1] mx-auto w-[calc(100%-16px)] max-w-[1360px] pt-2 min-[380px]:w-[calc(100%-24px)] min-[380px]:pt-3 sm:w-[calc(100%-32px)] sm:pt-4 md:w-[calc(100%-48px)] lg:w-[calc(100%-64px)] lg:pt-[30px]">
         <a
           href="#main"
@@ -260,6 +249,8 @@ export default function App() {
             followEnabled={followCursor}
             onToggleFollow={() => setFollowCursor((prev) => !prev)}
             catStatus={catStatus}
+            catHungry={catHungry}
+            onFeedCat={() => setCatHungry(false)}
           />
         </div>
         <SiteFooter

@@ -10,6 +10,8 @@ export default function PersonalSidebar({
   followEnabled,
   onToggleFollow,
   catStatus,
+  catHungry,
+  onFeedCat,
 }) {
   const [selectedTopicIds, setSelectedTopicIds] = useState(() => {
     try {
@@ -62,6 +64,8 @@ export default function PersonalSidebar({
         followEnabled={followEnabled}
         onToggleFollow={onToggleFollow}
         catStatus={catStatus}
+        hungry={catHungry}
+        onFeed={onFeedCat}
       />
 
       {/* Ambient Mindful Pause */}
