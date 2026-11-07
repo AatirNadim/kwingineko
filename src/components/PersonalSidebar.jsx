@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import readingConfig from '../reading.config.json';
 import DeskCompanion from './DeskCompanion.jsx';
+import FortuneWidget from './FortuneWidget.jsx';
 import NightSkyWidget from './NightSkyWidget.jsx';
 import ReadingWidget from './ReadingWidget.jsx';
 import SocialLinks from './SocialLinks.jsx';
@@ -56,14 +57,17 @@ export default function PersonalSidebar({
       {/* 3. Ambient Mindful Pause */}
       <NightSkyWidget />
 
-      {/* 4. Desk Companion (Positioned safely below hero particle portrait) */}
+      {/* 4. Fortune Cookie Workstation Oracle */}
+      <FortuneWidget />
+
+      {/* 5. Desk Companion (Positioned safely below hero particle portrait) */}
       <DeskCompanion
         followEnabled={followEnabled}
         onToggleFollow={onToggleFollow}
         catStatus={catStatus}
       />
 
-      {/* 5. Open Source Engineering Badge */}
+      {/* 6. Open Source Engineering Badge */}
       <div className="flex items-center gap-[10px] border border-dashed border-line bg-surface-card px-3 py-[11px] font-mono text-[10px] tracking-wide text-lime">
         <span className="text-lg">◎</span>
         <span>
