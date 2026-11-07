@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ContactModal from './components/ContactModal.jsx';
 import DosPlayerModal from './components/DosPlayerModal.jsx';
 import ContactSection from './components/ContactSection.jsx';
-import CertificatesSection from './components/CertificatesSection.jsx';
 import BlogSection from './components/BlogSection.jsx';
+import CertificatesSection from './components/CertificatesSection.jsx';
 import FaqSection from './components/FaqSection.jsx';
 import ExperienceSection from './components/ExperienceSection.jsx';
 import ExpertiseSection from './components/ExpertiseSection.jsx';
@@ -32,6 +32,8 @@ export default function App() {
   const [activeDosGame, setActiveDosGame] = useState(null);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [crtActive, setCrtActive] = useState(false);
+  const isNavigatingRef = useRef(false);
+  const navLockTimerRef = useRef(null);
 
   useEffect(() => {
     const timer = window.setInterval(() => setTime(new Date()), 60_000);
@@ -77,34 +79,75 @@ export default function App() {
 
   // Synchronize active section in sticky NavigationRail with viewport scroll
   useEffect(() => {
-    const sectionIds = ['home', 'work', 'experience', 'expertise', 'certificates', 'writing', 'faq', 'contact'];
-    const elements = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
+    const sectionIds = ['home', 'work', 'experience', 'expertise', 'writing', 'certificates', 'faq', 'contact'];
+    let ticking = false;
 
-    if (elements.length === 0) return;
+    const updateActiveSection = () => {
+      if (isNavigatingRef.current) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting);
-        if (visible.length > 0) {
-          visible.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-          setActive(visible[0].target.id);
-        }
-      },
-      {
-        rootMargin: '-15% 0px -50% 0px',
-        threshold: [0.1, 0.25, 0.5],
+      // 1. If at/near the bottom of the document, activate the last section ('contact')
+      const scrollBottom = window.innerHeight + window.scrollY;
+      const docHeight = document.documentElement.scrollHeight;
+      if (scrollBottom >= docHeight - 80) {
+        setActive(sectionIds[sectionIds.length - 1]);
+        return;
       }
-    );
 
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+      // 2. If at the very top of the page, activate 'home'
+      if (window.scrollY < 120) {
+        setActive(sectionIds[0]);
+        return;
+      }
+
+      // 3. Reading anchor line: 180px from top of viewport (below sticky header)
+      const targetOffset = 180;
+      let currentActive = null;
+
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= targetOffset && rect.bottom > targetOffset) {
+          currentActive = id;
+          break;
+        }
+      }
+
+      if (currentActive) {
+        setActive(currentActive);
+      }
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(() => {
+          updateActiveSection();
+          ticking = false;
+        });
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
+    updateActiveSection(); // Initial sync
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+      if (navLockTimerRef.current) window.clearTimeout(navLockTimerRef.current);
+    };
   }, []);
 
   const navigateTo = (id) => {
     setActive(id);
     setNavOpen(false);
+    isNavigatingRef.current = true;
+    if (navLockTimerRef.current) window.clearTimeout(navLockTimerRef.current);
+    navLockTimerRef.current = window.setTimeout(() => {
+      isNavigatingRef.current = false;
+    }, 900);
+
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     document.getElementById(id)?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
   };
@@ -130,6 +173,8 @@ export default function App() {
             navigateTo('home');
           }}
           onOpenCommandPalette={() => setCommandPaletteOpen(true)}
+          crtActive={crtActive}
+          onToggleCrt={setCrtActive}
         />
         <div className="grid grid-cols-1 items-start gap-3 pt-3 sm:gap-4 sm:pt-4 lg:grid-cols-[200px_minmax(0,1fr)_258px] lg:gap-[22px] lg:pt-6">
           <NavigationRail
@@ -144,8 +189,8 @@ export default function App() {
             <ProjectsSection />
             <ExperienceSection />
             <ExpertiseSection />
-            <CertificatesSection />
             <BlogSection />
+            <CertificatesSection />
             <FaqSection onLaunchGame={(game) => setActiveDosGame(game)} />
             <ContactSection onOpenComposer={() => setContactModalOpen(true)} />
           </main>
@@ -161,8 +206,6 @@ export default function App() {
             navigateTo('home');
           }}
           onOpenCommandPalette={() => setCommandPaletteOpen(true)}
-          crtActive={crtActive}
-          onToggleCrt={setCrtActive}
         />
         <ContactModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} />
         <DosPlayerModal

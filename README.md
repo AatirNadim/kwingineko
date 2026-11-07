@@ -13,7 +13,7 @@ Create a production build with `pnpm build`.
 
 ## Owner setup before publication
 
-- `src/reading.config.json` lists reading topics, default visitor selections, the maximum selectable topics, and their public RSS/Atom URLs. The panel fetches only feeds for the visitor's selected topics and caches successful results in memory for six hours (failed requests for ten minutes). The visitor's topic selection is saved in local storage. Direct browser feed requests depend on each publisher allowing cross-origin access; the panel reports a load issue when a publisher blocks it. A same-origin or build-time aggregator will be needed for feeds that do not allow browser access.
+- `src/reading.config.json` lists reading topics, default visitor selections, the maximum selectable topics, and their public RSS/Atom URLs. The panel fetches feeds for the visitor's selected topics and caches successful results in memory for six hours (failed requests for ten minutes). The visitor's topic selection is saved in local storage. Feed fetching automatically tries direct browser requests first (for CORS-enabled feeds), falls back to the `/api/feed` proxy endpoint (supported out of the box in Vite dev/preview server and Vercel serverless functions), and uses public aggregators as a final fallback.
 - Public email, profile links, current location, résumé download, and approved employment outcome claims were not established for publication in the brief's source material, so they are omitted.
 - The project repository links are the URLs listed in `projects/projects_context.md`.
 

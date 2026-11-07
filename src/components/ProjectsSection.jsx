@@ -42,7 +42,11 @@ export default function ProjectsSection() {
                         href={link.href}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex min-h-[44px] sm:min-h-[28px] items-center gap-1 border border-line bg-surface px-2.5 sm:px-2 py-1 sm:py-0.5 font-mono text-[11px] sm:text-[11.5px] font-semibold tracking-wide text-ink-secondary transition-all duration-150 hover:border-lime hover:text-lime hover:bg-lime/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow"
+                        className={`inline-flex min-h-[44px] sm:min-h-[28px] items-center gap-1 border px-2.5 sm:px-2 py-1 sm:py-0.5 font-mono text-[11px] sm:text-[11.5px] font-semibold tracking-wide transition-all duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow ${
+                          link.type === 'demo'
+                            ? 'border-lime/60 bg-lime/5 text-lime hover:bg-lime/15 hover:border-lime'
+                            : 'border-line bg-surface text-ink-secondary hover:border-lime hover:text-lime hover:bg-lime/10'
+                        }`}
                       >
                         <span>{link.label}</span>
                         <ArrowUpRight size={12} className="opacity-80" />

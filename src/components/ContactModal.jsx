@@ -249,7 +249,7 @@ export default function ContactModal({ isOpen, onClose }) {
                 {encodedLength} / {SAFE_URL_BUDGET} BYTES ({budgetRatio}%)
               </span>
             </div>
-            <div className="mt-1.5 h-1.5 w-full bg-[#272822] overflow-hidden">
+            <div className="mt-1.5 h-1.5 w-full bg-canvas overflow-hidden">
               <div
                 className={`h-full transition-all duration-300 ${
                   budgetRatio > 90 ? 'bg-pink' : budgetRatio > 70 ? 'bg-yellow' : 'bg-lime'

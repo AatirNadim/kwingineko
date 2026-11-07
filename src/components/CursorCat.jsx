@@ -1,76 +1,117 @@
 import { useEffect, useRef, useState } from 'react';
 
 const PIXELS = {
-  k: '#0b0b0b',
-  g: '#9a9a9a',
-  r: '#e53935',
-  p: '#ff8a80',
-  w: '#f0f0f0',
+  k: '#141512', // Dark charcoal outline, pupil, shadow
+  b: '#252720', // Dark charcoal tuxedo coat
+  m: '#383b30', // Midtone charcoal fur
+  h: '#4d5142', // Subtle coat highlight
+  w: '#f8f8f2', // Crisp white bib, paws, muzzle, smiling eyes
+  p: '#f92672', // Monokai pink collar and nose
+  r: '#ff8a80', // Soft pink inner ear and cheek blush
+  y: '#e6db74', // Monokai yellow bell
+  e: '#a6e22e', // Monokai lime green eyes
 };
 
-// 12x12 Pixel Cat frames facing right:
-// RUN_1: Stride A (front legs forward, back legs back, tail up)
+// 24x24 Pixel Tuxedo Cat frames facing right:
+// RUN_1: Stride extension (front paws reaching forward, hind legs extended back, arched tail)
 const RUN_1 = [
-  '..kk........',
-  '.kggk...kk.k',
-  '.kggk..krgkk',
-  '..kggkkggggk',
-  '..kggggggkgk',
-  '.kggggwwgpkk',
-  '.kggggggkkk.',
-  '..kggggggk..',
-  '..kgk..kgk..',
-  '.kgk....kgk.',
-  '.kk......kk.',
-  '............',
+  '........................',
+  '....kk..................',
+  '...kmmk.................',
+  '...kmmk.........kk...kk.',
+  '..kmmk.........krk..krk.',
+  '..kmmk........krmk.krmk.',
+  '...kmmk......kmmmmkmmmmk',
+  '....kmmk....kmmmmmmkekmk',
+  '.....kmmk..kbbmmmmmwwpkk',
+  '......kmmk..kbbmmmmbbkk.',
+  '.......kmmk..kbbkkpyk...',
+  '......kbbbbk.kbbkwwk....',
+  '.....kbbhhhhhhhbbkwwwk..',
+  '....kbbbbbbbbbbbbkwwk...',
+  '...kbbbbk.kbbbbbbbbkbbk.',
+  '..kbbbbk...kbbbbbbbbkwwk',
+  '.kwwk.......kkbbbbbbkwwk',
+  'kwwwk.........kkkkk...kk',
+  '.kkk....................',
+  '........................',
+  '........................',
+  '........................',
+  '........................',
+  '........................',
 ];
 
-// RUN_2: Stride B (legs gathered, tail flick)
+// RUN_2: Stride gather (paws tucked under body mid-leap, tail flick)
 const RUN_2 = [
-  '............',
-  '........kk.k',
-  '..kk...krgkk',
-  '.kggk.kggggk',
-  '.kggkggggkgk',
-  '..kggggwgpkk',
-  '..kgggggkkk.',
-  '...kgggggk..',
-  '....kggk....',
-  '....kgkg....',
-  '....kkkk....',
-  '............',
+  '........................',
+  '........................',
+  '................kk...kk.',
+  '...............krk..krk.',
+  '.....kk.......krmk.krmk.',
+  '....kmmk.....kmmmmkmmmmk',
+  '...kmmk.....kmmmmmmkekmk',
+  '...kmmk....kbbmmmmmwwpkk',
+  '....kmmk....kbbmmmmbbkk.',
+  '....kmmk.....kbbkkpyk...',
+  '.....kmmk...kbbbkwwk....',
+  '......kmmkkbbhhhhkwwwk..',
+  '.....kbbbbbbbbbbbbkwwk..',
+  '....kbbbbbbbbbbbbbbkk...',
+  '......kbbbbk..kbbbbk....',
+  '.......kbbk....kbbk.....',
+  '.......kwwk....kwwk.....',
+  '......kwwwk...kwwwk.....',
+  '.......kkk.....kkk......',
+  '........................',
+  '........................',
+  '........................',
+  '........................',
+  '........................',
 ];
 
-// CAUGHT: Sitting cute, closed eyes curved / blush, paws together, tail curled
+// CAUGHT: Sitting neat, happy curved eyes (^ _ ^), pink blush, white paws side-by-side, tail curled
 const CAUGHT = [
-  '............',
-  '.......kk.kk',
-  '......krgkrk',
-  '.....kgggggk',
-  '.....kgkggkk',
-  '....kgrrkppk',
-  '....kggggkk.',
-  '...kggwwwwk.',
-  '..kggggwwwk.',
-  '.kggkggggkkk',
-  'kggkk..kkkk.',
-  '.kk.........',
+  '........................',
+  '........k.......k.......',
+  '.......krk.....krk......',
+  '......krmk....krmk......',
+  '......krmkkkkkkrmk......',
+  '.....kmmhhhhhhhmmk......',
+  '....kmmmmmmmmmmmmmmk....',
+  '....kmmwwmmmmmmwwmmk....',
+  '...krmwmmwmmmmwmmwrmk...',
+  '...krmmmmmmmmmmmmmrmk...',
+  '....kmmmmwwppwwmmmmk....',
+  '.....kmmmwwwwwwmmmk.....',
+  '......kpppppypppk.......',
+  '.....kbbkwwwwwwkbbk.....',
+  '....kbbbkmwwwwmkbbbk....',
+  '...kbbbbkmwwwwmkbbbbk...',
+  '...kbbbbkbbkkbbkbbbbk...',
+  '...kbbbbkwwkkwwkbbbbk...',
+  '..kkbbbbkwwkkwwkbbbbk...',
+  '.kmmkbbbkwwkkwwkbbbkk...',
+  '.kmmkkbbkwwkkwwkbbk.....',
+  '..kmmkkkkwwkkwwkkk......',
+  '...kkk...kk..kk.........',
+  '........................',
 ];
 
 const FRAMES = { RUN_1, RUN_2, CAUGHT };
 const BUBBLE_TEXTS = ['♥ gotcha!', 'meow!'];
 const SPEED = 160; // pixels per second
-const CATCH_RADIUS = 22;
-const RESUME_RADIUS = 28;
-const CAT_HALF_SIZE = 18;
+const CATCH_RADIUS = 28;
+const RESUME_RADIUS = 34;
+const CAT_HALF_SIZE = 24;
 
 function PixelSprite({ frame }) {
   const rows = FRAMES[frame] || CAUGHT;
   return (
     <svg
       aria-hidden="true"
-      viewBox="0 0 12 12"
-      className="h-[36px] w-[36px] [image-rendering:pixelated]"
+      viewBox="0 0 24 24"
+      shapeRendering="crispEdges"
+      className="h-[48px] w-[48px] [image-rendering:pixelated]"
     >
       {rows.flatMap((row, y) =>
         [...row].map((pixel, x) =>
@@ -468,12 +509,12 @@ export default function CursorCat({ active = false, onStatusChange }) {
           <div
             role="status"
             aria-live="polite"
-            className={`pointer-events-none absolute max-w-[140px] truncate whitespace-nowrap bg-[#f0f0f0] text-[#0b0b0b] font-mono text-[9px] px-1.5 py-0.5 border border-[#0b0b0b] shadow-[1px_1px_0_#f92672] ${
-              pos.y < 40 ? 'top-full mt-1.5' : 'bottom-full mb-1.5'
+            className={`pointer-events-none absolute max-w-[140px] truncate whitespace-nowrap bg-[#f8f8f2] text-[#141512] font-mono text-[9px] px-1.5 py-0.5 border border-[#141512] shadow-[2px_2px_0_#f92672] ${
+              pos.y < 46 ? 'top-full mt-1.5' : 'bottom-full mb-1.5'
             } ${
-              pos.x < 75
+              pos.x < 80
                 ? 'left-0'
-                : pos.x > (typeof window !== 'undefined' ? window.innerWidth - 75 : 800)
+                : pos.x > (typeof window !== 'undefined' ? window.innerWidth - 80 : 800)
                 ? 'right-0'
                 : 'left-1/2 -translate-x-1/2'
             }`}

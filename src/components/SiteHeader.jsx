@@ -1,10 +1,18 @@
-import { Menu, X, Terminal, FileText } from 'lucide-react';
+import { Menu, X, Terminal, FileText, Monitor } from 'lucide-react';
 
-export default function SiteHeader({ time, navOpen, onToggleNavigation, onHome, onOpenCommandPalette }) {
+export default function SiteHeader({
+  time,
+  navOpen,
+  onToggleNavigation,
+  onHome,
+  onOpenCommandPalette,
+  crtActive = false,
+  onToggleCrt,
+}) {
   return (
     <header className="border border-line bg-surface/95 shadow-panel-lg">
       <div className="flex h-[69px] items-center justify-between border-b border-line px-3 sm:px-6">
-        <a href="#home" onClick={onHome} className="flex min-w-0 items-center gap-2.5 sm:gap-3 text-ink no-underline hover:no-underline">
+        <a href="#home" onClick={onHome} className="flex min-w-0 shrink items-center gap-2.5 sm:gap-3 text-ink no-underline hover:no-underline">
           <span className="shrink-0 border border-lime/50 px-[7px] py-[3px] font-mono text-[17px] font-bold tracking-[-2px] text-lime sm:text-[19px]">
             AN<span className="text-pink">_</span>
           </span>
@@ -18,8 +26,22 @@ export default function SiteHeader({ time, navOpen, onToggleNavigation, onHome, 
           </div>
         </a>
 
-        {/* Action Controls: Mobile Command Trigger + Hamburger */}
-        <div className="flex items-center gap-2 lg:hidden">
+        {/* Action Controls: Mobile CRT Toggle + Mobile Command Trigger + Hamburger */}
+        <div className="flex shrink-0 items-center gap-1.5 min-[360px]:gap-2 lg:hidden">
+          <button
+            type="button"
+            onClick={() => onToggleCrt?.(!crtActive)}
+            aria-label={crtActive ? 'Deactivate retro CRT phosphor filter' : 'Activate retro CRT phosphor filter'}
+            aria-pressed={crtActive}
+            title={crtActive ? 'CRT Filter: ON' : 'CRT Filter: OFF'}
+            className={`grid h-11 w-11 min-h-[44px] min-w-[44px] place-items-center border transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow ${
+              crtActive
+                ? 'border-lime bg-lime/10 text-lime'
+                : 'border-line bg-surface text-muted hover:bg-focus hover:text-ink'
+            }`}
+          >
+            <Monitor size={18} className={crtActive ? 'animate-pulse motion-reduce:animate-none text-lime' : ''} />
+          </button>
           <button
             type="button"
             onClick={onOpenCommandPalette}
@@ -40,7 +62,7 @@ export default function SiteHeader({ time, navOpen, onToggleNavigation, onHome, 
           </button>
         </div>
 
-        {/* Desktop Command Palette Badge + Systems Motto */}
+        {/* Desktop Command Palette Badge + CRT Filter Toggle + Resume + Systems Motto */}
         <div className="hidden items-center gap-3 font-mono text-[10.5px] tracking-[.6px] text-ink-secondary lg:flex">
           <button
             type="button"
@@ -51,6 +73,21 @@ export default function SiteHeader({ time, navOpen, onToggleNavigation, onHome, 
             <Terminal size={12} className="text-lime" />
             <span>COMMANDS</span>
             <kbd className="border border-[#4c4d42] bg-[#252621] px-1 text-[8.5px] text-ink">⌘K</kbd>
+          </button>
+          <button
+            type="button"
+            onClick={() => onToggleCrt?.(!crtActive)}
+            aria-label={crtActive ? 'Deactivate retro CRT phosphor filter' : 'Activate retro CRT phosphor filter'}
+            aria-pressed={crtActive}
+            title={crtActive ? 'CRT Filter: ON' : 'CRT Filter: OFF'}
+            className={`inline-flex min-h-[32px] items-center gap-1.5 border px-2.5 py-1 text-[9.5px] font-mono transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${
+              crtActive
+                ? 'border-lime bg-lime/15 text-lime font-semibold'
+                : 'border-[#43443a] bg-[#1a1b18] text-[#c2c0af] hover:border-lime hover:text-lime'
+            }`}
+          >
+            <Monitor size={12} className={crtActive ? 'text-lime animate-pulse motion-reduce:animate-none' : 'text-[#88846f]'} />
+            <span>CRT: {crtActive ? 'ON' : 'OFF'}</span>
           </button>
           <a
             href="/Aatir_Nadim_Resume.pdf"

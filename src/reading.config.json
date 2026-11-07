@@ -4,12 +4,12 @@
   "topics": [
     { "id": "ai", "label": "AI News", "feeds": ["https://www.wired.com/feed/tag/ai/latest/rss"] },
     { "id": "anime", "label": "Anime", "feeds": ["https://www.animenewsnetwork.com/all/rss.xml?ann-edition=us"] },
-    { "id": "cinema", "label": "Cinema", "feeds": [] },
-    { "id": "open-source", "label": "Open Source", "feeds": ["https://blog.fossasia.org/feed/"] },
+    { "id": "cinema", "label": "Cinema", "feeds": ["https://www.indiewire.com/feed/"] },
+    { "id": "open-source", "label": "Open Source", "feeds": ["https://github.blog/feed/"] },
     { "id": "mental-health", "label": "Mental Health", "feeds": ["https://www.nationalelfservice.net/mental-health/feed/"] },
     { "id": "gaming", "label": "Gaming", "feeds": ["https://www.theverge.com/rss/games/index.xml"] },
     { "id": "pop-culture", "label": "Pop Culture", "feeds": ["https://www.popmatters.com/feed"] },
     { "id": "comics", "label": "Comics", "feeds": ["https://comicbook.com/feed/"] },
-    { "id": "investing", "label": "Investing", "feeds": ["https://www.getrichslowly.org/feed/"] }
+    { "id": "investing", "label": "Investing", "feeds": ["https://awealthofcommonsense.com/feed/"] }
   ]
 }

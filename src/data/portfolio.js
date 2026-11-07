@@ -3,42 +3,17 @@ export const navigation = [
   ['work', '02', 'Selected work'],
   ['experience', '03', 'Experience'],
   ['expertise', '04', 'Expertise'],
-  ['certificates', '05', 'Certificates'],
-  ['writing', '06', 'Writing'],
+  ['writing', '05', 'Writing'],
+  ['certificates', '06', 'Certificates'],
   ['faq', '07', 'FAQ & Trivia'],
   ['contact', '08', 'Contact'],
 ];
 
 export const projects = [
   {
-    name: 'plan-parse',
-    kind: 'INFRASTRUCTURE TOOLING',
-    number: '01',
-    description: 'Interactive visual workbench for Terraform plans to map dependency DAGs and inspect blast radius.',
-    problem: 'Large Terraform plans produce thousands of lines of cryptic text diffs, making it risky to detect destructive resource replacements or cascading breaks before applying changes.',
-    contribution: 'Engineered a standalone visual workbench that converts plan files into interactive dependency DAGs with side-by-side attribute comparisons and automated risk checks.',
-    result: 'Enables interactive dependency DAG traversal and blast-radius auditing across multi-module plans, distributed as a self-contained binary via go:embed.',
-    highlightTag: 'DEPENDENCY GRAPH & BLAST RADIUS',
-    highlight: 'Maps upstream dependencies and downstream reference lineage using a Cytoscape.js hierarchical DAG to pinpoint breaking changes and destructive replacements before terraform apply. Packages the Go parser engine and Next.js workbench into a single, self-contained binary via go:embed.',
-    stack: ['Go', 'Terraform', 'React', 'Cytoscape.js'],
-    href: 'https://github.com/AatirNadim/plan-parse',
-    links: [
-      { label: 'SOURCE', href: 'https://github.com/AatirNadim/plan-parse', type: 'source' },
-    ],
-    telemetry: {
-      distribution: 'Standalone Binary (go:embed) · Multi-Stage Docker',
-      inputModes: 'Plan JSON (-plan) · Terraform Config Directory (-dir)',
-      lineageEngine: 'Cytoscape.js Hierarchical DAG · Submodule Manifest Resolution',
-    },
-    status: 'PERSONAL PROJECT',
-    image: '/assets/plan-parse-timelines.png',
-    imageAlt: 'Pixel-art visualization of infrastructure dependency graph nodes and blast-radius pathways.',
-    imageCaption: 'Interactive dependency DAG // Blast-radius & attribute diff analysis',
-  },
-  {
     name: 'getMe',
     kind: 'STORAGE SYSTEMS',
-    number: '02',
+    number: '01',
     description: 'Persistent, embeddable log-structured key-value storage engine in Go modeled on the Bitcask design.',
     problem: 'Applications needing embedded persistence often hit random disk I/O bottlenecks and write amplification under heavy write workloads.',
     contribution: 'Built a log-structured Go storage engine featuring append-only disk storage, background compaction, fast crash recovery, and low-latency local client communication.',
@@ -62,6 +37,31 @@ export const projects = [
     image: '/assets/getme-record-hoard.png',
     imageAlt: 'Pixel-art depiction of a subterranean storage vault housing disk platters and indexed data archives.',
     imageCaption: 'Bitcask storage engine // Append-only log with in-memory hash index',
+  },
+  {
+    name: 'plan-parse',
+    kind: 'INFRASTRUCTURE TOOLING',
+    number: '02',
+    description: 'Interactive visual workbench for Terraform plans to map dependency DAGs and inspect blast radius.',
+    problem: 'Large Terraform plans produce thousands of lines of cryptic text diffs, making it risky to detect destructive resource replacements or cascading breaks before applying changes.',
+    contribution: 'Engineered a standalone visual workbench that converts plan files into interactive dependency DAGs with side-by-side attribute comparisons and automated risk checks.',
+    result: 'Enables interactive dependency DAG traversal and blast-radius auditing across multi-module plans, distributed as a self-contained binary via go:embed.',
+    highlightTag: 'DEPENDENCY GRAPH & BLAST RADIUS',
+    highlight: 'Maps upstream dependencies and downstream reference lineage using a Cytoscape.js hierarchical DAG to pinpoint breaking changes and destructive replacements before terraform apply. Packages the Go parser engine and Next.js workbench into a single, self-contained binary via go:embed.',
+    stack: ['Go', 'Terraform', 'React', 'Cytoscape.js'],
+    href: 'https://github.com/AatirNadim/plan-parse',
+    links: [
+      { label: 'SOURCE', href: 'https://github.com/AatirNadim/plan-parse', type: 'source' },
+    ],
+    telemetry: {
+      distribution: 'Standalone Binary (go:embed) · Multi-Stage Docker',
+      inputModes: 'Plan JSON (-plan) · Terraform Config Directory (-dir)',
+      lineageEngine: 'Cytoscape.js Hierarchical DAG · Submodule Manifest Resolution',
+    },
+    status: 'PERSONAL PROJECT',
+    image: '/assets/plan-parse-timelines.png',
+    imageAlt: 'Pixel-art visualization of infrastructure dependency graph nodes and blast-radius pathways.',
+    imageCaption: 'Interactive dependency DAG // Blast-radius & attribute diff analysis',
   },
   {
     name: 'Window',
@@ -91,11 +91,11 @@ export const projects = [
 ];
 
 export const socials = [
-  { name: 'LinkedIn', handle: 'aatirnadim', url: 'https://www.linkedin.com/in/aatirnadim/' },
-  { name: 'GitHub', handle: 'AatirNadim', url: 'https://github.com/AatirNadim' },
-  { name: 'Blog', handle: 'Techtom', url: 'https://techtom.hashnode.dev/' },
-  { name: 'LeetCode', handle: 'AatirNadim', url: 'https://leetcode.com/user3405Ye/' },
-  { name: 'Google Cloud Skills Boost', handle: 'Aatir Nadim', url: 'https://www.cloudskillsboost.google/public_profiles/d61be509-d6cb-46fc-9b62-c083e3636598' },
+  { name: 'LinkedIn', handle: 'aatirnadim', url: 'https://www.linkedin.com/in/aatirnadim/', icon: 'linkedin' },
+  { name: 'GitHub', handle: 'AatirNadim', url: 'https://github.com/AatirNadim', icon: 'github' },
+  { name: 'Blog', handle: 'techtom.hashnode.dev', url: 'https://techtom.hashnode.dev/', icon: 'hashnode' },
+  { name: 'LeetCode', handle: 'AatirNadim', url: 'https://leetcode.com/user3405Ye/', icon: 'leetcode' },
+  { name: 'Google Cloud Skills Boost', handle: 'Aatir Nadim', url: 'https://www.cloudskillsboost.google/public_profiles/d61be509-d6cb-46fc-9b62-c083e3636598', icon: 'gcp' },
 ];
 
 export const experience = [
@@ -224,7 +224,7 @@ export const contact = {
       id: 'systems',
       label: '⚡ Systems Collab',
       subject: 'Question on Systems & Infrastructure',
-      body: 'Hi Aatir,\n\nI was checking out your work on plan-parse / getMe / Window and wanted to reach out regarding [topic/project].\n\nWould love to exchange thoughts!\n\nBest,\n[Your Name]',
+      body: 'Hi Aatir,\n\nI was checking out your work on getMe / plan-parse / Window and wanted to reach out regarding [topic/project].\n\nWould love to exchange thoughts!\n\nBest,\n[Your Name]',
     },
     {
       id: 'casual',

@@ -1,31 +1,47 @@
 import { useEffect, useRef } from 'react';
 
-// Color distribution tailored to eliminate "syntax salad":
-// 75% subtle off-white (#f8f8f2), 15% muted olive-grey (#88846f),
-// 10% rare Monokai syntax sparkles (#e6db74 yellow, #a6e22e lime, #ae81ff violet).
+// Color distribution matching the site's Monokai theme ratio:
+// 44% Crisp Ink (#f8f8f2), 14% Secondary Ink (#d6d4c5), 10% Muted Dim (#88846f),
+// 10% Monokai Lime (#a6e22e), 8% Monokai Pink (#f92672), 8% Monokai Yellow (#e6db74), 6% Monokai Violet (#ae81ff).
 function pickStarColor() {
   const roll = Math.random();
-  if (roll < 0.75) return '#f8f8f2';
-  if (roll < 0.90) return '#88846f';
+  if (roll < 0.44) return '#f8f8f2';
+  if (roll < 0.58) return '#d6d4c5';
+  if (roll < 0.68) return '#88846f';
+  if (roll < 0.78) return '#a6e22e';
+  if (roll < 0.86) return '#f92672';
   if (roll < 0.94) return '#e6db74';
-  if (roll < 0.97) return '#a6e22e';
   return '#ae81ff';
 }
 
 function createStars(width, height) {
-  // Density: ~1 star per 9,500px^2, clamped between 55 and 165
-  const count = Math.min(165, Math.max(55, Math.round((width * height) / 9500)));
+  // Density: ~1 star per 4,800px^2, clamped between 120 and 340
+  const count = Math.min(340, Math.max(120, Math.round((width * height) / 4800)));
   return Array.from({ length: count }, () => {
-    // 82% 1px pixel stars, 18% 2px pixel stars for authentic retro pixel density
-    const isTwoPx = Math.random() < 0.18;
+    // Star sizes: ~78% 1px pixel stars, ~18% 2px pixel stars, ~4% 3px prominent pixel stars
+    const sizeRoll = Math.random();
+    const size = sizeRoll < 0.78 ? 1 : sizeRoll < 0.96 ? 2 : 3;
     const color = pickStarColor();
-    const isAccent = color !== '#f8f8f2' && color !== '#88846f';
+
+    // Calibrated alpha: accents and crisp ink pop vividly, secondary and muted stars provide depth
+    let baseAlpha;
+    if (color === '#88846f') {
+      baseAlpha = Math.random() * 0.25 + 0.35;
+    } else if (color === '#d6d4c5') {
+      baseAlpha = Math.random() * 0.30 + 0.45;
+    } else {
+      // Crisp Ink (#f8f8f2) and Syntax Accents (#a6e22e, #f92672, #e6db74, #ae81ff)
+      baseAlpha = Math.random() * 0.35 + 0.55;
+    }
+
+    // Boost alpha by +0.10 for prominent 3px stars (capped at 1.0)
+    const alpha = Math.min(1.0, size === 3 ? baseAlpha + 0.10 : baseAlpha);
+
     return {
       x: Math.random() * width,
       y: Math.random() * height,
-      size: isTwoPx ? 2 : 1,
-      // Accents stay dimmer so they never compete with UI semantic highlights
-      alpha: isAccent ? Math.random() * 0.22 + 0.16 : Math.random() * 0.32 + 0.16,
+      size,
+      alpha,
       twinkle: Math.random() * 1.2 + 0.4,
       phase: Math.random() * Math.PI * 2,
       color,
@@ -84,11 +100,11 @@ export default function StarfieldBackground() {
           if (star.y < -4) star.y = height + 4;
         }
 
-        const twinkle = still ? 1 : 0.78 + Math.sin(time * 0.0006 * star.twinkle + star.phase) * 0.22;
+        const twinkle = still ? 1 : 0.82 + Math.sin(time * 0.0007 * star.twinkle + star.phase) * 0.18;
         context.globalAlpha = star.alpha * twinkle;
         context.fillStyle = star.color;
 
-        // Crisp integer coordinates: strictly square 1px or 2px pixel blocks
+        // Crisp integer coordinates: strictly square 1px, 2px, or 3px pixel blocks
         context.fillRect(
           Math.round(star.x + offsetX),
           Math.round(star.y + offsetY),
