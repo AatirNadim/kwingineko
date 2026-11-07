@@ -105,8 +105,15 @@ export const experience = [
     team: 'Private Equity Team',
     date: 'JUL 2024 – PRESENT',
     location: 'Noida, India',
-    note: 'Engineered an asynchronous, event-driven architecture to process and sync 30k+ data entries per cycle from blob storage into a centralized database. Executed seamless migration of the core API Registry from Gradle to Maven for connected microservices, and leading development of an elastic Data Inventory service with TDD and multi-tier authentication.',
-    stack: ['Java', 'Spring Framework', 'AWS', 'Docker', 'PostgreSQL', 'GitLab CI'],
+    logo: '/assets/sp-global-logo.png',
+    logoAlt: 'S&P Global logo',
+    highlights: [
+      'Built asynchronous, event-driven ingestion to process and synchronize 30,000+ records per cycle from object storage into a centralized database.',
+      'Migrated the shared API Registry build from Gradle to Maven and coordinated compatibility across connected microservices.',
+      'Developing a scalable Data Inventory service with test-driven development and multi-tier authentication.',
+      'Work across backend services, cloud infrastructure, data persistence, and delivery pipelines in a financial data platform.',
+    ],
+    stack: ['Java', 'Spring', 'AWS', 'Docker', 'PostgreSQL', 'GitLab CI', 'Microservices', 'TDD'],
   },
   {
     role: 'Core Software Development Engineer Intern',
@@ -114,8 +121,16 @@ export const experience = [
     team: 'Core Engineering',
     date: 'MAY 2023 – JUN 2024',
     location: 'Halifax, NS, Canada (Remote)',
-    note: 'Engineered an in-browser AI-powered note-taking extension from nascent phase to production in a 2-person engineering team. Built scalable sales automation pipelines serving enterprise clients including Illumin, Deel, and Apollo.io.',
-    stack: ['TypeScript', 'React', 'Next.js', 'Python', 'Firebase', 'AWS'],
+    logo: '/assets/floqer-logo.jpeg',
+    logoAlt: 'Floqer logo',
+    highlights: [
+      'Built an AI-powered browser note-taking extension from early prototype to production as part of a two-person engineering team, including rich-text editing and streaming LLM responses.',
+      'Developed full-stack features for a B2B sales automation platform, connecting prospect research, enrichment, personalized outreach, and follow-up workflows.',
+      'Engineered a visual workflow builder, spreadsheet execution interface, and human review tools for editing and regenerating AI-generated content.',
+      'Integrated row-aware RAG chat with workflow data, plus external prospecting and outreach services across a React and TypeScript application.',
+      'Personalized outreach workflows were associated with roughly 4× the return rate of other methods, as reported by the team.',
+    ],
+    stack: ['React', 'TypeScript', 'Vite', 'Tailwind', 'Ant Design', 'Tiptap', 'RAG', 'Firebase', 'Stripe'],
   },
 ];
 
