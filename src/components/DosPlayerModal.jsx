@@ -141,6 +141,11 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
     document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = originalOverflow;
+
+      // js-dos ships a stylesheet with a global Tailwind/DaisyUI reset. Keep
+      // it loaded only while the arcade is open so those rules cannot restyle
+      // the portfolio after the emulator modal has been dismissed.
+      document.querySelector('link[data-jsdos-css]')?.remove();
     };
   }, [isOpen]);
 
