@@ -28,6 +28,8 @@ export default function App() {
   const [time, setTime] = useState(new Date());
   const [followCursor, setFollowCursor] = useState(false);
   const [catStatus, setCatStatus] = useState('idle');
+  const [catHungry, setCatHungry] = useState(false);
+  const [feedProgress, setFeedProgress] = useState(0);
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [activeDosGame, setActiveDosGame] = useState(null);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
@@ -39,6 +41,66 @@ export default function App() {
     const timer = window.setInterval(() => setTime(new Date()), 60_000);
     return () => window.clearInterval(timer);
   }, []);
+
+  // First hunger cue arrives shortly after the page is ready; later cues settle into a five minute rhythm.
+  useEffect(() => {
+    let repeatTimer;
+    const firstTimer = window.setTimeout(() => {
+      setCatHungry(true);
+      repeatTimer = window.setInterval(() => setCatHungry(true), 60_000);
+    }, 15_000);
+    return () => {
+      window.clearTimeout(firstTimer);
+      if (repeatTimer) window.clearInterval(repeatTimer);
+    };
+  }, []);
+
+  // A small synthesized audio note accompanies each hunger cue where browser audio is available.
+  useEffect(() => {
+    if (!catHungry) return;
+    try {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return;
+      const context = new AudioContextClass();
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(740, context.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(520, context.currentTime + 0.22);
+      gain.gain.setValueAtTime(0.0001, context.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.07, context.currentTime + 0.025);
+      gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.26);
+      oscillator.connect(gain);
+      gain.connect(context.destination);
+      oscillator.start();
+      oscillator.stop(context.currentTime + 0.27);
+      oscillator.onended = () => context.close();
+    } catch { /* Audio may be unavailable or blocked until a visitor interacts. */ }
+  }, [catHungry]);
+
+  useEffect(() => {
+    if (!catHungry) return;
+    const originalTitle = document.title;
+    let showReminder = false;
+    const timer = window.setInterval(() => {
+      showReminder = !showReminder;
+      document.title = showReminder ? '🐈 Feed me!' : originalTitle;
+    }, 1200);
+    return () => {
+      window.clearInterval(timer);
+      document.title = originalTitle;
+    };
+  }, [catHungry]);
+
+  const feedCat = () => {
+    if (!catHungry) return;
+    if (feedProgress >= 4) {
+      setFeedProgress(0);
+      setCatHungry(false);
+      return;
+    }
+    setFeedProgress((count) => count + 1);
+  };
 
   // Idle pre-warm shared emulator runtime (wdosbox.wasm, js-dos.js)
   useEffect(() => {
@@ -156,7 +218,7 @@ export default function App() {
     <>
       <StarfieldBackground />
       <IntroSplash />
-      <CursorCat active={followCursor} onStatusChange={setCatStatus} />
+      <CursorCat active={followCursor || catHungry} hungry={catHungry} feedProgress={feedProgress} onFeed={feedCat} onStatusChange={setCatStatus} />
       <div className="relative z-[1] mx-auto w-[calc(100%-16px)] max-w-[1360px] pt-2 min-[380px]:w-[calc(100%-24px)] min-[380px]:pt-3 sm:w-[calc(100%-32px)] sm:pt-4 md:w-[calc(100%-48px)] lg:w-[calc(100%-64px)] lg:pt-[30px]">
         <a
           href="#main"

@@ -131,7 +131,7 @@ function PixelSprite({ frame }) {
   );
 }
 
-export default function CursorCat({ active = false, onStatusChange }) {
+export default function CursorCat({ active = false, hungry = false, feedProgress = 0, onFeed, onStatusChange }) {
   const [pos, setPos] = useState(() => ({
     x: typeof window !== 'undefined' ? Math.max(CAT_HALF_SIZE, window.innerWidth - 80) : 100,
     y: typeof window !== 'undefined' ? Math.max(CAT_HALF_SIZE, window.innerHeight - 80) : 100,
@@ -140,6 +140,7 @@ export default function CursorCat({ active = false, onStatusChange }) {
   const [facingLeft, setFacingLeft] = useState(false);
   const [isCaught, setIsCaught] = useState(false);
   const [bubbleText, setBubbleText] = useState('♥ gotcha!');
+  const wasHungryRef = useRef(false);
 
   const posRef = useRef(pos);
   posRef.current = pos;
@@ -156,6 +157,12 @@ export default function CursorCat({ active = false, onStatusChange }) {
 
   const onStatusChangeRef = useRef(onStatusChange);
   onStatusChangeRef.current = onStatusChange;
+
+  useEffect(() => {
+    if (hungry && !wasHungryRef.current) setBubbleText('meow... feed me?');
+    if (!hungry && wasHungryRef.current) setBubbleText('♥ thank you!');
+    wasHungryRef.current = hungry;
+  }, [hungry]);
 
   const setCatStatus = (status) => {
     if (statusRef.current !== status) {
@@ -233,6 +240,19 @@ export default function CursorCat({ active = false, onStatusChange }) {
 
       const mouse = mouseRef.current;
       const currentPos = posRef.current;
+
+      // Feeding takes priority over petting and cursor-chasing interactions.
+      if (hungry) {
+        isCaughtRef.current = false;
+        setIsCaught(false);
+        setCatStatus('feeding');
+        if (currentFrameRef.current !== 'CAUGHT') {
+          currentFrameRef.current = 'CAUGHT';
+          setFrame('CAUGHT');
+        }
+        rafRef.current = requestAnimationFrame(loop);
+        return;
+      }
 
       if (!mouse.active || mouse.x === null || mouse.y === null) {
         setCatStatus('idle');
@@ -490,14 +510,13 @@ export default function CursorCat({ active = false, onStatusChange }) {
       document.removeEventListener('mouseenter', handleMouseEnter);
       reduceMotionQuery.removeEventListener?.('change', onMotionChange);
     };
-  }, [active]);
+  }, [active, hungry]);
 
   if (!active) return null;
 
   return (
     <div
-      aria-hidden="true"
-      className={`fixed pointer-events-none z-40 select-none ${isCaught ? '' : 'will-change-transform'}`}
+      className={`fixed z-40 select-none ${isCaught ? '' : 'will-change-transform'} ${hungry ? 'pointer-events-auto' : 'pointer-events-none'}`}
       style={{
         left: 0,
         top: 0,
@@ -505,11 +524,11 @@ export default function CursorCat({ active = false, onStatusChange }) {
       }}
     >
       <div className="relative pointer-events-none select-none">
-        {isCaught && (
+        {(isCaught || hungry) && (
           <div
             role="status"
             aria-live="polite"
-            className={`pointer-events-none absolute max-w-[140px] truncate whitespace-nowrap bg-[#f8f8f2] text-[#141512] font-mono text-[9px] px-1.5 py-0.5 border border-[#141512] shadow-[2px_2px_0_#f92672] ${
+            className={`pointer-events-none absolute max-w-[160px] whitespace-nowrap bg-[#f8f8f2] text-[#141512] font-mono text-[9px] px-1.5 py-0.5 border border-[#141512] shadow-[2px_2px_0_#f92672] ${
               pos.y < 46 ? 'top-full mt-1.5' : 'bottom-full mb-1.5'
             } ${
               pos.x < 80
@@ -519,11 +538,19 @@ export default function CursorCat({ active = false, onStatusChange }) {
                 : 'left-1/2 -translate-x-1/2'
             }`}
           >
-            {bubbleText}
+            {hungry ? `feed me · ${feedProgress}/5` : bubbleText}
           </div>
         )}
         <div style={{ transform: facingLeft ? 'scaleX(-1)' : 'scaleX(1)' }}>
-          <PixelSprite frame={frame} />
+          <button
+            type="button"
+            onClick={hungry ? onFeed : undefined}
+            disabled={!hungry}
+            aria-label={hungry ? `Feed the cat, ${5 - feedProgress} clicks remaining` : 'Cat'}
+            className={`block rounded-sm ${hungry ? 'cursor-pointer pointer-events-auto focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#e6db74]' : 'cursor-default pointer-events-none'}`}
+          >
+            <PixelSprite frame={frame} />
+          </button>
         </div>
       </div>
     </div>
