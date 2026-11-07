@@ -1,4 +1,4 @@
-export default function PanelFrame({ title, symbol, icon, children, className = '' }) {
+export default function PanelFrame({ title, symbol, icon, children, className = '', headerAction }) {
   const badge = symbol || icon;
 
   return (
@@ -12,11 +12,13 @@ export default function PanelFrame({ title, symbol, icon, children, className = 
           )}
           <span>{title}</span>
         </span>
-        <span aria-hidden="true" className="flex gap-1">
-          {[0, 1, 2].map((item) => (
-            <i key={item} className="h-[7px] w-[7px] border border-line bg-focus" />
-          ))}
-        </span>
+        {headerAction ?? (
+          <span aria-hidden="true" className="flex gap-1">
+            {[0, 1, 2].map((item) => (
+              <i key={item} className="h-[7px] w-[7px] border border-line bg-focus" />
+            ))}
+          </span>
+        )}
       </div>
       {children}
     </section>
