@@ -130,6 +130,26 @@ export default function CommandPalette({
         },
       },
 
+      // Help & Easter Egg Notes
+      {
+        id: 'info-console-help',
+        category: 'BROWSER DEVTOOLS',
+        label: 'Run aatir.help() in the browser console to see available commands',
+        icon: Terminal,
+        shortcut: 'CONSOLE',
+        informational: true,
+        action: () => {},
+      },
+      {
+        id: 'info-konami-code',
+        category: 'KONAMI CODE',
+        label: '↑ ↑ ↓ ↓ ← → ← → B A',
+        icon: HelpCircle,
+        shortcut: '',
+        informational: true,
+        action: () => {},
+      },
+
       // Workstation Actions & Easter Eggs
       {
         id: 'act-arcade',
@@ -348,7 +368,7 @@ export default function CommandPalette({
                   data-active={isSelected}
                   onClick={cmd.action}
                   onMouseEnter={() => setSelectedIndex(idx)}
-                  className={`flex cursor-pointer items-center justify-between gap-3 border px-3 py-2.5 transition-colors ${
+                  className={`flex ${cmd.informational ? 'cursor-default' : 'cursor-pointer'} items-center justify-between gap-3 border px-3 py-2.5 transition-colors ${
                     isSelected
                       ? 'border-pink/50 bg-[#36272c] text-ink'
                       : 'border-transparent text-[#c7c5b7] hover:bg-[#252621]'
@@ -366,7 +386,7 @@ export default function CommandPalette({
                   </div>
 
                   <div className="flex shrink-0 items-center gap-2">
-                    <span
+                    {cmd.shortcut && <span
                       className={`border px-1.5 py-0.5 text-[8.5px] ${
                         isSelected
                           ? 'border-pink/40 bg-pink/20 text-pink'
@@ -374,8 +394,8 @@ export default function CommandPalette({
                       }`}
                     >
                       {cmd.shortcut}
-                    </span>
-                    {isSelected && <ArrowRight size={13} className="text-pink" />}
+                    </span>}
+                    {isSelected && !cmd.informational && <ArrowRight size={13} className="text-pink" />}
                   </div>
                 </div>
               );
@@ -391,8 +411,6 @@ export default function CommandPalette({
           </div>
           <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
             <span>SURPRISE: <span className="font-semibold text-lime">FAQ #09</span></span>
-            <span className="text-[#55564c]" aria-hidden="true">·</span>
-            <span>KONAMI: <span className="text-yellow">↑↑↓↓←→←→BA</span></span>
           </div>
         </div>
       </div>

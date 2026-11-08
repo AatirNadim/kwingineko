@@ -10,6 +10,26 @@
   animation: cat-hop 0.3s steps(2);
 }
 
+@keyframes arcade-confetti-fall {
+  0% { transform: translateY(-8vh) rotate(0deg); opacity: 0; }
+  12% { opacity: 1; }
+  100% { transform: translateY(108vh) rotate(540deg); opacity: 0.9; }
+}
+
+.arcade-confetti {
+  position: absolute;
+  top: -12px;
+  width: 7px;
+  height: 12px;
+  image-rendering: pixelated;
+  animation: arcade-confetti-fall 3s steps(12) both;
+}
+
+.arcade-confetti-0 { background: #a6e22e; }
+.arcade-confetti-1 { width: 9px; height: 9px; background: #f92672; }
+.arcade-confetti-2 { background: #e6db74; }
+.arcade-confetti-3 { width: 6px; height: 14px; background: #ae81ff; }
+
 @keyframes cat-kiss {
   0%, 100% { transform: scale(1) rotate(0); }
   35% { transform: scale(1.18) rotate(-8deg); }

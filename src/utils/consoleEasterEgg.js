@@ -69,6 +69,7 @@ export function initConsoleEasterEgg({ onToggleCrt, onLaunchArcade, onOpenCompos
         { Command: 'aatir.contact()', Description: 'Get direct contact email & links' },
         { Command: 'aatir.arcade()', Description: 'Launch retro DOS game emulator' },
         { Command: 'aatir.crt()', Description: 'Toggle retro CRT scanline mode' },
+        { Command: 'aatir.konami()', Description: 'Reveal the Konami Code' },
         { Command: 'aatir.cat()', Description: 'Send love to the workstation cat' },
         { Command: "aatir.where('zoro')", Description: 'Try to locate the lost swordsman' },
       ]);
@@ -108,6 +109,11 @@ export function initConsoleEasterEgg({ onToggleCrt, onLaunchArcade, onOpenCompos
     crt: () => {
       onToggleCrt?.();
       return 'Toggled CRT scanline overlay.';
+    },
+    konami: () => {
+      const code = '↑ ↑ ↓ ↓ ← → ← → B A';
+      console.log('%cKONAMI CODE // ' + code, 'color: #e6db74; background: #1e1f1c; font: bold 13px monospace; padding: 4px 8px;');
+      return code;
     },
     cat: () => {
       console.log('%c=^._.^= ∫  Purrrrr! The workstation cat acknowledges your friendship.', 'color: #f92672; font-size: 14px; font-weight: bold;');

@@ -7,6 +7,7 @@ const consoleCommands = [
   ['aatir.contact()', 'Contact details'],
   ['aatir.arcade()', 'Launch DOS arcade'],
   ['aatir.crt()', 'Toggle CRT effect'],
+  ['aatir.konami()', 'Reveal the Konami Code'],
   ['aatir.cat()', 'Cat easter egg'],
   ["aatir.where('zoro')", 'Find the lost swordsman'],
 ];
