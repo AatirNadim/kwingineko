@@ -41,12 +41,12 @@ export default function App() {
     return () => window.clearInterval(timer);
   }, []);
 
-  // First hunger cue arrives 40 seconds after the page is ready; later cues return every minute.
+  // First hunger cue arrives 40 seconds after the page is ready; later cues return every five minutes.
   useEffect(() => {
     let repeatTimer;
     const firstTimer = window.setTimeout(() => {
       setCatHungry(true);
-      repeatTimer = window.setInterval(() => setCatHungry(true), 60_000);
+      repeatTimer = window.setInterval(() => setCatHungry(true), 5 * 60_000);
     }, 40_000);
     return () => {
       window.clearTimeout(firstTimer);
