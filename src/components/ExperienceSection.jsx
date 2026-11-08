@@ -4,13 +4,19 @@ import SectionHeading from './SectionHeading.jsx';
 export default function ExperienceSection() {
   return (
     <section id="experience" className="scroll-mt-6 border-b border-line px-3 py-6 sm:px-[14px] sm:py-8 md:pl-5">
-      <SectionHeading index="03 / THE PATH HERE" title="Experience" />
+      <SectionHeading index="02 / THE PATH HERE" title="Experience" />
       <div className="ml-2.5 sm:ml-3 mt-6 border-l border-line">
         {experience.map((item, i) => (
-          <article key={`${item.org}-${item.role}`} className="relative pb-8 pl-5 sm:pl-[24px] last:pb-2">
+          <article key={`${item.org}-${item.role}`} className="relative pb-8 pl-5 pr-[82px] sm:pl-[24px] sm:pr-[112px] last:pb-2">
             <span className="absolute -left-[9px] top-px grid h-[17px] w-[17px] place-items-center border border-violet bg-canvas font-mono text-[9.5px] font-bold text-violet">
               0{i + 1}
             </span>
+            <img
+              src={item.logo}
+              alt={item.logoAlt}
+              className="absolute right-0 top-0 h-[72px] w-[72px] shrink-0 aspect-square border border-line bg-white object-cover sm:h-24 sm:w-24"
+              loading="lazy"
+            />
             <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
               <span className="font-semibold text-yellow tracking-wide">{item.date}</span>
               {item.location && (
@@ -22,12 +28,6 @@ export default function ExperienceSection() {
             </div>
             <h3 className="mb-0.5 mt-1 font-display text-base font-bold text-ink sm:text-lg">{item.role}</h3>
             <div className="mt-2 flex items-center gap-2.5">
-              <img
-                src={item.logo}
-                alt={item.logoAlt}
-                className={`h-9 ${item.role === 'Software Engineer 2' ? 'w-9' : 'w-14'} shrink-0 object-contain`}
-                loading="lazy"
-              />
               <div className="flex flex-wrap items-center gap-2 font-mono text-xs sm:text-[13px]">
                 <span className="font-semibold text-lime">{item.org}</span>
                 {item.team && (
