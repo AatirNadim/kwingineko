@@ -1,25 +1,21 @@
-# Aatir Nadim — portfolio
+# Kwingineko
 
-A Vite + React personal portfolio that adapts the compact, playful panel language of `../portfolio-v3/` while using Aatir's evidence-backed material.
+Kwingineko is Aatir Nadim’s personal portfolio, presented as a small retro-inspired workstation. Explore his experience, selected software projects, technical interests, writing, and certificates through a starfield of pixel art, computer panels, and playful details.
 
-## Run locally
+## What’s on the site
 
-```sh
-pnpm install
-pnpm dev
-```
+- **Portfolio:** an introduction, résumé, work experience, selected projects, areas of expertise, writing, certificates, FAQ, and contact options.
+- **Reading Radio:** choose up to three topics for a personal RSS reading mix. Browse topics such as AI, anime, cinema, open source, gaming, and more; the selected mix stays in your browser.
+- **Fortune cookie:** crack a pixel-art cookie for a fortune, lucky number, and lucky hex color. The little crack sound can be turned off.
+- **Workstation cat:** pet the cat, feed it when it gets hungry, or let it follow your cursor. It may meow when it wants attention.
+- **Recreation Bay:** boot classic DOS games in the browser from the arcade inside FAQ & Trivia.
+- **More desk details:** local weather, a living starfield, an interactive particle portrait, CRT scanlines, and a command palette.
 
-Create a production build with `pnpm build`.
+## A few hints
 
-## Owner setup before publication
+- Try **Cmd/Ctrl+K** or **/** to open the command palette.
+- The workstation has a developer-console welcome message with a hint to its commands.
+- There’s a classic game-code sequence hidden in the experience. The console can reveal it.
+- Keep an eye out for a lost swordsman and other small details around the page.
 
-- `src/reading.config.json` lists reading topics, default visitor selections, the maximum selectable topics, and their public RSS/Atom URLs. The panel fetches feeds for the visitor's selected topics and caches successful results in memory for six hours (failed requests for ten minutes). The visitor's topic selection is saved in local storage. Feed fetching automatically tries direct browser requests first (for CORS-enabled feeds), falls back to the `/api/feed` proxy endpoint (supported out of the box in Vite dev/preview server and Vercel serverless functions), and uses public aggregators as a final fallback.
-- Public email, profile links, current location, résumé download, and approved employment outcome claims were not established for publication in the brief's source material, so they are omitted.
-- The project repository links are the URLs listed in `projects/projects_context.md`.
-
-## Structure
-
-- `src/components/` contains the page shell, sections, and standalone personal widgets.
-- `src/data/portfolio.js` contains reusable portfolio content.
-- `src/reading.config.json` contains RSS topic/feed configuration and visitor selection defaults; `src/readingFeeds.js` loads and caches selected feed results.
-- Tailwind CSS utilities style the components; the theme tokens live in `tailwind.config.js`.
+For local setup, project structure, implementation details, configuration, and deployment notes, see the [Technical README](TECHNICAL_README.md).
