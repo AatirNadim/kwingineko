@@ -208,7 +208,7 @@ export default function App() {
       <StarfieldBackground />
       <IntroSplash />
       <CursorCat active={followCursor} hungry={catHungry} onStatusChange={setCatStatus} />
-      <div className="relative z-[1] w-full pt-2 min-[380px]:pt-3 sm:pt-4 lg:pt-[30px]">
+      <div className="relative z-[1] w-full pt-1 min-[380px]:pt-1 sm:pt-2 lg:pt-3">
         <a
           href="#main"
           className="fixed left-[-10000px] top-[10px] z-[120] bg-yellow p-[10px] text-surface focus:left-[10px]"

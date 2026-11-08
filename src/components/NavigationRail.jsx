@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { navigation } from '../data/portfolio.js';
 import PixelZoro from './PixelZoro.jsx';
+import LocalWeather from './LocalWeather.jsx';
 
 function ZoroWrongWayMarker({ mobile = false }) {
   const [found, setFound] = useState(false);
@@ -101,11 +102,14 @@ export default function NavigationRail({ open, onClose, active, time, onNavigate
               Making complex systems easier to understand, change, and operate.
             </p>
           </div>
-          <div className="mx-[9px] flex items-center justify-between border-t border-dashed border-line py-[11px]">
-            <span className="font-mono text-[10px] font-semibold tracking-wider text-muted">LOCAL SESSION</span>
-            <b className="font-mono text-xs font-medium text-ink">
-              {time.toLocaleTimeString('en', { hour: '2-digit', minute: '2-digit' })}
-            </b>
+          <div className="mx-[9px] border-t border-dashed border-line py-[11px]">
+            <span className="block font-mono text-[10px] font-semibold tracking-wider text-muted">LOCAL SESSION</span>
+            <div className="mt-1">
+              <b className="block font-mono text-xs font-medium text-ink">
+                {time.toLocaleTimeString('en', { hour: '2-digit', minute: '2-digit' })}
+              </b>
+              <LocalWeather />
+            </div>
           </div>
         </div>
       </aside>
@@ -179,9 +183,12 @@ export default function NavigationRail({ open, onClose, active, time, onNavigate
               <div className="mt-4 border-t border-dashed border-line pt-3 font-mono">
                 <div className="flex items-center justify-between text-[10px] tracking-wider">
                   <span className="text-muted font-semibold">LOCAL SESSION</span>
-                  <b className="font-mono text-xs font-medium text-ink">
-                    {time.toLocaleTimeString('en', { hour: '2-digit', minute: '2-digit' })}
-                  </b>
+                  <div className="text-right">
+                    <b className="block font-mono text-xs font-medium text-ink">
+                      {time.toLocaleTimeString('en', { hour: '2-digit', minute: '2-digit' })}
+                    </b>
+                    <LocalWeather />
+                  </div>
                 </div>
               </div>
             </nav>

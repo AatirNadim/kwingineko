@@ -91,11 +91,11 @@ export const projects = [
 ];
 
 export const socials = [
-  { name: 'LinkedIn', handle: 'aatirnadim', url: 'https://www.linkedin.com/in/aatirnadim/', icon: 'linkedin' },
-  { name: 'GitHub', handle: 'AatirNadim', url: 'https://github.com/AatirNadim', icon: 'github' },
-  { name: 'Blog', handle: 'techtom.hashnode.dev', url: 'https://techtom.hashnode.dev/', icon: 'hashnode' },
-  { name: 'LeetCode', handle: 'AatirNadim', url: 'https://leetcode.com/user3405Ye/', icon: 'leetcode' },
-  { name: 'Google Cloud Skills Boost', handle: 'Aatir Nadim', url: 'https://www.cloudskillsboost.google/public_profiles/d61be509-d6cb-46fc-9b62-c083e3636598', icon: 'gcp' },
+  { name: 'LinkedIn', handle: 'aatirnadim', url: 'https://www.linkedin.com/in/aatirnadim/', logo: '/assets/elsewhere-linkedin.jpeg' },
+  { name: 'GitHub', handle: 'AatirNadim', url: 'https://github.com/AatirNadim', logo: '/assets/elsewhere-github.png' },
+  { name: 'Blog', handle: 'techtom.hashnode.dev', url: 'https://techtom.hashnode.dev/', logo: '/assets/elsewhere-hashnode.jpeg' },
+  { name: 'LeetCode', handle: 'AatirNadim', url: 'https://leetcode.com/user3405Ye/', logo: '/assets/elsewhere-lc.png' },
+  { name: 'Google Cloud Skills Boost', handle: 'Aatir Nadim', url: 'https://www.cloudskillsboost.google/public_profiles/d61be509-d6cb-46fc-9b62-c083e3636598', logo: '/assets/elsewhere-gcloud.png' },
 ];
 
 export const experience = [

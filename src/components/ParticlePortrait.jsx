@@ -19,6 +19,7 @@ export default function ParticlePortrait({ className = '' }) {
   const imageRef = useRef(null);
 
   const [isLoaded, setIsLoaded] = useState(false);
+  const [imageFailed, setImageFailed] = useState(false);
   const [coords, setCoords] = useState({ x: 0, y: 0, active: false, isTouch: false });
   const [particleCount, setParticleCount] = useState(0);
 
@@ -37,6 +38,9 @@ export default function ParticlePortrait({ className = '' }) {
 
   // Build the particle grid from the cropped image data
   const initParticles = useCallback((img, canvasWidth, canvasHeight) => {
+    // A failed image also reports complete=true, but cannot be sampled by canvas.
+    if (!img.complete || !img.naturalWidth || !img.naturalHeight) return;
+
     // 4:5 aspect ratio crop matching object-position: center 22%
     // Native dimensions: 953 x 1651
     const nativeW = img.naturalWidth || 953;
@@ -315,7 +319,7 @@ export default function ParticlePortrait({ className = '' }) {
     stateRef.current.height = height;
     stateRef.current.dpr = dpr;
 
-    if (imageRef.current && imageRef.current.complete) {
+    if (imageRef.current?.complete && imageRef.current.naturalWidth > 0) {
       initParticles(imageRef.current, width, height);
     }
   }, [initParticles]);
@@ -487,16 +491,18 @@ export default function ParticlePortrait({ className = '' }) {
             {/* Base photographic portrait with warm Monokai color grading */}
             <img
               ref={imageRef}
-              src="/assets/aatir-portrait.webp"
+              src="/assets/aatir-portrait.png"
               alt="Portrait of Aatir Nadim"
               fetchPriority="high"
               decoding="async"
               width="953"
               height="1651"
               onLoad={() => {
+                setImageFailed(false);
                 setIsLoaded(true);
                 updateDimensions();
               }}
+              onError={() => setImageFailed(true)}
               className="h-full w-full object-cover object-[center_22%] contrast-125 brightness-90 saturate-[0.85] sepia-[0.2]"
             />
 
@@ -535,7 +541,7 @@ export default function ParticlePortrait({ className = '' }) {
           {/* Loading indicator */}
           {!isLoaded && (
             <div className="absolute inset-0 flex items-center justify-center bg-surface font-mono text-[9px] tracking-wider text-muted">
-              INITIALIZING MESH...
+              {imageFailed ? 'PORTRAIT UNAVAILABLE' : 'INITIALIZING MESH...'}
             </div>
           )}
 

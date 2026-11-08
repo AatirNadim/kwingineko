@@ -14,7 +14,7 @@ const consoleCommands = [
 
 export default function SiteFooter({ onHome, onOpenCommandPalette }) {
   return (
-    <footer className="mb-5 mt-[10px] border-y border-line bg-surface/95 font-mono text-[10px] text-[#bbb8a5]">
+    <footer className="mb-2 mt-[10px] border-y border-line bg-surface/95 font-mono text-[10px] text-[#bbb8a5]">
       <div className="mx-auto flex min-h-[49px] w-[calc(100%-16px)] max-w-[1360px] flex-wrap items-center justify-between gap-3 px-3 py-3 min-[380px]:w-[calc(100%-24px)] sm:w-[calc(100%-32px)] md:w-[calc(100%-48px)] lg:w-[calc(100%-64px)]">
         <div className="flex flex-wrap items-center gap-2.5">
           <span>© 2026 AATIR NADIM</span>

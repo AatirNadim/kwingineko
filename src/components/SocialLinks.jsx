@@ -20,11 +20,20 @@ export default function SocialLinks() {
                 aria-hidden="true"
                 className="grid h-[26px] w-[26px] shrink-0 place-items-center border border-line-subtle bg-surface-well transition-colors duration-150 group-hover:border-lime group-hover:bg-lime/10"
               >
-                <PixelIcon
-                  name={social.icon || social.name}
-                  size={16}
-                  className="transition-transform duration-150 group-hover:scale-110"
-                />
+                {social.logo ? (
+                  <img
+                    src={social.logo}
+                    alt=""
+                    aria-hidden="true"
+                    className="h-[20px] w-[20px] object-contain transition-transform duration-150 group-hover:scale-110"
+                  />
+                ) : (
+                  <PixelIcon
+                    name={social.icon || social.name}
+                    size={16}
+                    className="transition-transform duration-150 group-hover:scale-110"
+                  />
+                )}
               </span>
               <span className="min-w-0 flex-1">
                 <b className="block truncate font-mono text-[10.5px] font-medium text-ink">{social.name}</b>
