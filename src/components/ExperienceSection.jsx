@@ -7,7 +7,7 @@ export default function ExperienceSection() {
       <SectionHeading index="03 / THE PATH HERE" title="Experience" />
       <div className="ml-2.5 sm:ml-3 mt-6 border-l border-line">
         {experience.map((item, i) => (
-          <article key={item.org} className="relative pb-8 pl-5 sm:pl-[24px] last:pb-2">
+          <article key={`${item.org}-${item.role}`} className="relative pb-8 pl-5 sm:pl-[24px] last:pb-2">
             <span className="absolute -left-[9px] top-px grid h-[17px] w-[17px] place-items-center border border-violet bg-canvas font-mono text-[9.5px] font-bold text-violet">
               0{i + 1}
             </span>
@@ -59,7 +59,7 @@ export default function ExperienceSection() {
         ))}
       </div>
       <p className="mb-0 ml-2.5 sm:ml-3 mt-4 border-t border-dashed border-line pt-[10px] font-mono text-[10px] text-muted sm:text-[10.5px]">
-        Selected contributions across backend systems, cloud platforms, and AI-powered sales workflows.
+        Selected contributions across backend services, cloud platforms, and delivery systems.
       </p>
     </section>
   );

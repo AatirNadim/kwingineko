@@ -100,10 +100,28 @@ export const socials = [
 
 export const experience = [
   {
+    role: 'Software Engineer 2',
+    org: 'S&P Global',
+    team: 'Private Equity Team',
+    date: 'OCT 2026 – PRESENT',
+    location: 'Noida, India',
+    logo: '/assets/sp-global-logo.png',
+    logoAlt: 'S&P Global logo',
+    highlights: [
+      'Contribute to a staged Spring Boot 4 and Jackson modernization across Java and Kotlin services and shared libraries, assessing dependency alignment, generated API compatibility, security changes, and runtime and test behavior.',
+      'Develop reusable migration guidance that covers dependency analysis, generated code, service startup, test discovery, and API, security, messaging, and database contract validation.',
+      'Investigate Java 21 readiness for containerized services and Lambda workloads, including shared build images, Maven configuration, dependency compatibility, and Java 17 support requirements.',
+      'Work on a Scala service infrastructure migration toward service-owned Terraform, mapping ECS resources, shared infrastructure, configuration, managed-secret access, and deployment dependencies.',
+      'Design least-privilege CI credential patterns, distinguishing workflow-scoped GitHub tokens from short-lived GitHub App installation tokens for cross-repository automation.',
+      'Investigate operational issues spanning OpenTelemetry log forwarding, service authentication and secrets, deployment dependency downloads, and session behavior.',
+    ],
+    stack: ['Java', 'Spring Boot', 'Kotlin', 'Scala', 'AWS', 'Terraform', 'GitHub Actions', 'OpenTelemetry'],
+  },
+  {
     role: 'Associate Software Engineer I',
     org: 'S&P Global',
     team: 'Private Equity Team',
-    date: 'JUL 2024 – PRESENT',
+    date: 'JUL 2024 – SEP 2026',
     location: 'Noida, India',
     logo: '/assets/sp-global-logo.png',
     logoAlt: 'S&P Global logo',

@@ -108,7 +108,7 @@ export default function SiteHeader({
       {/* Sub-bar: clean wrapping & responsive text for 320px+ viewports */}
       <div className="flex min-h-[36px] flex-wrap items-center justify-between gap-x-2 gap-y-1 bg-surface-card px-3 py-1.5 sm:h-[39px] sm:px-6 sm:py-0">
         <span className="truncate font-mono text-[9px] tracking-[.4px] text-ink-secondary min-[360px]:text-[9.5px] min-[420px]:tracking-[.5px] sm:text-[10.5px]">
-          SOFTWARE ENGINEER <b className="px-1 text-pink">·</b> BACKEND / CLOUD / SYSTEMS
+          SOFTWARE ENGINEER <b className="px-1 text-pink">·</b> BACKEND / FRONTEND / CLOUD / SYSTEMS
         </span>
         <span className="ml-auto font-mono text-[9px] tracking-[.55px] text-muted min-[360px]:text-[9.5px] sm:text-[10.5px]">
           {time.toLocaleDateString('en', { weekday: 'short', day: '2-digit', month: 'short' }).toUpperCase()}

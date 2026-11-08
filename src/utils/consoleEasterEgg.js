@@ -70,6 +70,7 @@ export function initConsoleEasterEgg({ onToggleCrt, onLaunchArcade, onOpenCompos
         { Command: 'aatir.arcade()', Description: 'Launch retro DOS game emulator' },
         { Command: 'aatir.crt()', Description: 'Toggle retro CRT scanline mode' },
         { Command: 'aatir.cat()', Description: 'Send love to the workstation cat' },
+        { Command: "aatir.where('zoro')", Description: 'Try to locate the lost swordsman' },
       ]);
       return 'Command table rendered above.';
     },
@@ -111,6 +112,13 @@ export function initConsoleEasterEgg({ onToggleCrt, onLaunchArcade, onOpenCompos
     cat: () => {
       console.log('%c=^._.^= ∫  Purrrrr! The workstation cat acknowledges your friendship.', 'color: #f92672; font-size: 14px; font-weight: bold;');
       return 'Purr mode engaged.';
+    },
+    where: (name = 'zoro') => {
+      if (String(name).trim().toLowerCase() !== 'zoro') {
+        return `No location data for ${name}.`;
+      }
+      console.log('%c↖ ZORO // LAST SEEN HEADING AWAY FROM THE EXIT', 'color: #a6e22e; background: #1e1f1c; font: bold 11px monospace; padding: 4px 8px;');
+      return 'Location unknown. Last seen heading away from the exit.';
     },
   };
 }
