@@ -1,8 +1,6 @@
 # robots.txt for Aatir Nadim Portfolio
-# Update domain to your production domain once custom domain DNS is linked.
-
 User-agent: *
 Allow: /
 
 # Canonical sitemap location
-Sitemap: https://aatirnadim.com/sitemap.xml
+Sitemap: https://aatirnadim.dev/sitemap.xml

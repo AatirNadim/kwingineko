@@ -64,6 +64,7 @@ function playRetroChime() {
 
 export default function CrtOverlay({ active, onToggle }) {
   const [toastMessage, setToastMessage] = useState('');
+  const [showVictory, setShowVictory] = useState(false);
   const keySequenceRef = useRef([]);
 
   // Accessibility: detect prefers-reduced-motion
@@ -109,13 +110,13 @@ export default function CrtOverlay({ active, onToggle }) {
           keySequenceRef.current = [];
           playRetroChime();
           onToggle(!active);
-          setToastMessage(
-            !active
-              ? prefersReducedMotion
-                ? 'KONAMI CODE ACCEPTED // CRT MODE (SCANLINES SUPPRESSED FOR ACCESSIBILITY)'
-                : 'KONAMI CODE ACCEPTED // RETRO CRT PHOSPHOR MODE ACTIVATED'
-              : 'RETRO CRT MODE DEACTIVATED'
-          );
+          if (!active) {
+            setToastMessage('');
+            setShowVictory(true);
+          } else {
+            setShowVictory(false);
+            setToastMessage('RETRO CRT MODE DEACTIVATED');
+          }
         }
       } else {
         // Reset sequence or check if it matches the first key
@@ -134,8 +135,73 @@ export default function CrtOverlay({ active, onToggle }) {
     return () => clearTimeout(timer);
   }, [toastMessage]);
 
+  useEffect(() => {
+    if (!showVictory) return;
+    const timer = window.setTimeout(() => setShowVictory(false), 7200);
+    const dismissOnKey = (event) => {
+      if (!['Shift', 'Control', 'Alt', 'Meta'].includes(event.key)) {
+        setShowVictory(false);
+      }
+    };
+    window.addEventListener('keydown', dismissOnKey);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener('keydown', dismissOnKey);
+    };
+  }, [showVictory]);
+
   return (
     <>
+      {showVictory && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="konami-victory-title"
+          className="fixed inset-0 z-[130] grid place-items-center overflow-hidden bg-[#10110f]/95 px-4 py-8 text-center"
+          onClick={() => setShowVictory(false)}
+        >
+          {!prefersReducedMotion && (
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+              {Array.from({ length: 28 }, (_, index) => (
+                <span
+                  key={index}
+                  className={`arcade-confetti arcade-confetti-${index % 4}`}
+                  style={{
+                    left: `${(index * 37 + 5) % 100}%`,
+                    animationDelay: `${(index % 7) * 0.11}s`,
+                    animationDuration: `${2.4 + (index % 5) * 0.32}s`,
+                  }}
+                />
+              ))}
+            </div>
+          )}
+          <div className="relative w-full max-w-[680px] border-2 border-yellow bg-[#1e1f1c] px-5 py-9 shadow-[0_0_0_6px_rgba(166,226,46,0.12),0_0_60px_rgba(166,226,46,0.18)] sm:px-12 sm:py-14">
+            <p className="mb-4 font-mono text-[10px] tracking-[0.28em] text-lime sm:text-xs">
+              ★ SECRET TRANSMISSION UNLOCKED ★
+            </p>
+            <h2 id="konami-victory-title" className="font-display text-3xl font-bold leading-tight text-yellow sm:text-5xl">
+              YOU’RE OFFICIALLY
+              <span className="mt-1 block text-pink">A NERD!</span>
+            </h2>
+            <p className="mt-5 font-mono text-sm tracking-widest text-ink sm:mt-7 sm:text-lg">
+              WELCOME TO THE HUDDLE
+            </p>
+            <div className="mx-auto mt-6 h-[2px] w-24 bg-lime sm:mt-8" />
+            <button
+              type="button"
+              autoFocus
+              onClick={(event) => {
+                event.stopPropagation();
+                setShowVictory(false);
+              }}
+              className="mt-6 min-h-[44px] border border-[#55564b] px-4 py-2 font-mono text-[10px] tracking-wider text-muted transition-colors hover:border-yellow hover:text-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow sm:mt-8"
+            >
+              PRESS ANY KEY OR CLICK TO CONTINUE
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Toast Notification when Konami Code or CRT toggles (z-50) */}
       {toastMessage && (
         <div

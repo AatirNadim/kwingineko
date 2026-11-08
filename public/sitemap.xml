@@ -3,27 +3,27 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <!-- Homepage and workstation overview -->
   <url>
-    <loc>https://aatirnadim.com/</loc>
+    <loc>https://aatirnadim.dev/</loc>
     <lastmod>2026-11-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://aatirnadim.com/assets/windows.png</image:loc>
+      <image:loc>https://aatirnadim.dev/assets/windows.png</image:loc>
       <image:title>Aatir Nadim — Engineer's Desktop &amp; Workstation</image:title>
       <image:caption>Retro Monokai workstation interface overview</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://aatirnadim.com/assets/getme-record-hoard.png</image:loc>
+      <image:loc>https://aatirnadim.dev/assets/getme-record-hoard.png</image:loc>
       <image:title>getMe: Bitcask Key-Value Storage Engine</image:title>
       <image:caption>Persistent append-only log-structured key-value engine in Go</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://aatirnadim.com/assets/plan-parse-timelines.png</image:loc>
+      <image:loc>https://aatirnadim.dev/assets/plan-parse-timelines.png</image:loc>
       <image:title>plan-parse: Terraform Plan Workbench</image:title>
       <image:caption>Interactive Terraform plan analyzer and blast radius dependency graph</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://aatirnadim.com/assets/window-spiderverse-rift.png</image:loc>
+      <image:loc>https://aatirnadim.dev/assets/window-spiderverse-rift.png</image:loc>
       <image:title>Window: Peer-to-Peer File Transfer</image:title>
       <image:caption>WebRTC Data Channel peer-to-peer file transfer system</image:caption>
     </image:image>
@@ -31,7 +31,7 @@
 
   <!-- Résumé (PDF) -->
   <url>
-    <loc>https://aatirnadim.com/Aatir_Nadim_Resume.pdf</loc>
+    <loc>https://aatirnadim.dev/Aatir_Nadim_Resume.pdf</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

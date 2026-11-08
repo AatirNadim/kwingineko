@@ -25,7 +25,7 @@ export default function ParticlePortrait({ className = '' }) {
   // Animation and physics state stored in refs to avoid React re-render overhead
   const stateRef = useRef({
     particles: [],
-    pointer: { x: -9999, y: -9999, active: false, radius: 75, power: 8.5 },
+    pointer: { x: -9999, y: -9999, active: false, radius: 62, power: 2.2 },
     shockwaves: [],
     width: 220,
     height: 275,
@@ -65,15 +65,15 @@ export default function ParticlePortrait({ className = '' }) {
     // Grid resolution: calibrate columns smoothly based on canvas width:
     // target ~38-42 cols on mobile (<240px) up to ~56-60 cols on desktop
     const cols = canvasWidth < 300
-      ? Math.max(48, Math.min(60, Math.round(canvasWidth / 4.8)))
-      : Math.max(60, Math.min(88, Math.round(canvasWidth / 4.1)));
+      ? Math.max(88, Math.min(112, Math.round(canvasWidth / 2.7)))
+      : Math.max(120, Math.min(176, Math.round(canvasWidth / 2.3)));
     const rows = Math.round(cols * 1.25);
     const stepX = canvasWidth / cols;
     const stepY = canvasHeight / rows;
 
     // Rectangular particle dash size (slightly wider than tall, matching terminal raster)
-    const pWidth = Math.max(2.4, stepX * 0.82);
-    const pHeight = Math.max(1.8, stepY * 0.72);
+    const pWidth = Math.max(1, stepX * 0.78);
+    const pHeight = Math.max(1, stepY * 0.62);
 
     const newParticles = [];
 
@@ -162,8 +162,8 @@ export default function ParticlePortrait({ className = '' }) {
       }
 
       let totalMovement = 0;
-      const spring = 0.045;
-      const friction = 0.9;
+      const spring = 0.035;
+      const friction = 0.78;
       const repelRadius = pointer.radius;
       const repelRadiusSq = repelRadius * repelRadius;
 
@@ -180,7 +180,7 @@ export default function ParticlePortrait({ className = '' }) {
           if (distSq < repelRadiusSq && distSq > 0.001) {
             const dist = Math.sqrt(distSq);
             const normDist = 1 - dist / repelRadius;
-            const force = Math.pow(normDist, 1.4) * pointer.power * 0.68 * p.jitterWeight;
+            const force = Math.pow(normDist, 1.4) * pointer.power * 0.45 * p.jitterWeight;
             const angle = Math.atan2(dy, dx);
 
             // Radial repulsion
@@ -188,7 +188,7 @@ export default function ParticlePortrait({ className = '' }) {
             p.vy += Math.sin(angle) * force;
 
             // Organic tangent swirl + dispersion scatter
-            const swirl = (Math.random() - 0.5) * force * 0.45;
+            const swirl = (Math.random() - 0.5) * force * 0.18;
             p.vx += -Math.sin(angle) * swirl;
             p.vy += Math.cos(angle) * swirl;
           }
@@ -201,8 +201,8 @@ export default function ParticlePortrait({ className = '' }) {
           const sdy = p.y - sw.y;
           const sdist = Math.sqrt(sdx * sdx + sdy * sdy);
           const diff = Math.abs(sdist - sw.radius);
-          if (diff < 22 && sdist > 0.1) {
-            const waveForce = (1 - diff / 22) * sw.intensity;
+          if (diff < 16 && sdist > 0.1) {
+            const waveForce = (1 - diff / 16) * sw.intensity;
             p.vx += (sdx / sdist) * waveForce;
             p.vy += (sdy / sdist) * waveForce;
           }
@@ -257,7 +257,7 @@ export default function ParticlePortrait({ className = '' }) {
       // Draw subtle retro aperture target ring at cursor if active
       if (pointer.active) {
         ctx.save();
-        ctx.strokeStyle = 'rgba(166, 226, 46, 0.45)'; // Monokai lime
+        ctx.strokeStyle = 'rgba(166, 226, 46, 0.2)'; // Monokai lime
         ctx.lineWidth = 1;
         ctx.setLineDash([3, 4]);
         ctx.beginPath();
@@ -266,7 +266,7 @@ export default function ParticlePortrait({ className = '' }) {
 
         // Crosshair ticks
         const tick = 5;
-        ctx.strokeStyle = 'rgba(249, 38, 114, 0.6)'; // Monokai pink
+        ctx.strokeStyle = 'rgba(249, 38, 114, 0.25)'; // Monokai pink
         ctx.setLineDash([]);
         ctx.beginPath();
         ctx.moveTo(pointer.x - tick, pointer.y);
@@ -381,9 +381,9 @@ export default function ParticlePortrait({ className = '' }) {
       x,
       y,
       radius: 5,
-      maxRadius: stateRef.current.width * 0.65,
-      speed: 4,
-      intensity: 8,
+      maxRadius: stateRef.current.width * 0.4,
+      speed: 2.4,
+      intensity: 0.9,
     });
 
     stateRef.current.isSleeping = false;
@@ -410,9 +410,9 @@ export default function ParticlePortrait({ className = '' }) {
       x,
       y,
       radius: 6,
-      maxRadius: stateRef.current.width * 0.7,
-      speed: 3.8,
-      intensity: 8,
+      maxRadius: stateRef.current.width * 0.4,
+      speed: 2.2,
+      intensity: 0.9,
     });
 
     setCoords({ x: Math.round(x), y: Math.round(y), active: true, isTouch: true });
@@ -503,11 +503,11 @@ export default function ParticlePortrait({ className = '' }) {
             {/* Fine 3px x 2px raster mesh, matching the denser portrait particle grid */}
             <div
               aria-hidden="true"
-              className="absolute inset-0 mix-blend-multiply opacity-90 [image-rendering:pixelated]"
+              className="absolute inset-0 mix-blend-multiply opacity-50 [image-rendering:pixelated]"
               style={{
                 backgroundImage:
-                  'repeating-linear-gradient(0deg, rgba(24, 25, 21, 0.85) 0px, rgba(24, 25, 21, 0.85) 1px, transparent 1px, transparent 2px), repeating-linear-gradient(90deg, rgba(24, 25, 21, 0.85) 0px, rgba(24, 25, 21, 0.85) 1px, transparent 1px, transparent 3px)',
-                backgroundSize: '3px 2px',
+                  'repeating-linear-gradient(0deg, rgba(24, 25, 21, 0.22) 0px, rgba(24, 25, 21, 0.22) 1px, transparent 1px, transparent 3px), repeating-linear-gradient(90deg, rgba(24, 25, 21, 0.16) 0px, rgba(24, 25, 21, 0.16) 1px, transparent 1px, transparent 3px)',
+                backgroundSize: '3px 3px',
               }}
             />
 
