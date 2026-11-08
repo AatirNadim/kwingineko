@@ -234,7 +234,7 @@ iframe {
 
 @container (min-width: 620px) {
   .cq-split-intro {
-    grid-template-columns: minmax(0, 1fr) 210px !important;
+    grid-template-columns: minmax(0, 1fr) 260px !important;
     gap: 1.5rem !important;
   }
   .cq-split-project {
@@ -245,7 +245,7 @@ iframe {
 
 @container (min-width: 720px) {
   .cq-split-intro {
-    grid-template-columns: minmax(0, 1fr) 228px !important;
+    grid-template-columns: minmax(0, 1fr) 300px !important;
     gap: 2rem !important;
   }
   .cq-split-contact {
