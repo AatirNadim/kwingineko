@@ -210,7 +210,7 @@ export default function DeskCompanion({ followEnabled = false, onToggleFollow, c
       <button
         onClick={hungry ? feed : pet}
         aria-label={hungry ? `Feed the desk companion cat, ${5 - feedProgress} clicks remaining` : 'Pet the desk companion cat'}
-        className={`group relative grid h-[116px] w-full place-items-center overflow-hidden bg-surface-well text-yellow transition-colors hover:bg-focus focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${hungry ? 'cursor-pointer' : ''}`}
+        className={`group relative grid h-[116px] w-full place-items-center overflow-hidden bg-surface-well text-yellow transition-colors hover:bg-focus active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${hungry ? 'cursor-pointer' : ''}`}
       >
         <span className="absolute right-3 top-2 font-mono text-xs text-pink" aria-hidden="true">✦</span>
         <span className={`relative block ${hopping ? 'animate-cat-hop' : ''} ${kissing ? 'animate-cat-kiss' : ''}`}>

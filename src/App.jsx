@@ -41,12 +41,12 @@ export default function App() {
     return () => window.clearInterval(timer);
   }, []);
 
-  // First hunger cue arrives 40 seconds after the page is ready; later cues return every minute.
+  // First hunger cue arrives 40 seconds after the page is ready; later cues return every five minutes.
   useEffect(() => {
     let repeatTimer;
     const firstTimer = window.setTimeout(() => {
       setCatHungry(true);
-      repeatTimer = window.setInterval(() => setCatHungry(true), 60_000);
+      repeatTimer = window.setInterval(() => setCatHungry(true), 5 * 60_000);
     }, 40_000);
     return () => {
       window.clearTimeout(firstTimer);
@@ -130,7 +130,7 @@ export default function App() {
 
   // Synchronize active section in sticky NavigationRail with viewport scroll
   useEffect(() => {
-    const sectionIds = ['home', 'work', 'experience', 'expertise', 'writing', 'certificates', 'faq', 'contact'];
+    const sectionIds = ['home', 'experience', 'work', 'expertise', 'writing', 'certificates', 'faq', 'contact'];
     let ticking = false;
 
     const updateActiveSection = () => {
@@ -208,7 +208,7 @@ export default function App() {
       <StarfieldBackground />
       <IntroSplash />
       <CursorCat active={followCursor} hungry={catHungry} onStatusChange={setCatStatus} />
-      <div className="relative z-[1] mx-auto w-[calc(100%-16px)] max-w-[1360px] pt-2 min-[380px]:w-[calc(100%-24px)] min-[380px]:pt-3 sm:w-[calc(100%-32px)] sm:pt-4 md:w-[calc(100%-48px)] lg:w-[calc(100%-64px)] lg:pt-[30px]">
+      <div className="relative z-[1] w-full pt-2 min-[380px]:pt-3 sm:pt-4 lg:pt-[30px]">
         <a
           href="#main"
           className="fixed left-[-10000px] top-[10px] z-[120] bg-yellow p-[10px] text-surface focus:left-[10px]"
@@ -227,7 +227,7 @@ export default function App() {
           crtActive={crtActive}
           onToggleCrt={setCrtActive}
         />
-        <div className="grid grid-cols-1 items-start gap-3 pt-3 sm:gap-4 sm:pt-4 lg:grid-cols-[200px_minmax(0,1fr)_258px] lg:gap-[22px] lg:pt-6">
+        <div className="mx-auto grid w-[calc(100%-16px)] max-w-[1360px] grid-cols-1 items-start gap-3 pt-3 min-[380px]:w-[calc(100%-24px)] sm:w-[calc(100%-32px)] sm:gap-4 sm:pt-4 md:w-[calc(100%-48px)] lg:w-[calc(100%-64px)] lg:grid-cols-[200px_minmax(0,1fr)_258px] lg:gap-[22px] lg:pt-6">
           <NavigationRail
             open={navOpen}
             onClose={() => setNavOpen(false)}
@@ -237,8 +237,8 @@ export default function App() {
           />
           <main id="main" tabIndex="-1" className="main-container min-w-0 focus:outline-none">
             <Introduction onExplore={() => navigateTo('work')} />
-            <ProjectsSection />
             <ExperienceSection />
+            <ProjectsSection />
             <ExpertiseSection />
             <BlogSection />
             <CertificatesSection />

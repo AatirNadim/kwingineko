@@ -225,6 +225,16 @@
   :focus-visible {
     @apply outline outline-2 outline-offset-[3px] outline-yellow;
   }
+
+  a,
+  button,
+  summary,
+  label,
+  [role='switch'],
+  [role='tab'] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(166, 226, 46, 0.18);
+  }
 }
 
 /* Container-Query Responsive System for Main Content */

@@ -1,0 +1,29 @@
+# Aatir Nadim — Software Engineer
+
+> Personal portfolio for Aatir Nadim, a software engineer focused on backend systems, distributed storage, cloud platforms, and developer tooling. The site presents selected work, professional experience, writing, certificates, and contact/profile links.
+
+The canonical website is <https://aatirnadim.dev/>. It is a single-page portfolio; its main sections cover overview, experience, selected projects, expertise, writing, certificates, FAQ, and contact.
+
+## Selected projects
+
+- [getMe](https://github.com/AatirNadim/getMe): Persistent, embeddable log-structured key-value storage engine in Go, with append-only storage, in-memory indexing, crash recovery, background compaction, SDKs, and an MCP server. [Project demo](https://getme-kv.vercel.app/) · [Technical write-up](https://techtom.hashnode.dev/building-getme-i)
+- [plan-parse](https://github.com/AatirNadim/plan-parse): Terraform plan workbench for exploring dependency graphs and auditing change impact and replacement risk.
+- [Window](https://github.com/AatirNadim/window): Browser-based peer-to-peer file transfer using WebRTC data channels and WebSocket signaling.
+
+## Writing and profiles
+
+- [Aatir's Hashnode blog](https://techtom.hashnode.dev/)
+- [GitHub](https://github.com/AatirNadim)
+- [LinkedIn](https://www.linkedin.com/in/aatirnadim/)
+- [Résumé](https://aatirnadim.dev/Aatir_Nadim_Resume.pdf)
+
+## Site resources
+
+- [Sitemap](https://aatirnadim.dev/sitemap.xml)
+- [Crawler rules](https://aatirnadim.dev/robots.txt)
+- The writing section loads recent articles from the Hashnode RSS feed at <https://techtom.hashnode.dev/rss.xml>.
+
+## Notes
+
+- Project descriptions summarize work presented on the portfolio and linked project pages. Consult the project repositories for implementation details and current status.
+- The site is an interactive JavaScript application. Search engines and other readers should use the page's metadata and structured data alongside its rendered content.

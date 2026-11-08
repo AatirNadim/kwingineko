@@ -1,7 +1,7 @@
 export const navigation = [
   ['home', '01', 'Overview'],
-  ['work', '02', 'Selected work'],
-  ['experience', '03', 'Experience'],
+  ['experience', '02', 'Experience'],
+  ['work', '03', 'Selected work'],
   ['expertise', '04', 'Expertise'],
   ['writing', '05', 'Writing'],
   ['certificates', '06', 'Certificates'],
@@ -123,7 +123,7 @@ export const experience = [
     team: 'Private Equity Team',
     date: 'JUL 2024 – SEP 2026',
     location: 'Noida, India',
-    logo: '/assets/sp-global-logo.png',
+    logo: '/assets/sp-logo-square.png',
     logoAlt: 'S&P Global logo',
     highlights: [
       'Built asynchronous, event-driven ingestion to process and synchronize 30,000+ records per cycle from object storage into a centralized database.',
