@@ -25,7 +25,7 @@ export default function ExperienceSection() {
               <img
                 src={item.logo}
                 alt={item.logoAlt}
-                className="h-9 w-14 shrink-0 object-contain"
+                className={`h-9 ${item.role === 'Software Engineer 2' ? 'w-9' : 'w-14'} shrink-0 object-contain`}
                 loading="lazy"
               />
               <div className="flex flex-wrap items-center gap-2 font-mono text-xs sm:text-[13px]">

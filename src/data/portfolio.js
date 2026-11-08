@@ -34,9 +34,9 @@ export const projects = [
       diskFormat: 'Sequential Append-Only Log · In-Memory Offset Hash Index',
     },
     status: 'PERSONAL PROJECT',
-    image: '/assets/getme-record-hoard.png',
-    imageAlt: 'Pixel-art depiction of a subterranean storage vault housing disk platters and indexed data archives.',
-    imageCaption: 'Bitcask storage engine // Append-only log with in-memory hash index',
+    image: '/assets/project-getme-pixel.png',
+    imageAlt: 'Pixel-art data vault showing an append-only record log feeding a glowing in-memory key index.',
+    imageCaption: 'Bitcask storage engine // Append-only log + in-memory keydir',
   },
   {
     name: 'plan-parse',
@@ -59,9 +59,9 @@ export const projects = [
       lineageEngine: 'Cytoscape.js Hierarchical DAG · Submodule Manifest Resolution',
     },
     status: 'PERSONAL PROJECT',
-    image: '/assets/plan-parse-timelines.png',
-    imageAlt: 'Pixel-art visualization of infrastructure dependency graph nodes and blast-radius pathways.',
-    imageCaption: 'Interactive dependency DAG // Blast-radius & attribute diff analysis',
+    image: '/assets/project-plan-pixel.svg',
+    imageAlt: 'Pixel-art Terraform dependency graph with healthy resources, a planned change, and replacement risks.',
+    imageCaption: 'Terraform plan graph // Changes + replacement risk',
   },
   {
     name: 'Window',
@@ -84,9 +84,9 @@ export const projects = [
       flowControl: 'Dynamic RTCDataChannel Backpressure Buffer Handling',
     },
     status: 'PERSONAL PROJECT',
-    image: '/assets/windows.png',
-    imageAlt: 'Pixel-art depiction of real-time peer-to-peer data transmission across workstation windows.',
-    imageCaption: 'Peer-to-peer data mesh // Direct WebRTC streaming with zero server relay',
+    image: '/assets/project-window-pixel.png',
+    imageAlt: 'Pixel-art workstations exchanging file data directly over a bright peer-to-peer stream.',
+    imageCaption: 'Direct browser transfer // WebRTC data channel',
   },
 ];
 
@@ -105,7 +105,7 @@ export const experience = [
     team: 'Private Equity Team',
     date: 'OCT 2026 – PRESENT',
     location: 'Noida, India',
-    logo: '/assets/sp-global-logo.png',
+    logo: '/assets/sp-logo-square.png',
     logoAlt: 'S&P Global logo',
     highlights: [
       'Contribute to a staged Spring Boot 4 and Jackson modernization across Java and Kotlin services and shared libraries, assessing dependency alignment, generated API compatibility, security changes, and runtime and test behavior.',

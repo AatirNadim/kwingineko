@@ -217,17 +217,14 @@ export default function ProjectsSection() {
                     </div>
                     <div className="relative overflow-hidden bg-[#181915] bg-[radial-gradient(#36372f_1px,transparent_1px)] [background-size:8px_8px]">
                       <picture>
-                        <source
-                          type="image/webp"
-                          srcSet={project.image.replace(/\.(png|jpg|jpeg)$/, '.webp')}
-                        />
+                        {project.imageWebp && <source type="image/webp" srcSet={project.imageWebp} />}
                         <img
                           src={project.image}
                           alt={project.imageAlt}
                           loading="lazy"
                           decoding="async"
-                          width="1376"
-                          height="860"
+                          width="1254"
+                          height="1254"
                           className="aspect-[16/10] w-full object-cover [image-rendering:pixelated] transition-transform duration-300 ease-out group-hover/art:scale-[1.03]"
                         />
                       </picture>

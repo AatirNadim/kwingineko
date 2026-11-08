@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 716 716" shape-rendering="crispEdges">
+  <rect width="716" height="716" fill="#171814"/>
+  <path d="M0 40H716M0 80H716M0 120H716M0 160H716M0 200H716M0 240H716M0 280H716M0 320H716M0 360H716M0 400H716M0 440H716M0 480H716M0 520H716M0 560H716M0 600H716M0 640H716M40 0V716M80 0V716M120 0V716M160 0V716M200 0V716M240 0V716M280 0V716M320 0V716M360 0V716M400 0V716M440 0V716M480 0V716M520 0V716M560 0V716M600 0V716M640 0V716M680 0V716" stroke="#20211e" stroke-width="2"/>
+  <rect x="64" y="92" width="588" height="532" fill="#141512" stroke="#45463e" stroke-width="4"/>
+  <path d="M358 252V300M358 300H214V338M358 300H502V338M214 388V438H358M502 388V438H358V478" fill="none" stroke="#789324" stroke-width="10"/>
+  <path d="M350 294L358 306L366 294M206 330L214 342L222 330M494 330L502 342L510 330M350 470L358 482L366 470" fill="none" stroke="#789324" stroke-width="7"/>
+  <g stroke="#777566" stroke-width="5">
+    <rect x="298" y="166" width="120" height="82" fill="#20211e"/>
+    <rect x="164" y="338" width="100" height="54" fill="#20211e"/>
+    <rect x="452" y="338" width="100" height="54" fill="#20211e"/>
+    <rect x="306" y="478" width="104" height="54" fill="#20211e"/>
+  </g>
+  <rect x="314" y="182" width="16" height="16" fill="#ad2855"/><rect x="338" y="182" width="16" height="16" fill="#938b49"/><rect x="362" y="182" width="16" height="16" fill="#8068b0"/><rect x="386" y="182" width="16" height="16" fill="#789324"/>
+  <circle cx="214" cy="365" r="12" fill="#789324"/><circle cx="502" cy="365" r="12" fill="#ad2855"/><circle cx="358" cy="505" r="12" fill="#8068b0"/>
+  <g fill="#777566">
+    <path d="M128 570V550H140V530H152V510H176V498H188V486H212V474H224V462H236V442H248V430H272V418H284V406H308V394H320V382H344V370H356V358H380V346H392V334H416V322H428V310H452V298H464V286H488V274H500V254H512V234H524V214H548V202H560V190H584V178H596V154H608V134H620V114H634V142H622V162H610V186H598V198H586V210H562V222H550V242H538V262H526V282H502V294H490V306H466V318H454V330H430V342H418V354H394V366H382V378H358V390H346V402H322V414H310V426H286V438H274V450H250V470H238V490H226V502H202V514H190V526H166V538H154V558H142V570Z" opacity=".12"/>
+  </g>
+  <g fill="#b4b19e">
+    <rect x="104" y="112" width="8" height="8"/><rect x="592" y="112" width="8" height="8"/><rect x="104" y="592" width="8" height="8"/><rect x="592" y="592" width="8" height="8"/>
+  </g>
+  <!-- Pixel lettering drawn from the exact source wordmark: plan-parse -->
+  <g fill="#777566">
+    <!-- p -->
+    <path d="M164 570h8v8h-8zm0 8h24v8h-24zm0 8h8v24h-8zm8-8h8v8h-8zm8 0h8v8h-8z"/>
+    <!-- l -->
+    <path d="M196 570h8v24h-8z"/>
+    <!-- a -->
+    <path d="M212 578h24v8h-24zm0 8h8v8h-8zm16 0h8v16h-8zm-16 8h24v8h-24z"/>
+    <!-- n -->
+    <path d="M244 578h8v24h-8zm0 0h24v8h-24zm16 8h8v16h-8z"/>
+    <!-- hyphen -->
+    <path d="M276 586h16v8h-16z"/>
+    <!-- p -->
+    <path d="M300 578h8v8h-8zm0 8h24v8h-24zm0 8h8v24h-8zm8-8h8v8h-8zm8 0h8v8h-8z"/>
+    <!-- a -->
+    <path d="M332 578h24v8h-24zm0 8h8v8h-8zm16 0h8v16h-8zm-16 8h24v8h-24z"/>
+    <!-- r -->
+    <path d="M364 578h8v24h-8zm0 0h20v8h-20zm12 8h8v8h-8z"/>
+    <!-- s -->
+    <path d="M392 578h24v8h-24zm0 8h8v8h-8zm8 0h16v8h-16zm16 8h8v8h-8zm-24 0h24v8h-24z"/>
+    <!-- e -->
+    <path d="M428 578h24v8h-24zm0 8h8v8h-8zm0 8h24v8h-24zm16-8h8v8h-8z"/>
+  </g>
+</svg>
