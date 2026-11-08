@@ -257,13 +257,13 @@ export const contact = {
       id: 'systems',
       label: '⚡ Systems Collab',
       subject: 'Question on Systems & Infrastructure',
-      body: 'Hi Aatir,\n\nI was checking out your work on getMe / plan-parse / Window and wanted to reach out regarding [topic/project].\n\nWould love to exchange thoughts!\n\nBest,\n[Your Name]',
+      body: 'Hi Aatir,\n\nI was checking out your work on your portfolio and wanted to reach out regarding [topic/project].\n\nWould love to exchange thoughts!\n\nBest,\n[Your Name]',
     },
     {
       id: 'casual',
       label: '☕ Say Hello',
       subject: 'Greetings from a fellow engineer',
-      body: 'Hi Aatir,\n\nLoved the portfolio, the interactive particle portrait, and the companion cat! Just wanted to drop a quick hello.\n\nCheers,\n[Your Name]',
+      body: 'Hi Aatir,\n\nLoved the portfolio, the retro vibe, and the companion cat! Just wanted to drop a quick hello.\n\nCheers,\n[Your Name]',
     },
   ],
   avatars: [
