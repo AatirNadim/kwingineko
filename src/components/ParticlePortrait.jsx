@@ -64,9 +64,9 @@ export default function ParticlePortrait({ className = '' }) {
 
     // Grid resolution: calibrate columns smoothly based on canvas width:
     // target ~38-42 cols on mobile (<240px) up to ~56-60 cols on desktop
-    const cols = canvasWidth < 240
-      ? Math.max(36, Math.min(42, Math.round(canvasWidth / 5.2)))
-      : Math.max(42, Math.min(60, Math.round(canvasWidth / 4.1)));
+    const cols = canvasWidth < 300
+      ? Math.max(48, Math.min(60, Math.round(canvasWidth / 4.8)))
+      : Math.max(60, Math.min(88, Math.round(canvasWidth / 4.1)));
     const rows = Math.round(cols * 1.25);
     const stepX = canvasWidth / cols;
     const stepY = canvasHeight / rows;
@@ -140,7 +140,7 @@ export default function ParticlePortrait({ className = '' }) {
       for (let i = shockwaves.length - 1; i >= 0; i--) {
         const sw = shockwaves[i];
         sw.radius += sw.speed;
-        sw.intensity *= 0.92;
+        sw.intensity *= 0.965;
         if (sw.radius > sw.maxRadius || sw.intensity < 0.05) {
           shockwaves.splice(i, 1);
         }
@@ -162,8 +162,8 @@ export default function ParticlePortrait({ className = '' }) {
       }
 
       let totalMovement = 0;
-      const spring = 0.075;
-      const friction = 0.83;
+      const spring = 0.045;
+      const friction = 0.9;
       const repelRadius = pointer.radius;
       const repelRadiusSq = repelRadius * repelRadius;
 
@@ -180,7 +180,7 @@ export default function ParticlePortrait({ className = '' }) {
           if (distSq < repelRadiusSq && distSq > 0.001) {
             const dist = Math.sqrt(distSq);
             const normDist = 1 - dist / repelRadius;
-            const force = Math.pow(normDist, 1.4) * pointer.power * p.jitterWeight;
+            const force = Math.pow(normDist, 1.4) * pointer.power * 0.68 * p.jitterWeight;
             const angle = Math.atan2(dy, dx);
 
             // Radial repulsion
@@ -382,8 +382,8 @@ export default function ParticlePortrait({ className = '' }) {
       y,
       radius: 5,
       maxRadius: stateRef.current.width * 0.65,
-      speed: 7.5,
-      intensity: 14,
+      speed: 4,
+      intensity: 8,
     });
 
     stateRef.current.isSleeping = false;
@@ -411,8 +411,8 @@ export default function ParticlePortrait({ className = '' }) {
       y,
       radius: 6,
       maxRadius: stateRef.current.width * 0.7,
-      speed: 7,
-      intensity: 14,
+      speed: 3.8,
+      intensity: 8,
     });
 
     setCoords({ x: Math.round(x), y: Math.round(y), active: true, isTouch: true });
@@ -500,14 +500,14 @@ export default function ParticlePortrait({ className = '' }) {
               className="h-full w-full object-cover object-[center_22%] contrast-125 brightness-90 saturate-[0.85] sepia-[0.2]"
             />
 
-            {/* Calibrated 4px x 3px Pixel Raster Mesh Overlay (matches particle stepX ~4.1px & stepY ~3.3px) */}
+            {/* Fine 3px x 2px raster mesh, matching the denser portrait particle grid */}
             <div
               aria-hidden="true"
               className="absolute inset-0 mix-blend-multiply opacity-90 [image-rendering:pixelated]"
               style={{
                 backgroundImage:
-                  'repeating-linear-gradient(0deg, rgba(24, 25, 21, 0.85) 0px, rgba(24, 25, 21, 0.85) 1px, transparent 1px, transparent 3px), repeating-linear-gradient(90deg, rgba(24, 25, 21, 0.85) 0px, rgba(24, 25, 21, 0.85) 1px, transparent 1px, transparent 4px)',
-                backgroundSize: '4px 3px',
+                  'repeating-linear-gradient(0deg, rgba(24, 25, 21, 0.85) 0px, rgba(24, 25, 21, 0.85) 1px, transparent 1px, transparent 2px), repeating-linear-gradient(90deg, rgba(24, 25, 21, 0.85) 0px, rgba(24, 25, 21, 0.85) 1px, transparent 1px, transparent 3px)',
+                backgroundSize: '3px 2px',
               }}
             />
 

@@ -1,6 +1,31 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { navigation } from '../data/portfolio.js';
+import PixelZoro from './PixelZoro.jsx';
+
+function ZoroWrongWayMarker({ mobile = false }) {
+  const [found, setFound] = useState(false);
+
+  return (
+    <div className={mobile ? 'mt-3 border-t border-dashed border-line-subtle pt-2' : 'px-[9px] pt-2'}>
+      <button
+        type="button"
+        aria-expanded={found}
+        onClick={() => setFound((visible) => !visible)}
+        className="group flex min-h-[44px] w-full items-center gap-2 px-1 text-left font-mono text-[9.5px] text-muted-dim opacity-70 transition hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+      >
+        <PixelZoro className="h-7 w-7 shrink-0 transition-transform group-hover:-rotate-6" />
+        <span>↖ ZORO?</span>
+        <span className="ml-auto text-violet">?</span>
+      </button>
+      {found && (
+        <p role="status" className="mb-0 ml-1 mt-1 font-mono text-[10px] leading-relaxed text-yellow">
+          Wrong direction again.
+        </p>
+      )}
+    </div>
+  );
+}
 
 export default function NavigationRail({ open, onClose, active, time, onNavigate }) {
   // Close drawer on Escape key
@@ -59,6 +84,7 @@ export default function NavigationRail({ open, onClose, active, time, onNavigate
             </div>
           ))}
         </nav>
+        <ZoroWrongWayMarker />
         <div className="mt-auto hidden md:block">
           <div className="flex items-center gap-[10px] border-y border-line px-[9px] py-[13px]">
             <div className="grid h-[31px] w-[31px] place-items-center bg-[#37382f] font-display text-[17px] font-semibold text-lime">
@@ -147,6 +173,7 @@ export default function NavigationRail({ open, onClose, active, time, onNavigate
                   </div>
                 ))}
               </div>
+              <ZoroWrongWayMarker mobile />
 
               {/* Drawer metadata footer */}
               <div className="mt-4 border-t border-dashed border-line pt-3 font-mono">

@@ -117,16 +117,20 @@ function RefinedCat({ blinking }) {
   );
 }
 
-export default function DeskCompanion({ followEnabled = false, onToggleFollow, catStatus = 'idle' }) {
-  const [pets, setPets] = useState(0);
+export default function DeskCompanion({ followEnabled = false, onToggleFollow, catStatus = 'idle', hungry = false, onFeed }) {
+  const [petStreak, setPetStreak] = useState(0);
+  const [feedProgress, setFeedProgress] = useState(0);
   const [line, setLine] = useState('');
   const [blinking, setBlinking] = useState(false);
   const [hopping, setHopping] = useState(false);
+  const [kissing, setKissing] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const lineTimer = useRef();
   const hopTimer = useRef();
   const blinkTimeout = useRef();
   const hopFrame = useRef();
+  const kissTimer = useRef();
+  const wasHungry = useRef(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -139,6 +143,23 @@ export default function DeskCompanion({ followEnabled = false, onToggleFollow, c
   }, []);
 
   useEffect(() => {
+    if (hungry && !wasHungry.current) {
+      setPetStreak(0);
+      setFeedProgress(0);
+      setKissing(false);
+      window.clearTimeout(lineTimer.current);
+      window.clearTimeout(kissTimer.current);
+      setLine('meow... could you feed me?');
+    } else if (!hungry && wasHungry.current) {
+      setFeedProgress(0);
+      setLine('thank you! that was delicious ♥');
+      window.clearTimeout(lineTimer.current);
+      lineTimer.current = window.setTimeout(() => setLine(''), 3500);
+    }
+    wasHungry.current = hungry;
+  }, [hungry]);
+
+  useEffect(() => {
     const blinkTimer = window.setInterval(() => {
       window.clearTimeout(blinkTimeout.current);
       setBlinking(true);
@@ -148,34 +169,57 @@ export default function DeskCompanion({ followEnabled = false, onToggleFollow, c
       window.clearInterval(blinkTimer);
       window.clearTimeout(lineTimer.current);
       window.clearTimeout(hopTimer.current);
+      window.clearTimeout(kissTimer.current);
       window.clearTimeout(blinkTimeout.current);
       window.cancelAnimationFrame(hopFrame.current);
     };
   }, []);
 
   const pet = () => {
-    const next = pets + 1;
-    setPets(next);
-    setLine(next === 10 ? 'ok you are my favorite human now' : LINES[Math.floor(Math.random() * LINES.length)]);
+    if (hungry) return;
+    const next = petStreak + 1;
+    const earnedKiss = next === 7;
+    setPetStreak(earnedKiss ? 0 : next);
+    setLine(earnedKiss ? 'mwah! you earned a kitty kiss 💋' : LINES[Math.floor(Math.random() * LINES.length)]);
     setHopping(false);
     window.cancelAnimationFrame(hopFrame.current);
     hopFrame.current = window.requestAnimationFrame(() => setHopping(true));
     window.clearTimeout(hopTimer.current);
     hopTimer.current = window.setTimeout(() => setHopping(false), 300);
+    window.clearTimeout(kissTimer.current);
+    setKissing(earnedKiss);
+    if (earnedKiss) kissTimer.current = window.setTimeout(() => setKissing(false), 1000);
     window.clearTimeout(lineTimer.current);
     lineTimer.current = window.setTimeout(() => setLine(''), 3500);
+  };
+
+  const feed = () => {
+    if (!hungry) return;
+    const next = feedProgress + 1;
+    if (next >= 5) {
+      setFeedProgress(5);
+      onFeed?.();
+      return;
+    }
+    setFeedProgress(next);
+    setLine(`nom nom... ${5 - next} more ${5 - next === 1 ? 'bite' : 'bites'}!`);
   };
 
   return (
     <PanelFrame title="DESK_COMPANION" symbol="CAT">
       <button
-        onClick={pet}
-        aria-label="Pet the desk companion cat"
-        className="group relative grid h-[116px] w-full place-items-center overflow-hidden bg-surface-well text-yellow transition-colors hover:bg-focus focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"
+        onClick={hungry ? feed : pet}
+        aria-label={hungry ? `Feed the desk companion cat, ${5 - feedProgress} clicks remaining` : 'Pet the desk companion cat'}
+        className={`group relative grid h-[116px] w-full place-items-center overflow-hidden bg-surface-well text-yellow transition-colors hover:bg-focus focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow ${hungry ? 'cursor-pointer' : ''}`}
       >
         <span className="absolute right-3 top-2 font-mono text-xs text-pink" aria-hidden="true">✦</span>
-        <span className={`block ${hopping ? 'animate-cat-hop' : ''}`}>
+        <span className={`relative block ${hopping ? 'animate-cat-hop' : ''} ${kissing ? 'animate-cat-kiss' : ''}`}>
           <RefinedCat blinking={blinking} />
+          {kissing && (
+            <span aria-hidden="true" className="pointer-events-none absolute -right-2 -top-2 text-xl animate-heart-pop">
+              ❤️
+            </span>
+          )}
         </span>
       </button>
 
@@ -191,13 +235,17 @@ export default function DeskCompanion({ followEnabled = false, onToggleFollow, c
       <div className="flex items-center justify-between px-[10px] pb-[3px] pt-2">
         <b className="font-display text-xs text-ink">tiny coworker</b>
         <span className="font-mono text-[9px] text-muted">
-          {pets ? `pets: ${pets}${pets >= 10 ? ' ♥' : ''}` : 'A LITTLE ENCOURAGEMENT'}
+          {hungry ? `bites: ${feedProgress}/5` : `pets: ${petStreak}/7`}
         </span>
       </div>
 
       <div className="flex items-center gap-[5px] px-[10px] py-[2px] font-mono text-[9.5px] text-muted">
-        <Heart size={11} className="text-pink" />
-        <span>{isTouchDevice ? 'touch screen: tap to pet' : 'click to pet the cat'}</span>
+        <Heart size={11} className={hungry ? 'text-yellow' : 'text-pink'} />
+        <span>
+          {hungry
+            ? (isTouchDevice ? 'tap the cat 5 times to feed' : 'click the cat 5 times to feed')
+            : (isTouchDevice ? 'touch screen: tap to pet' : 'click to pet the cat')}
+        </span>
       </div>
 
       <div className="mt-2 border-t border-line-subtle px-[10px] pb-2 pt-2 font-mono">
@@ -228,6 +276,8 @@ export default function DeskCompanion({ followEnabled = false, onToggleFollow, c
           <span className="text-muted-dim">SYS.STALKER //</span>
           {!followEnabled ? (
             <span className="text-muted">{isTouchDevice ? 'TOUCH SCREEN · TAP TO STALK' : 'STANDBY · CLICK TO DEPLOY'}</span>
+          ) : catStatus === 'hungry' ? (
+            <span className="font-semibold text-yellow tracking-wide">♡ HUNGRY · FEED IN DESK_COMPANION</span>
           ) : catStatus === 'observing' ? (
             <span className="font-semibold text-yellow tracking-wide">◐ CURIOUS · OBSERVING PORTRAIT</span>
           ) : catStatus === 'caught' ? (

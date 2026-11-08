@@ -11,6 +11,7 @@ export default function ReadingWidget({ topic, selectedTopicIds, onTopicChange, 
   const hasSources = selected?.feeds.length > 0;
   const [feedData, setFeedData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [expanded, setExpanded] = useState(true);
 
   useEffect(() => {
     let active = true;
@@ -32,7 +33,27 @@ export default function ReadingWidget({ topic, selectedTopicIds, onTopicChange, 
   };
 
   return (
-    <PanelFrame title="READING_RADIO" symbol="RAD">
+    <PanelFrame
+      title="READING_RADIO"
+      symbol="RAD"
+      headerAction={(
+        <span className="group/control relative flex h-[7px] w-[29px] items-center justify-between" role="group" aria-label="Reading feed display controls">
+          {[0, 1, 2].map((item) => (
+            <i key={item} aria-hidden="true" className="h-[7px] w-[7px] border border-line bg-focus transition-opacity group-hover/control:opacity-0" />
+          ))}
+          <button
+            type="button"
+            aria-label={`${expanded ? 'Minimize' : 'Maximize'} reading feed`}
+            aria-expanded={expanded}
+            aria-controls="reading-radio-content"
+            title={`${expanded ? 'Minimize' : 'Maximize'} reading feed`}
+            onClick={() => setExpanded((value) => !value)}
+            className="absolute inset-0 h-[7px] w-[29px] bg-lime opacity-0 transition-opacity hover:opacity-100 focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow group-hover/control:opacity-100"
+          />
+        </span>
+      )}
+    >
+      <div id="reading-radio-content" hidden={!expanded}>
       <div className="mx-2 mb-2 mt-3 border border-line bg-surface p-[9px]">
         <div className="font-mono text-[9.5px] font-semibold tracking-wider text-muted">YOUR READING MIX</div>
         <p className="mb-[7px] mt-1 text-[10px] leading-[1.45] text-ink-secondary">Choose up to {maxSelectedTopics} topics to follow. You can change them any time.</p>
@@ -74,6 +95,7 @@ export default function ReadingWidget({ topic, selectedTopicIds, onTopicChange, 
         </div>
       </> : <div className="m-2 border border-dashed border-line px-[11px] py-[14px] text-[10px] leading-[1.55] text-muted">Choose up to {maxSelectedTopics} topics above to display here.</div>}
       <div className="flex justify-between border-t border-line px-[10px] py-[9px] font-mono text-[9px] text-muted-dim"><span>UPDATE STATUS</span><span className="text-muted">{loading ? 'FETCHING SELECTED' : hasSources ? 'SELECTED FEEDS' : 'AWAITING SOURCES'}</span></div>
+      </div>
     </PanelFrame>
   );
 }

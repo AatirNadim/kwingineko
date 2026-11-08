@@ -131,7 +131,7 @@ function PixelSprite({ frame }) {
   );
 }
 
-export default function CursorCat({ active = false, onStatusChange }) {
+export default function CursorCat({ active = false, hungry = false, onStatusChange }) {
   const [pos, setPos] = useState(() => ({
     x: typeof window !== 'undefined' ? Math.max(CAT_HALF_SIZE, window.innerWidth - 80) : 100,
     y: typeof window !== 'undefined' ? Math.max(CAT_HALF_SIZE, window.innerHeight - 80) : 100,
@@ -140,6 +140,7 @@ export default function CursorCat({ active = false, onStatusChange }) {
   const [facingLeft, setFacingLeft] = useState(false);
   const [isCaught, setIsCaught] = useState(false);
   const [bubbleText, setBubbleText] = useState('♥ gotcha!');
+  const [toastMessage, setToastMessage] = useState('');
 
   const posRef = useRef(pos);
   posRef.current = pos;
@@ -156,6 +157,12 @@ export default function CursorCat({ active = false, onStatusChange }) {
 
   const onStatusChangeRef = useRef(onStatusChange);
   onStatusChangeRef.current = onStatusChange;
+
+  useEffect(() => {
+    if (!toastMessage) return;
+    const timer = window.setTimeout(() => setToastMessage(''), 3500);
+    return () => window.clearTimeout(timer);
+  }, [toastMessage]);
 
   const setCatStatus = (status) => {
     if (statusRef.current !== status) {
@@ -233,6 +240,19 @@ export default function CursorCat({ active = false, onStatusChange }) {
 
       const mouse = mouseRef.current;
       const currentPos = posRef.current;
+
+      // Hold position while hungry so the cursor cat can be clicked for a feeding hint.
+      if (hungry) {
+        isCaughtRef.current = false;
+        setIsCaught(false);
+        setCatStatus('hungry');
+        if (currentFrameRef.current !== 'CAUGHT') {
+          currentFrameRef.current = 'CAUGHT';
+          setFrame('CAUGHT');
+        }
+        rafRef.current = requestAnimationFrame(loop);
+        return;
+      }
 
       if (!mouse.active || mouse.x === null || mouse.y === null) {
         setCatStatus('idle');
@@ -490,26 +510,27 @@ export default function CursorCat({ active = false, onStatusChange }) {
       document.removeEventListener('mouseenter', handleMouseEnter);
       reduceMotionQuery.removeEventListener?.('change', onMotionChange);
     };
-  }, [active]);
+  }, [active, hungry]);
 
   if (!active) return null;
 
   return (
+    <>
     <div
-      aria-hidden="true"
-      className={`fixed pointer-events-none z-40 select-none ${isCaught ? '' : 'will-change-transform'}`}
+      aria-hidden={!hungry}
+      className={`fixed z-40 select-none ${isCaught ? '' : 'will-change-transform'} ${hungry ? 'pointer-events-auto' : 'pointer-events-none'}`}
       style={{
         left: 0,
         top: 0,
         transform: `translate3d(${pos.x - CAT_HALF_SIZE}px, ${pos.y - CAT_HALF_SIZE}px, 0)`,
       }}
     >
-      <div className="relative pointer-events-none select-none">
-        {isCaught && (
+      <div className={`relative select-none ${hungry ? 'pointer-events-auto' : 'pointer-events-none'}`}>
+        {(isCaught || hungry) && (
           <div
             role="status"
             aria-live="polite"
-            className={`pointer-events-none absolute max-w-[140px] truncate whitespace-nowrap bg-[#f8f8f2] text-[#141512] font-mono text-[9px] px-1.5 py-0.5 border border-[#141512] shadow-[2px_2px_0_#f92672] ${
+            className={`pointer-events-none absolute max-w-[160px] whitespace-nowrap bg-[#f8f8f2] text-[#141512] font-mono text-[9px] px-1.5 py-0.5 border border-[#141512] shadow-[2px_2px_0_#f92672] ${
               pos.y < 46 ? 'top-full mt-1.5' : 'bottom-full mb-1.5'
             } ${
               pos.x < 80
@@ -519,13 +540,32 @@ export default function CursorCat({ active = false, onStatusChange }) {
                 : 'left-1/2 -translate-x-1/2'
             }`}
           >
-            {bubbleText}
+            {hungry ? 'feed me' : bubbleText}
           </div>
         )}
         <div style={{ transform: facingLeft ? 'scaleX(-1)' : 'scaleX(1)' }}>
-          <PixelSprite frame={frame} />
+          {hungry ? (
+            <button
+              type="button"
+              onClick={() => setToastMessage('Feed me in the Desk Companion panel — click the cat there five times.')}
+              aria-label="Show where to feed the hungry cursor cat"
+              className="block cursor-pointer rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#e6db74]"
+            >
+              <PixelSprite frame={frame} />
+            </button>
+          ) : <PixelSprite frame={frame} />}
         </div>
       </div>
     </div>
+      {toastMessage && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed bottom-16 left-1/2 z-50 -translate-x-1/2 border border-yellow bg-[#1e1f1c] px-4 py-2.5 font-mono text-xs text-yellow shadow-[4px_4px_0_rgba(0,0,0,0.5)] max-w-[90vw]"
+        >
+          {toastMessage}
+        </div>
+      )}
+    </>
   );
 }

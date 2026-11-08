@@ -10,6 +10,8 @@ export default function PersonalSidebar({
   followEnabled,
   onToggleFollow,
   catStatus,
+  catHungry,
+  onFeedCat,
 }) {
   const [selectedTopicIds, setSelectedTopicIds] = useState(() => {
     try {
@@ -43,7 +45,10 @@ export default function PersonalSidebar({
 
   return (
     <aside className="grid content-start gap-5 sm:grid-cols-2 lg:grid-cols-1 lg:gap-6 pt-1">
-      {/* 1. Quiet, purposeful RSS Reading Feed */}
+      {/* Direct Navigation & External Profiles */}
+      <SocialLinks />
+
+      {/* Quiet, purposeful RSS Reading Feed */}
       <ReadingWidget
         topic={topic}
         selectedTopicIds={selectedTopicIds}
@@ -51,23 +56,22 @@ export default function PersonalSidebar({
         onToggleTopic={toggleTopic}
       />
 
-      {/* 2. Direct Navigation & External Profiles */}
-      <SocialLinks />
-
-      {/* 3. Ambient Mindful Pause */}
-      <NightSkyWidget />
-
-      {/* 4. Fortune Cookie Workstation Oracle */}
+      {/* Fortune Cookie Workstation Oracle */}
       <FortuneWidget />
 
-      {/* 5. Desk Companion (Positioned safely below hero particle portrait) */}
+      {/* Desk Companion (Positioned safely below hero particle portrait) */}
       <DeskCompanion
         followEnabled={followEnabled}
         onToggleFollow={onToggleFollow}
         catStatus={catStatus}
+        hungry={catHungry}
+        onFeed={onFeedCat}
       />
 
-      {/* 6. Open Source Engineering Badge */}
+      {/* Ambient Mindful Pause */}
+      <NightSkyWidget />
+
+      {/* Open Source Engineering Badge */}
       <div className="flex items-center gap-[10px] border border-dashed border-line bg-surface-card px-3 py-[11px] font-mono text-[10px] tracking-wide text-lime">
         <span className="text-lg">◎</span>
         <span>

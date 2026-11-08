@@ -10,6 +10,33 @@
   animation: cat-hop 0.3s steps(2);
 }
 
+@keyframes cat-kiss {
+  0%, 100% { transform: scale(1) rotate(0); }
+  35% { transform: scale(1.18) rotate(-8deg); }
+  70% { transform: scale(1.08) rotate(7deg); }
+}
+
+.animate-cat-kiss {
+  animation: cat-kiss 0.65s steps(4);
+}
+
+@keyframes heart-pop {
+  0% { opacity: 0; transform: translate(0, 8px) scale(0.45); }
+  25% { opacity: 1; transform: translate(3px, -2px) scale(1.2); }
+  100% { opacity: 0; transform: translate(8px, -27px) scale(0.9); }
+}
+
+.animate-heart-pop {
+  animation: heart-pop 0.9s steps(6) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-cat-kiss,
+  .animate-heart-pop {
+    animation-duration: 0.01ms;
+  }
+}
+
 @keyframes tail-swish {
   0%, 80%, 100% { transform: rotate(0deg); }
   85% { transform: rotate(6deg); }
@@ -183,6 +210,26 @@
 /* Container-Query Responsive System for Main Content */
 .main-container {
   container-type: inline-size;
+}
+
+/* Keep long pages responsive by postponing off-screen section rendering while
+   reserving approximate space to avoid scroll jumps as content enters view. */
+.main-container > section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}
+
+img,
+canvas,
+video,
+iframe {
+  max-width: 100%;
+}
+
+@media (max-width: 380px) {
+  .main-container > section {
+    contain-intrinsic-size: auto 620px;
+  }
 }
 
 @container (min-width: 620px) {
