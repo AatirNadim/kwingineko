@@ -86,7 +86,7 @@ export default function ContactSection({ onOpenComposer }) {
           <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-line-subtle pt-3 font-mono text-[9.5px] sm:text-[10px]">
             <span className="text-muted">LOOKING FOR A FORMAL RESUME?</span>
             <a
-              href="/Aatir_Nadim_Resume.pdf"
+              href="/Aatir_Nadim%20-%20Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex min-h-[44px] sm:min-h-[36px] items-center gap-1.5 border border-line bg-surface-inset px-2.5 py-1 text-ink-secondary transition-colors hover:border-lime hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow"

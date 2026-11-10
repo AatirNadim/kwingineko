@@ -56,7 +56,7 @@ The desktop layout uses a navigation rail, central content column, and personal 
 
 The portfolio is data-driven where practical. `src/data/portfolio.js` holds navigation labels and structured content for the projects, experience, expertise, certificates, social profiles, and contact details. Project cards include summaries, problems, contributions, outcomes, technical highlights, stacks, and links. Images and logos are served from `public/assets/`.
 
-The résumé is `public/Aatir_Nadim_Resume.pdf`. Update the portfolio data and public assets together when changing claims, links, or imagery so that all displayed information remains consistent.
+The résumé is `public/Aatir_Nadim - Resume.pdf`. Update the portfolio data and public assets together when changing claims, links, or imagery so that all displayed information remains consistent.
 
 ### DOS arcade
 
@@ -92,7 +92,7 @@ public/
   assets/                 Portfolio images, project art, and logos
   games/                  js-dos game bundle files (.jsdos)
   js-dos/                 js-dos browser player and emulator runtime
-  Aatir_Nadim_Resume.pdf  Résumé download
+  Aatir_Nadim - Resume.pdf  Résumé download
 src/
   App.jsx                 Page shell, global state, shortcuts, and section wiring
   main.jsx                React entry point
