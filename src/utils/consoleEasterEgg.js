@@ -90,9 +90,9 @@ export function initConsoleEasterEgg({ onToggleCrt, onLaunchArcade, onOpenCompos
       return 'Core competencies listed above.';
     },
     resume: () => {
-      console.log('%cOpening official résumé PDF: /Aatir_Nadim_Resume.pdf', 'color: #e6db74; font-family: monospace; font-size: 12px;');
-      window.open('/Aatir_Nadim_Resume.pdf', '_blank');
-      return 'Opened /Aatir_Nadim_Resume.pdf in new tab.';
+      console.log('%cOpening official résumé PDF: /Aatir_Nadim%20-%20Resume.pdf', 'color: #e6db74; font-family: monospace; font-size: 12px;');
+      window.open('/Aatir_Nadim%20-%20Resume.pdf', '_blank');
+      return 'Opened /Aatir_Nadim%20-%20Resume.pdf in new tab.';
     },
     contact: () => {
       console.log(

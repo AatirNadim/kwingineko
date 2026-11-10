@@ -34,7 +34,7 @@ export default function Introduction({ onExplore }) {
               EXPLORE SELECTED WORK <ArrowDownRight size={15} />
             </button>
             <a
-              href="/Aatir_Nadim_Resume.pdf"
+              href="/Aatir_Nadim%20-%20Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex min-h-[44px] items-center gap-2 border border-line bg-surface px-4 py-2.5 font-mono text-xs sm:text-[12.5px] font-semibold tracking-wide text-ink-secondary transition select-none hover:border-lime hover:text-lime hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0_#a6e22e40] active:translate-x-0 active:translate-y-0 active:shadow-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow"

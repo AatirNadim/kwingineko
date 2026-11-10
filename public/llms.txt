@@ -15,7 +15,7 @@ The canonical website is <https://aatirnadim.dev/>. It is a single-page portfoli
 - [Aatir's Hashnode blog](https://techtom.hashnode.dev/)
 - [GitHub](https://github.com/AatirNadim)
 - [LinkedIn](https://www.linkedin.com/in/aatirnadim/)
-- [Résumé](https://aatirnadim.dev/Aatir_Nadim_Resume.pdf)
+- [Résumé](https://aatirnadim.dev/Aatir_Nadim%20-%20Resume.pdf)
 
 ## Site resources
 

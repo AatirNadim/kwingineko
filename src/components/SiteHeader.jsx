@@ -92,7 +92,7 @@ export default function SiteHeader({
                 <span>CRT: {crtActive ? 'ON' : 'OFF'}</span>
               </button>
               <a
-                href="/Aatir_Nadim_Resume.pdf"
+                href="/Aatir_Nadim%20-%20Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="View Resume PDF"

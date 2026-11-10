@@ -222,7 +222,7 @@ export default function CommandPalette({
         shortcut: 'CV',
         action: () => {
           onClose();
-          window.open('/Aatir_Nadim_Resume.pdf', '_blank');
+          window.open('/Aatir_Nadim%20-%20Resume.pdf', '_blank');
         },
       },
     ],
