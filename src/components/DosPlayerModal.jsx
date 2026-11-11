@@ -411,7 +411,7 @@ export default function DosPlayerModal({ isOpen, onClose, game, onGameChange }) 
           {/* Active Canvas Mount */}
           <div
             ref={mountRef}
-            className="h-full w-full max-h-[58vh] aspect-[4/3] flex items-center justify-center"
+            className="dos-player-mount h-full w-full max-h-[58vh] min-w-0 aspect-[4/3] flex items-center justify-center"
           />
 
           {/* Authentic BIOS/DOS Diagnostic Telemetry Loading State */}

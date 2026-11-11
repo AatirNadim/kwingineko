@@ -39,7 +39,7 @@ export default function FaqArcadeVault({ onLaunchGame }) {
             <span>JS-DOS v7.49 · WASM</span>
           </span>
           <span className="hidden min-[480px]:inline text-[#55564c]">|</span>
-          <span className="hidden min-[480px]:inline text-yellow">7 DISKS MOUNTED</span>
+          <span className="hidden min-[480px]:inline text-yellow">8 DISKS MOUNTED</span>
         </div>
       </div>
 
@@ -51,7 +51,7 @@ export default function FaqArcadeVault({ onLaunchGame }) {
             <span>MOUNTED CARTRIDGES [SELECT DISK]</span>
           </span>
           <span className="text-[#a4a18e]">
-            DISK {activeGame.diskNumber} / 07
+            DISK {activeGame.diskNumber} / 08
           </span>
         </div>
 
