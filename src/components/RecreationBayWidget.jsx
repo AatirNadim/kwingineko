@@ -85,7 +85,7 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
               AATIR'S ARCADE // WASM
             </span>
             <span className="text-muted-dim">
-              ROM.ID // 0x{game.cartridgeCode} [{game.diskNumber}/07]
+              ROM.ID // 0x{game.cartridgeCode} [{game.diskNumber}/08]
             </span>
           </div>
 
@@ -116,7 +116,7 @@ export default function RecreationBayWidget({ onLaunchGame, activeGame }) {
           <div className="flex items-center justify-between pb-1.5 font-mono text-[9.5px] tracking-wider text-muted">
             <span className="flex items-center gap-1">
               <Disc size={9} className="text-yellow" />
-              CARTRIDGE RACK [7 DISKS]
+              CARTRIDGE RACK [8 DISKS]
             </span>
             <button
               type="button"
