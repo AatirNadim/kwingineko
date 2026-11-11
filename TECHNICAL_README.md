@@ -142,7 +142,7 @@ The app is a Vite static build plus two Vercel serverless functions. Deploying t
 - `X-Content-Type-Options: nosniff`
 - `X-Frame-Options: SAMEORIGIN`
 - `Referrer-Policy: strict-origin-when-cross-origin`
-- `Permissions-Policy: camera=(), microphone=(), geolocation=()`
+- `Permissions-Policy: camera=(), microphone=(), geolocation=(self)` (allows the site to request location; the browser controls the user prompt and grant)
 - Long-lived immutable caching for assets and built static files; revalidation for `index.html`.
 
 The Vite build output is `dist/`; it is generated and should not be edited by hand.
