@@ -20,7 +20,6 @@ import CrtOverlay from './components/CrtOverlay.jsx';
 import CommandPalette from './components/CommandPalette.jsx';
 import { initConsoleEasterEgg } from './utils/consoleEasterEgg.js';
 import { retroGames } from './data/games.js';
-import { prewarmEmulatorRuntime } from './utils/arcadeCache.js';
 
 export default function App() {
   const [active, setActive] = useState('home');
@@ -90,11 +89,6 @@ export default function App() {
       document.title = originalTitle;
     };
   }, [catHungry]);
-
-  // Idle pre-warm shared emulator runtime (wdosbox.wasm, js-dos.js)
-  useEffect(() => {
-    prewarmEmulatorRuntime();
-  }, []);
 
   // Global keyboard shortcut listeners (Cmd+K / Ctrl+K and /)
   useEffect(() => {

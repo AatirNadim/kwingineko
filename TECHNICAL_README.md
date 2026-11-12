@@ -62,7 +62,7 @@ The résumé is `public/Aatir_Nadim - Resume.pdf`. Update the portfolio data and
 
 `src/data/games.js` describes the game catalogue and each game’s display metadata, controls, and audio notes. The FAQ arcade vault opens games in a lazy-loaded player (`src/components/DosPlayerModal.jsx`). Game bundles live in `public/games/*.jsdos`; the js-dos player and emulator runtime are vendored in `public/js-dos/`.
 
-The app prewarms shared emulator runtime assets while idle. `src/utils/arcadeCache.js` manages this cache and has a corresponding test file. Individual game bundles are loaded when a game is selected. The player supports switching games and exposes pause, mute, restart, fullscreen, and close controls where supported by the runtime.
+The shared emulator runtime loads only when the lazy player opens, so ordinary portfolio visits do not download arcade assets. `src/utils/arcadeCache.js` manages game bundle caching and low-priority prefetching when a visitor hovers or focuses a game entry. The player supports switching games and exposes pause, mute, restart, fullscreen, and close controls where supported by the runtime.
 
 ### Reading and writing feeds
 

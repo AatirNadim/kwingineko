@@ -3,7 +3,7 @@
  *
  * Implements Rule 1 & Rule 2:
  * - On-demand only: Cartridge bundles remain 0 bytes until launched or explicitly hovered/focused.
- * - Cache API + Low-priority background prefetching + Idle emulator engine pre-warming.
+ * - Cache API + low-priority background prefetching for selected game bundles.
  * - Precision stream progress telemetry for authentic BIOS/DOS loading state.
  */
 
@@ -288,59 +288,5 @@ export async function prefetchBundle(bundleUrl) {
     console.debug('[arcadeCache] Background prefetch notice:', bundleUrl, err?.message);
   } finally {
     inFlightDownloads.delete(bundleUrl);
-  }
-}
-
-let isEnginePrewarmed = false;
-
-/**
- * Pre-warms the shared js-dos emulator engine files (wdosbox.wasm, js-dos.js, etc.)
- * during browser idle time (requestIdleCallback or setTimeout 4000ms).
- * Strictly on-demand: NO game bundles are fetched here.
- */
-export function prewarmEmulatorRuntime() {
-  if (typeof window === 'undefined' || isEnginePrewarmed) return;
-  isEnginePrewarmed = true;
-
-  const runPrewarm = async () => {
-    const engineFiles = [
-      '/js-dos/js-dos.js',
-      '/js-dos/js-dos.css',
-      '/js-dos/emulators/wdosbox.wasm',
-      '/js-dos/emulators/wlibzip.wasm',
-    ];
-
-    let cache = null;
-    if (hasCacheSupport()) {
-      try {
-        cache = await caches.open(ARCADE_CACHE_NAME);
-      } catch {
-        // ignore
-      }
-    }
-
-    for (const fileUrl of engineFiles) {
-      try {
-        if (cache) {
-          const match = await cache.match(fileUrl);
-          if (match) continue; // Already prewarmed
-        }
-        const fetchOptions = 'priority' in Request.prototype ? { priority: 'low' } : {};
-        const response = await fetch(fileUrl, fetchOptions);
-        if (response.ok && cache) {
-          await cache.put(fileUrl, response.clone());
-        }
-      } catch (err) {
-        console.debug('[arcadeCache] Engine prewarm item notice:', fileUrl, err?.message);
-      }
-    }
-  };
-
-  if ('requestIdleCallback' in window) {
-    window.requestIdleCallback(() => {
-      runPrewarm();
-    }, { timeout: 4000 });
-  } else {
-    setTimeout(runPrewarm, 4000);
   }
 }

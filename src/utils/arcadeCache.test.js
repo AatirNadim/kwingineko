@@ -48,7 +48,6 @@ const {
   releaseBundleUrl,
   getOrFetchBundle,
   prefetchBundle,
-  prewarmEmulatorRuntime,
   isBundleCached,
   ARCADE_CACHE_NAME,
 } = await import('./arcadeCache.js');
@@ -151,37 +150,4 @@ test('prefetchBundle: downloads bundle into Cache API without creating unrevoked
   assert.equal(fetchCalled, 1);
 
   globalThis.fetch = originalFetch;
-});
-
-test('prewarmEmulatorRuntime: only prewarms engine files, never game bundles', async () => {
-  const originalFetch = globalThis.fetch;
-  const fetchedUrls = [];
-
-  globalThis.fetch = async (url) => {
-    fetchedUrls.push(url);
-    return new Response(new Uint8Array([0, 1]), { status: 200 });
-  };
-
-  // Mock setTimeout to run immediately
-  const originalSetTimeout = globalThis.setTimeout;
-  globalThis.setTimeout = (fn) => {
-    fn();
-    return 1;
-  };
-
-  prewarmEmulatorRuntime();
-
-  // Allow async tasks to flush
-  await new Promise((r) => setImmediate(r));
-
-  assert.ok(fetchedUrls.includes('/js-dos/js-dos.js'));
-  assert.ok(fetchedUrls.includes('/js-dos/emulators/wdosbox.wasm'));
-  assert.ok(fetchedUrls.includes('/js-dos/emulators/wlibzip.wasm'));
-
-  // Strictly verify NO game bundle was fetched!
-  const gameFetched = fetchedUrls.some((u) => u.endsWith('.jsdos') || u.includes('/games/'));
-  assert.equal(gameFetched, false, 'Rule 1 violation: prewarm must never fetch game bundles');
-
-  globalThis.fetch = originalFetch;
-  globalThis.setTimeout = originalSetTimeout;
 });
