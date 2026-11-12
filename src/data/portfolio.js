@@ -52,6 +52,7 @@ export const projects = [
     href: 'https://github.com/AatirNadim/plan-parse',
     links: [
       { label: 'SOURCE', href: 'https://github.com/AatirNadim/plan-parse', type: 'source' },
+      { label: 'DOCKER', href: 'https://hub.docker.com/r/aatir0docking/plan-parse', type: 'docker' },
     ],
     telemetry: {
       distribution: 'Standalone Binary (go:embed) · Multi-Stage Docker',
