@@ -25,6 +25,7 @@ import {
   DEFAULT_HOST,
 } from '../services/hashnode.js';
 import SectionHeading from './SectionHeading.jsx';
+import { getCachedImageUrl } from '../utils/imageUrl.js';
 
 export default function BlogSection() {
   const [articles, setArticles] = useState([]);
@@ -134,7 +135,7 @@ export default function BlogSection() {
     [articles[nextIdx], articles[prevIdx]].forEach((art) => {
       if (art?.cover && !loadedImages[art.id] && typeof Image !== 'undefined') {
         const img = new Image();
-        img.src = art.cover;
+        img.src = getCachedImageUrl(art.cover);
         img.onload = () => {
           setLoadedImages((prev) => ({ ...prev, [art.id]: true }));
         };
@@ -571,7 +572,7 @@ export default function BlogSection() {
 
                           <img
                             key={current.id || current.cover}
-                            src={current.cover}
+                            src={getCachedImageUrl(current.cover)}
                             alt={current.title}
                             onLoad={() => handleImageLoad(current.id)}
                             onError={() => handleImageError(current.id)}
@@ -941,7 +942,7 @@ export default function BlogSection() {
                               </div>
                             )}
                             <img
-                              src={art.cover}
+                              src={getCachedImageUrl(art.cover)}
                               alt={art.title}
                               onLoad={() => handleImageLoad(art.id)}
                               onError={() => handleImageError(art.id)}

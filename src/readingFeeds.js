@@ -61,30 +61,32 @@ async function fetchFeed(url) {
   let xmlText = '';
   let lastError = null;
 
-  // 1. Direct fetch (fastest, works when remote feed allows CORS like Wired)
+  // 1. Same-origin proxy avoids noisy CORS failures for feeds that block browsers.
   try {
-    const response = await fetch(url, {
-      headers: { Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml' }
+    const proxyUrl = `/api/feed?url=${encodeURIComponent(url)}`;
+    const response = await fetch(proxyUrl, {
+      headers: { Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml' },
     });
     if (response.ok) {
       xmlText = await response.text();
     } else {
-      lastError = new Error(`Feed returned HTTP ${response.status}.`);
+      lastError = new Error(`Proxy returned HTTP ${response.status}.`);
     }
   } catch (error) {
     lastError = error;
   }
 
-  // 2. Same-origin proxy endpoint (/api/feed?url=...) handled by Vite dev server or Vercel serverless function
+  // 2. Try direct fetch only when the same-origin endpoint is unavailable.
   if (!xmlText) {
     try {
-      const proxyUrl = `/api/feed?url=${encodeURIComponent(url)}`;
-      const proxyResponse = await fetch(proxyUrl);
-      if (proxyResponse.ok) {
-        xmlText = await proxyResponse.text();
+      const response = await fetch(url, {
+        headers: { Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml' },
+      });
+      if (response.ok) {
+        xmlText = await response.text();
         lastError = null;
       } else {
-        lastError = new Error(`Proxy returned HTTP ${proxyResponse.status}.`);
+        lastError = new Error(`Feed returned HTTP ${response.status}.`);
       }
     } catch (error) {
       lastError = error;
