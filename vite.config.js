@@ -1,9 +1,34 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { fetchHashnodeImage, HASHNODE_IMAGE_CACHE_CONTROL } from './src/server/hashnodeImage.js';
 
 function apiProxyPlugin() {
   const handler = async (req, res, next) => {
     const reqUrl = new URL(req.url, 'http://localhost');
+
+    // Hashnode cover image proxy with explicit browser/CDN caching.
+    if (reqUrl.pathname === '/api/image') {
+      if (req.method !== 'GET') {
+        res.setHeader('Allow', 'GET');
+        res.statusCode = 405;
+        res.end();
+        return;
+      }
+
+      try {
+        const { body, contentType } = await fetchHashnodeImage(reqUrl.searchParams.get('url') || '');
+        res.statusCode = 200;
+        res.setHeader('Content-Type', contentType);
+        res.setHeader('Cache-Control', HASHNODE_IMAGE_CACHE_CONTROL);
+        res.setHeader('X-Content-Type-Options', 'nosniff');
+        res.end(body);
+      } catch (err) {
+        res.statusCode = err.statusCode || 502;
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({ error: err.message || 'Failed to fetch Hashnode image.' }));
+      }
+      return;
+    }
 
     // 1. RSS Feed Proxy (/api/feed)
     if (reqUrl.pathname === '/api/feed') {

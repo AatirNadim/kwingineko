@@ -71,7 +71,7 @@ There are two separate reading experiences:
 - **Topic reader:** `src/reading.config.json` defines visitor-selectable RSS/Atom topics and feed URLs. Up to three topics can be selected; AI News, Anime, and Open Source are the initial defaults. Topic selections are saved in browser local storage. `src/readingFeeds.js` fetches and parses feeds, coalesces in-flight requests, shows up to eight items per feed/topic, and caches successes in memory for six hours and errors for ten minutes.
 - **Aatir’s Hashnode writing:** `src/services/hashnode.js` and `BlogSection.jsx` provide the publication view for `techtom.hashnode.dev`. The component presents publication articles, with featured and grid views and loading/error/fallback states. Hashnode response caching and feed parsing are handled by the service module.
 
-For the topic reader, requests try the feed directly first, then the same-origin `/api/feed` endpoint, then public RSS-to-JSON and CORS-proxy fallbacks. Feed sources can block browser access or be unavailable; in that case the UI can show an error and offer retry/fallback actions.
+For the topic reader, requests use the same-origin `/api/feed` endpoint first to avoid browser CORS errors, then try a direct fetch and public RSS fallbacks if the local endpoint is unavailable. Feed sources can still be unavailable; in that case the UI can show an error and offer retry/fallback actions.
 
 ### Personal widgets and small interactions
 
@@ -87,6 +87,7 @@ For the topic reader, requests try the feed directly first, then the same-origin
 ```text
 api/
   feed.js                 RSS/Atom proxy for Vercel and local Vite
+  image.js                Cached Hashnode cover image proxy
   hashnode.js             Hashnode GraphQL proxy plus RSS GET proxy
 public/
   assets/                 Portfolio images, project art, and logos
@@ -102,7 +103,8 @@ src/
   services/hashnode.js    Hashnode article/feed parsing and caching
   reading.config.json     RSS topic and feed configuration
   readingFeeds.js         Topic feed retrieval, parsing, fallback, and cache
-  utils/                  Arcade cache and console easter egg utilities
+  server/                 Restricted Hashnode image fetch helper
+  utils/                  Arcade cache, image URL, and console easter egg utilities
 ```
 
 Notable components include `SiteHeader`, `NavigationRail`, `Introduction`, `ExperienceSection`, `ProjectsSection`, `ExpertiseSection`, `BlogSection`, `CertificatesSection`, `FaqSection`, `ContactSection`, `PersonalSidebar`, `DeskCompanion`, `ParticlePortrait`, `StarfieldBackground`, `CrtOverlay`, `CommandPalette`, `ContactModal`, and `DosPlayerModal`.
@@ -112,13 +114,14 @@ Notable components include `SiteHeader`, `NavigationRail`, `Introduction`, `Expe
 | Route/service | Used for | Configuration/behavior |
 | --- | --- | --- |
 | `/api/feed?url=…` | Fetch an RSS/Atom feed when the browser cannot fetch it directly. | Implemented in `api/feed.js`; Vite supplies a development/preview middleware, and Vercel deploys the API file as a serverless function. |
+| `/api/image?url=…` | Serve Hashnode article covers with explicit browser and CDN caching. | Implemented in `api/image.js`; only HTTPS URLs from `cdn.hashnode.com` are accepted, and images larger than 8 MB or with unsupported content types are rejected. |
 | `/api/hashnode` | Hashnode GraphQL proxy; also accepts GET requests to proxy RSS. | Implemented in `api/hashnode.js`. POST expects a GraphQL `query` and optional `variables`; GET accepts a `url` query parameter. |
 | `https://gql.hashnode.com` | Hashnode GraphQL origin. | Called server-side through `/api/hashnode`. |
 | Configured RSS/Atom hosts | Visitor-selected topic articles. | Edit `src/reading.config.json`; some hosts may reject direct browser requests. |
 | `api.rss2json.com`, `api.allorigins.win` | Public fallbacks for topic feeds when direct and same-origin fetching fail. | External availability and rate limits are outside this project’s control. |
 | Open-Meteo | Weather widget data. | Requested by the browser from `LocalWeather.jsx`. |
 
-The API handlers set permissive CORS response headers. The feed proxy accepts a URL from its query string and fetches it; restrict allowed upstream hosts if this endpoint is ever exposed in an environment where arbitrary proxying is not acceptable.
+The feed API accepts a URL from its query string and fetches it; restrict allowed upstream hosts if this endpoint is ever exposed in an environment where arbitrary proxying is not acceptable. The image API has a strict Hashnode CDN host allowlist.
 
 ## Configuration and content updates
 
@@ -143,7 +146,7 @@ The app is a Vite static build plus two Vercel serverless functions. Deploying t
 - `X-Frame-Options: SAMEORIGIN`
 - `Referrer-Policy: strict-origin-when-cross-origin`
 - `Permissions-Policy: camera=(), microphone=(), geolocation=(self)` (allows the site to request location; the browser controls the user prompt and grant)
-- Long-lived immutable caching for assets and built static files; revalidation for `index.html`.
+- One-day browser caching with stale revalidation for mutable public assets; one-year immutable caching only for fingerprinted Vite assets; revalidation for `index.html`. Hashnode article covers are served through `/api/image` with one-day browser and seven-day shared-cache lifetimes.
 
 The Vite build output is `dist/`; it is generated and should not be edited by hand.
 
