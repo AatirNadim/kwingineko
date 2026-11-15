@@ -6,8 +6,8 @@ The canonical website is <https://aatirnadim.dev/>. It is a single-page portfoli
 
 ## Selected projects
 
-- [getMe](https://github.com/AatirNadim/getMe): Persistent, embeddable log-structured key-value storage engine in Go, with append-only storage, in-memory indexing, crash recovery, background compaction, SDKs, and an MCP server. [Project demo](https://getme-kv.vercel.app/) · [Technical write-up](https://techtom.hashnode.dev/building-getme-i)
-- [plan-parse](https://github.com/AatirNadim/plan-parse): Terraform plan workbench for exploring dependency graphs and auditing change impact and replacement risk.
+- [getMe](https://getme.aatirnadim.dev): Persistent, embeddable log-structured key-value storage engine in Go, with append-only storage, in-memory indexing, crash recovery, background compaction, SDKs, and an MCP server. [Source](https://github.com/AatirNadim/getMe) · [Technical write-up](https://techtom.hashnode.dev/building-getme-i)
+- [plan-parse](https://planparse.aatirnadim.dev): Terraform plan workbench for exploring dependency graphs and auditing change impact and replacement risk. [Source](https://github.com/AatirNadim/plan-parse)
 - [Window](https://github.com/AatirNadim/window): Browser-based peer-to-peer file transfer using WebRTC data channels and WebSocket signaling.
 
 ## Writing and profiles
@@ -15,7 +15,7 @@ The canonical website is <https://aatirnadim.dev/>. It is a single-page portfoli
 - [Aatir's Hashnode blog](https://techtom.hashnode.dev/)
 - [GitHub](https://github.com/AatirNadim)
 - [LinkedIn](https://www.linkedin.com/in/aatirnadim/)
-- [Résumé](https://aatirnadim.dev/Aatir_Nadim%20-%20Resume.pdf)
+- [Résumé](https://resume.aatirnadim.dev)
 
 ## Site resources
 

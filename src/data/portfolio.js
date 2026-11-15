@@ -23,7 +23,7 @@ export const projects = [
     stack: ['Go', 'Bitcask', 'Unix Sockets', 'Storage Engine'],
     href: 'https://github.com/AatirNadim/getMe',
     links: [
-      { label: 'DEMO', href: 'https://getme-kv.vercel.app/', type: 'demo' },
+      { label: 'DEMO', href: 'https://getme.aatirnadim.dev', type: 'demo' },
       { label: 'DOCKER', href: 'https://hub.docker.com/r/aatir0docking/getme', type: 'docker' },
       { label: 'WRITEUP', href: 'https://techtom.hashnode.dev/building-getme-i', type: 'article' },
       { label: 'SOURCE', href: 'https://github.com/AatirNadim/getMe', type: 'source' },
@@ -51,6 +51,7 @@ export const projects = [
     stack: ['Go', 'Terraform', 'React', 'Cytoscape.js'],
     href: 'https://github.com/AatirNadim/plan-parse',
     links: [
+      { label: 'DEMO', href: 'https://planparse.aatirnadim.dev', type: 'demo' },
       { label: 'SOURCE', href: 'https://github.com/AatirNadim/plan-parse', type: 'source' },
       { label: 'DOCKER', href: 'https://hub.docker.com/r/aatir0docking/plan-parse', type: 'docker' },
     ],
